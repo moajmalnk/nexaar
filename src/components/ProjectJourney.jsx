@@ -144,15 +144,15 @@ const ProjectJourney = () => {
               const shouldBeOnLeft = isRTL ? (index % 2 !== 0) : (index % 2 === 0);
               const topOffset = nodePositions[index].y - 50; 
               
-              // Localized reactive highlight logic
+              // Localized reactive highlight logic: stay active once reached
               const isActive = useTransform(springProgress, 
-                [(index - 0.4) / steps.length, index / steps.length, (index + 0.4) / steps.length], 
-                [0.15, 1, 0.15]
+                [(index - 0.4) / steps.length, index / steps.length], 
+                [0.15, 1]
               );
               
               const pulseScale = useTransform(springProgress, 
-                [(index - 0.2) / steps.length, index / steps.length, (index + 0.2) / steps.length], 
-                [1, 1.04, 1]
+                [(index - 0.2) / steps.length, index / steps.length], 
+                [1, 1.04]
               );
 
               return (
