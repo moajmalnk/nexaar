@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Arabic:wght@400;700&family=Inter:wght@400;500&family=Montserrat:ital,wght@0,800;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+
+  body {
+    @apply font-body text-brand-pure-white bg-brand-deep-navy antialiased;
+  }
+
+  h1 {
+    @apply font-display text-h1 uppercase tracking-tight;
+  }
+
+  h2 {
+    @apply font-display text-h2 uppercase tracking-tight;
+  }
+
+  h3 {
+    @apply font-display text-h3 uppercase tracking-tight;
+  }
+
+  p {
+    @apply font-body text-body;
+  }
+
+  .tagline {
+    @apply font-display italic;
+  }
+
+  [dir="rtl"] {
+    @apply font-arabic text-right;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-electric-purple text-brand-pure-white font-body font-medium py-3 px-8 rounded-xl transition-all duration-200 active:scale-95 shadow-ambient;
+  }
+
+  .btn-secondary {
+    @apply bg-brand-lavender text-brand-pure-white font-body font-medium py-3 px-8 rounded-xl transition-all duration-200 active:scale-95 shadow-ambient;
+  }
+
+  .btn-cta {
+    @apply relative overflow-hidden font-display font-bold py-4 px-10 rounded-xl uppercase tracking-[0.18em] text-sm text-brand-pure-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)];
+    background: linear-gradient(135deg, #FF5C35 0%, #FF8A35 50%, #FF5C35 100%);
+    background-size: 200% auto;
+    box-shadow: 
+      0 4px 15px rgba(255, 92, 53, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+
+  .btn-cta::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-20deg) translateX(-150%);
+  }
+
+  .btn-cta:hover {
+    @apply -translate-y-1 scale-[1.03];
+    background-position: right center;
+    box-shadow: 
+      0 12px 30px rgba(255, 92, 53, 0.45),
+      0 0 20px rgba(255, 92, 53, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  }
+
+  .btn-cta:hover::before {
+    @apply opacity-100;
+    animation: shimmer 1.2s infinite;
+  }
+
+  .btn-cta:active {
+    @apply scale-95 translate-y-0 shadow-none transition-none;
+  }
+
+  @keyframes shimmer {
+    0% { transform: skewX(-20deg) translateX(-150%); }
+    100% { transform: skewX(-20deg) translateX(150%); }
+  }
+
+  .card {
+    @apply bg-brand-pure-white border border-brand-soft-lavender p-6 rounded-2xl transition-all duration-300 shadow-ambient;
+  }
+
+  .card-tinted {
+    @apply bg-brand-soft-lavender p-6 rounded-2xl transition-all duration-300 shadow-ambient;
+  }
+
+  .btn-outline-brand {
+    @apply relative border-2 border-brand-electric-purple text-brand-pure-white font-display font-bold py-4 px-8 rounded-xl uppercase tracking-[0.18em] text-sm transition-all duration-500 ease-out hover:bg-brand-electric-purple/10 shadow-ambient outline-none;
+  }
+
+  .btn-outline-brand:hover {
+    @apply -translate-y-1 shadow-elite-glow border-brand-lavender;
+  }
+}
+
+@layer utilities {
+  /* --- Custom Global UI (Codo Standards) --- */
+  
+  /* Branded Slim Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0D0D1A;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #6B20E8;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9B59D4;
+  }
+
+  /* 12-Column Grid Utility */
+  .codo-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.5rem; /* gap-6 */
+  }
+
+  /* Native Picker Overrides */
+  input[type="date"], input[type="time"], select {
+    @apply bg-brand-charcoal border border-brand-electric-purple/30 text-brand-pure-white px-4 py-2 rounded-xl outline-none focus:ring-2 focus:ring-brand-electric-purple/50 backdrop-blur-md transition-all;
+    appearance: none;
+  }
+
+  /* Backdrop Blur Global */
+  .blur-overlay {
+    @apply backdrop-blur-md bg-brand-deep-navy/70;
+  }
+
+  .shadow-ambient {
+    @apply shadow-amber-50; /* Dummy to trigger tailwind extend check if needed, but we used custom CSS below */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .shadow-elite-glow {
+    box-shadow: 0 0 20px rgba(107, 32, 232, 0.15), 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .shadow-coral-glow {
+    box-shadow: 0 0 25px rgba(255, 92, 53, 0.35), 0 10px 30px rgba(255, 92, 53, 0.15);
+  }
+
+  .hover-glow-purple:focus {
+    @apply ring-4 ring-brand-electric-purple/30;
+  }
+
+  .ring-coral:focus {
+    @apply ring-4 ring-brand-electric-coral/40 outline-none;
+  }
+
+  .flash-coral {
+    animation: flashCoral 0.2s ease-in-out;
+  }
+
+  @keyframes flashCoral {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.5); }
+    100% { filter: brightness(1); }
+  }
+  
+  .stagger-1 { animation-delay: 80ms; }
+  .stagger-2 { animation-delay: 160ms; }
+  .stagger-3 { animation-delay: 240ms; }
+  .stagger-4 { animation-delay: 320ms; }
+
+  /* Dual-Lane Infinite Marquee */
+  @keyframes marqueeLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes marqueeRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .animate-marquee-left {
+    animation: marqueeLeft 35s linear infinite;
+  }
+
+  .animate-marquee-right {
+    animation: marqueeRight 35s linear infinite;
+  }
+
+  .marquee-container:hover .animate-marquee-left,
+  .marquee-container:hover .animate-marquee-right {
+    animation-play-state: paused;
+  }
+}
