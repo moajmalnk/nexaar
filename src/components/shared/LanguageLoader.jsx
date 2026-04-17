@@ -38,14 +38,7 @@ const LanguageLoader = () => {
           {/* Background Ambient Glows */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-electric-purple/10 blur-[120px] rounded-full pointer-events-none" />
           
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 0.6, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="absolute bottom-12 font-display text-[10px] tracking-[0.4em] text-brand-pure-white/40 uppercase"
-          >
-            Optimizing Experience
-          </motion.p>
+
         </motion.div>
       )}
     </AnimatePresence>

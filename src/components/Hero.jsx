@@ -1,7 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import * as THREE from 'three';
-import WAVES from 'vanta/dist/vanta.waves.min';
 import { BRAND_CONFIG } from '../utils/constants';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../utils/translations';
@@ -11,26 +9,24 @@ import ConsultationModal from './ConsultationModal';
 import EliteButton from './shared/EliteButton';
 
 const MaskSlide = ({ children, delay = 0, duration = 0.8 }) => (
-  <div className="overflow-hidden">
-    <motion.div
-      initial={{ y: '100%' }}
-      animate={{ y: '0%' }}
-      transition={{
-        duration,
-        delay,
-        ease: [0.22, 1, 0.36, 1], // custom expo-out curve
-      }}
-    >
-      {children}
-    </motion.div>
-  </div>
+  <motion.div
+    initial={{ opacity: 0, filter: 'blur(8px)', scale: 0.96 }}
+    animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
+    transition={{
+      duration,
+      delay,
+      ease: [0.22, 1, 0.36, 1],
+    }}
+  >
+    {children}
+  </motion.div>
 );
 
 /* ─── Fade-up for non-text elements ─────────────────────────────────── */
 const FadeUp = ({ children, delay = 0 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
+    initial={{ opacity: 0, filter: 'blur(4px)', scale: 0.98 }}
+    animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
     transition={{
       duration: 0.7,
       delay,
@@ -45,79 +41,60 @@ const Hero = () => {
   const { lang } = useLanguage();
   const t = translations[lang].hero;
   
-  const vantaRef = useRef(null);
-  const vantaEffect = useRef(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-  useEffect(() => {
-    if (!vantaEffect.current && vantaRef.current) {
-      try {
-        const initVanta = WAVES.default || WAVES;
-        vantaEffect.current = initVanta({
-          el: vantaRef.current,
-          THREE: THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 1.00,
-          color: 0x6B20E8,
-          shininess: 35,
-          waveHeight: 15,
-          waveSpeed: 0.55,
-          zoom: 0.95,
-        });
-      } catch (err) {
-        console.error('Vanta initialization failed:', err);
-      }
-    }
-
-    return () => {
-      if (vantaEffect.current) {
-        vantaEffect.current.destroy();
-        vantaEffect.current = null;
-      }
-    };
-  }, []);
-
-  // Resize handler for responsiveness
-  useEffect(() => {
-    const handleResize = () => {
-      if (vantaEffect.current) {
-        vantaEffect.current.resize();
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0D0D1A]"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#0D0D1A]"
     >
-      {/* Vanta Background Container — absolutely positioned behind content */}
-      <div
-        ref={vantaRef}
-        className="absolute inset-0 z-0"
-      />
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920"
+        className="absolute inset-0 w-full h-full object-cover z-0 opacity-50"
+      >
+        <source src="/videos/background.mp4" type="video/mp4" />
+      </video>
+
+      {/* Brand Tint Overlay */}
+      <div className="absolute inset-0 z-0 bg-brand-electric-purple/30 mix-blend-hue" />
+      <div className="absolute inset-0 z-0 bg-brand-electric-purple/10 mix-blend-multiply" />
+
+      {/* Background Overlay Glow & Darkness */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_50%,rgba(107,32,232,0.2),transparent_80%)] mix-blend-screen" />
+      <div className="absolute inset-0 z-0 bg-brand-deep-navy/50" />
+
+      {/* Bottom Fade Transition */}
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-brand-deep-navy via-brand-deep-navy/80 to-transparent z-0" />
+
 
       {/* Content layer — always above the canvas */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-36 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 md:pt-36 pb-16 md:pb-20">
         <div className="codo-grid">
 
           {/* Headline: spans most of the grid */}
           <div className="col-span-12 lg:col-start-2 lg:col-span-10 text-center">
-            <MaskSlide delay={0.3} duration={0.9}>
-              <h1 className="text-5xl md:text-[80px] font-display font-extrabold text-brand-pure-white uppercase leading-[0.95] tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
-                {t.title1}
+            <MaskSlide delay={0.3} duration={0.8}>
+              <h1 className="text-4xl sm:text-6xl md:text-[80px] font-display font-bold text-brand-pure-white uppercase leading-[0.95] tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+                {lang === 'ar' ? (
+                  <>
+                    <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
+                    {t.title1}
+                  </>
+                ) : (
+                  <>
+                    {t.title1}
+                    <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
+                  </>
+                )}
               </h1>
             </MaskSlide>
 
-            <MaskSlide delay={0.45} duration={0.9}>
-              <h1 className="text-5xl md:text-[80px] font-display font-extrabold text-brand-pure-white uppercase leading-[0.95] mb-6 tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+            <MaskSlide delay={0.45} duration={0.8}>
+              <h1 className="text-4xl sm:text-6xl md:text-[80px] font-display font-bold text-brand-pure-white uppercase leading-[0.95] mb-4 tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
                 {t.title2}
               </h1>
             </MaskSlide>
@@ -126,7 +103,7 @@ const Hero = () => {
           {/* Subtext: centered within grid */}
           <div className="col-span-12 lg:col-start-3 lg:col-span-8 text-center">
             <MaskSlide delay={0.65} duration={0.8}>
-              <p className="text-brand-soft-lavender text-lg md:text-xl font-body max-w-3xl mx-auto mb-8 leading-relaxed opacity-90">
+              <p className="text-brand-soft-lavender text-lg md:text-xl font-body font-normal max-w-3xl mx-auto mb-6 leading-relaxed opacity-90">
                 {t.subtitle}
               </p>
             </MaskSlide>

@@ -43,9 +43,10 @@ const Services = () => {
   return (
     <section 
       id="services" 
-      className="bg-brand-deep-navy py-24 px-6 overflow-hidden"
+      className="bg-brand-deep-navy py-24 md:py-32 px-6 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Reduced to max-w-5xl for even smaller cards and more side padding */}
+      <div className="max-w-5xl mx-auto">
         {/* Header Area */}
         <motion.div 
           initial="hidden"
@@ -63,46 +64,46 @@ const Services = () => {
           </motion.div>
           <motion.h2 
             variants={itemVariants}
-            className="font-display font-extrabold text-4xl md:text-5xl text-brand-pure-white uppercase text-center"
+            className="font-display font-bold text-4xl md:text-5xl text-brand-pure-white tracking-tight text-center"
           >
             {t.title}
           </motion.h2>
         </motion.div>
 
-        {/* Grid: Using the 12-column utility */}
+        {/* Grid: 3 columns with standard gap, removed codo-grid 12-col for simpler flex/grid control */}
         <motion.div 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="codo-grid"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
         >
           {services.map((service, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group relative col-span-12 md:col-span-6 lg:col-span-4 rounded-2xl overflow-hidden aspect-[4/5] bg-brand-charcoal cursor-pointer shadow-ambient transition-all duration-300 hover:-translate-y-2"
+              className="group relative rounded-2xl overflow-hidden aspect-square md:aspect-[4/4.5] bg-brand-charcoal cursor-pointer border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-elite-glow hover:border-brand-electric-purple/50"
             >
-              {/* Background Image */}
-              <motion.img 
-                src={service.image} 
-                alt={service.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              />
-              
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-deep-navy via-brand-deep-navy/80 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+              {/* Layer 1: Scale-In Image Zoom */}
+              <div className="absolute inset-0 overflow-hidden">
+                <motion.img 
+                  src={service.image} 
+                  alt={service.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                
+                {/* Layer 2: Depth Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-deep-navy via-brand-deep-navy/40 to-transparent" />
+              </div>
 
-              {/* Text Content */}
-              <div className="absolute bottom-0 w-full p-8 translate-y-2 transition-transform duration-300 group-hover:translate-y-0 text-left rtl:text-right">
-                <h3 className="font-display font-bold text-2xl text-brand-pure-white mb-3 tracking-tight">
+              {/* Layer 3: Focused Text Content */}
+              <div className="relative h-full flex flex-col justify-end p-6 md:p-8 text-left rtl:text-right">
+                <h3 className="font-display font-bold text-xl md:text-2xl text-brand-pure-white mb-2 tracking-tight transition-colors duration-300 group-hover:text-brand-electric-purple">
                   {service.title}
                 </h3>
-                <p className="font-body text-brand-soft-lavender text-base leading-relaxed opacity-90">
+                <p className="font-body text-brand-soft-lavender/70 text-sm md:text-base leading-relaxed">
                   {service.description}
                 </p>
-                {/* Visual Accent */}
-                <div className="mt-6 w-0 h-[2px] bg-brand-electric-purple transition-all duration-300 group-hover:w-16 shadow-elite-glow" />
               </div>
             </motion.div>
           ))}

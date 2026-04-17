@@ -17,12 +17,12 @@ const EliteButton = ({
 }) => {
   const Component = as;
   
-  const baseStyles = "relative flex items-center justify-center gap-3 rounded-xl font-display font-bold uppercase tracking-[0.18em] text-sm transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-not-allowed disabled:opacity-80 group";
+  const baseStyles = "relative flex items-center justify-center gap-3 rounded-xl font-display font-medium uppercase tracking-[0.18em] text-sm transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-not-allowed disabled:opacity-80 group";
   
   const variantStyles = {
-    cta: `btn-cta bg-brand-electric-coral text-brand-pure-white py-4 px-10 shadow-ambient active:scale-95`,
-    outline: `btn-outline-brand border-2 border-brand-electric-purple text-brand-pure-white py-4 px-8 active:scale-95`,
-    primary: `bg-brand-electric-purple text-brand-pure-white py-4 px-10 shadow-ambient hover:bg-brand-lavender active:scale-95`
+    cta: `btn-cta bg-brand-electric-coral text-brand-pure-white py-4 px-6 md:px-10 shadow-ambient active:scale-95`,
+    outline: `btn-outline-brand border-2 border-brand-electric-purple text-brand-pure-white py-4 px-6 md:px-8 active:scale-95`,
+    primary: `bg-brand-electric-purple text-brand-pure-white py-4 px-6 md:px-10 shadow-ambient hover:bg-brand-lavender active:scale-95`
   };
 
   const currentStyles = `${baseStyles} ${variantStyles[variant] || variantStyles.cta} ${className}`;

@@ -49,7 +49,7 @@
   }
 
   .btn-cta {
-    @apply relative overflow-hidden font-display font-bold py-4 px-10 rounded-xl uppercase tracking-[0.18em] text-sm text-brand-pure-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)];
+    @apply relative overflow-hidden font-display font-medium py-4 px-10 rounded-xl uppercase tracking-[0.18em] text-sm text-brand-pure-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)];
     background: linear-gradient(135deg, #FF5C35 0%, #FF8A35 50%, #FF5C35 100%);
     background-size: 200% auto;
     box-shadow: 
@@ -96,7 +96,7 @@
   }
 
   .btn-outline-brand {
-    @apply relative border-2 border-brand-electric-purple text-brand-pure-white font-display font-bold py-4 px-8 rounded-xl uppercase tracking-[0.18em] text-sm transition-all duration-500 ease-out hover:bg-brand-electric-purple/10 shadow-ambient outline-none;
+    @apply relative border-2 border-brand-electric-purple text-brand-pure-white font-display font-medium py-4 px-8 rounded-xl uppercase tracking-[0.18em] text-sm transition-all duration-500 ease-out hover:bg-brand-electric-purple/10 shadow-ambient outline-none;
   }
 
   .btn-outline-brand:hover {
@@ -199,5 +199,14 @@
   .marquee-container:hover .animate-marquee-left,
   .marquee-container:hover .animate-marquee-right {
     animation-play-state: paused;
+  }
+
+  /* Hide scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

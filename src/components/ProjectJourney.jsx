@@ -93,9 +93,13 @@ const ProjectJourney = () => {
           </div>
         </div>
 
-        <div className="relative" style={{ minHeight: svgHeight }}>
+        <div 
+          className="relative min-h-[auto] md:min-h-[var(--md-height)] flex flex-col gap-5 md:block py-6 md:py-0" 
+          style={{ '--md-height': `${svgHeight}px` }}
+        >
+          {/* Desktop SVG Snake Tracking */}
           <svg
-            className="absolute inset-0 w-full h-full hidden md:block"
+            className="absolute inset-0 w-full h-full hidden md:block z-0 pointer-events-none"
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             preserveAspectRatio="xMidYMid meet"
             fill="none"
@@ -158,23 +162,19 @@ const ProjectJourney = () => {
               return (
                 <div 
                   key={step.id} 
-                  className="md:absolute md:w-[42%]"
-                  style={{ 
-                    top: topOffset,
-                    left: shouldBeOnLeft ? '0%' : undefined,
-                    right: !shouldBeOnLeft ? '0%' : undefined,
-                  }}
+                  className={`relative w-full md:absolute md:w-[42%] md:top-[var(--md-top)] ${shouldBeOnLeft ? 'md:left-0 md:right-auto' : 'md:right-0 md:left-auto'}`}
+                  style={{ '--md-top': `${topOffset}px` }}
                 >
                   <motion.div
                     style={{ opacity: isActive, scale: pulseScale }}
-                    initial={{ opacity: 0, y: 40, x: shouldBeOnLeft ? -30 : 30 }}
+                    initial={{ opacity: 0, y: 40, x: 0 }}
                     whileInView={{ opacity: 1, y: 0, x: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.08 }}
                     whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                    className="relative bg-[#0D0D1A]/60 backdrop-blur-md border border-brand-electric-purple/20 p-7 md:p-8 rounded-2xl shadow-ambient overflow-hidden group mb-8 md:mb-0 text-left rtl:text-right"
+                    className="relative bg-white/[0.02] md:bg-[#0D0D1A]/60 backdrop-blur-xl border border-white/5 md:border-brand-electric-purple/20 p-7 md:p-8 rounded-2xl shadow-ambient overflow-hidden group text-left rtl:text-right"
                   >
-                    <span className={`absolute top-3 ${shouldBeOnLeft ? 'right-4' : 'left-4'} font-display font-bold text-6xl text-[#2D2D3A] opacity-30 select-none group-hover:text-brand-electric-purple/20 transition-colors duration-500`}>
+                    <span className={`hidden md:block absolute top-3 ${shouldBeOnLeft ? 'right-4 rtl:left-4' : 'left-4 rtl:right-4'} font-display font-black text-6xl text-[#2D2D3A] opacity-30 select-none group-hover:text-brand-electric-purple/20 transition-colors duration-500`}>
                       {step.id}
                     </span>
 
@@ -193,7 +193,6 @@ const ProjectJourney = () => {
                         {step.desc}
                       </p>
                     </div>
-                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-brand-electric-purple to-brand-lavender group-hover:w-full transition-all duration-400 ease-out shadow-[0_0_12px_rgba(107,32,232,0.5)]" />
                   </motion.div>
                 </div>
               );
