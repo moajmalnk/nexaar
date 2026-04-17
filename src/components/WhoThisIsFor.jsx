@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../utils/translations';
 import Orb from './Orb';
@@ -8,22 +8,6 @@ const WhoThisIsFor = () => {
   const { lang } = useLanguage();
   const t = translations[lang].whoThisIsFor;
   const checklistItems = t.points;
-
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  // Start pull-up immediately with zero gap
-  // Delayed Start: Start at 0 (natural position) and lift UP as we scroll
-  const translateY = useTransform(scrollYProgress, [0, 0.5], [0, -300]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -50,10 +34,8 @@ const WhoThisIsFor = () => {
 
   return (
     <motion.section 
-      ref={sectionRef}
       id="who-it-is-for" 
-      style={{ y: translateY }}
-      className="relative z-20 bg-brand-deep-navy py-24 px-6 md:py-32 overflow-hidden shadow-[-20px_-20px_100px_rgba(0,0,0,0.6)] rounded-t-[3.5rem] mt-0 -mb-[300px]"
+      className="relative z-20 bg-brand-deep-navy py-24 px-6 md:py-32 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto codo-grid items-center">
         {/* Left Column: Spans 6 on desktop */}
@@ -141,7 +123,8 @@ const WhoThisIsFor = () => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+      {/* Bottom Fade Transition */}
+      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-brand-deep-navy via-brand-deep-navy/40 to-transparent z-20 pointer-events-none" />
     </motion.section>
   );
 };

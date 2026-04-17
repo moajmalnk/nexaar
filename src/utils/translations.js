@@ -25,9 +25,10 @@ export const translations = {
       ]
     },
     hero: {
-      title1: 'Smart Digital Solutions',
+      title1: 'Smart Digital ',
+      title1Accent: 'Solutions',
       title2: 'For Saudi Businesses',
-      subtitle: 'We build websites, mobile apps, and digital platforms that help SMEs and startups in Saudi Arabia grow, scale, and operate efficiently. From idea to launch with clarity, speed, and structure.',
+      subtitle: 'We build websites, mobile apps, and digital platforms that help SMEs and startups in Saudi Arabia grow, scale, and operate efficiently. From idea to launch with clarity, speed and structure.',
       ctaPrimary: 'Talk to Us on WhatsApp',
       ctaSecondary: 'Get a Free Consultation',
     },
@@ -51,7 +52,8 @@ export const translations = {
         { title: 'Clear Scope & Process', desc: 'No confusion, no hidden surprises. We define every detail before we write a single line of code.' },
         { title: 'SME & Startup Friendly', desc: 'Practical, high-impact solutions built for speed and budget efficiency, not over-engineering.' },
         { title: 'Scalable Technology', desc: 'Built to grow with your business using enterprise-grade foundations that handle traffic spikes.' },
-        { title: 'Direct Communication', desc: 'Talk to real people and lead developers, not layers of sales reps or middle managers.' }
+        { title: 'Direct Communication', desc: 'Talk to real people and lead developers, not layers of sales reps or middle managers.' },
+        { title: 'Future-Ready Engineering', desc: 'We don\'t just build for today; we engineer foundations that evolve alongside your long-term business strategy.' }
       ]
     },
     modal: {
@@ -103,11 +105,32 @@ export const translations = {
       challenge: 'The Challenge',
       stack: 'Technology Stack',
       goBack: 'Go Back',
-      items: [
-        { id: 1, title: "FINEDGE", category: "FinTech Platform", problem: "Complex data visualization required real-time rendering for stock traders." },
-        { id: 2, title: "LUMIERE", category: "E-Commerce App", problem: "High cart abandonment due to a slow, multi-step checkout process." },
-        { id: 3, title: "NEXUS", category: "AI Dashboard", problem: "Scattered marketing analytics needed a centralized, AI-driven command center." }
-      ]
+        items: [
+          { 
+            id: 1, 
+            title: "FINEDGE", 
+            category: "FinTech Platform", 
+            problem: "Complex data visualization required real-time rendering for stock traders.", 
+            solution: "We engineered a custom WebGL-based charting engine that handles 10,000+ data points per second with zero latency.", 
+            result: "Increased user retention by 40% and reduced server load through efficient client-side data processing."
+          },
+          { 
+            id: 2, 
+            title: "LUMIERE", 
+            category: "E-Commerce App", 
+            problem: "High cart abandonment due to a slow, multi-step checkout process.", 
+            solution: "Implemented a 'one-tap' checkout system with integrated Apple Pay and STC Pay, streamlining the funnel into a single page.", 
+            result: "Direct increase in conversion rates by 25% within the first month of deployment."
+          },
+          { 
+            id: 3, 
+            title: "NEXUS", 
+            category: "AI Dashboard", 
+            problem: "Scattered marketing analytics needed a centralized, AI-driven command center.", 
+            solution: "Centralized 12+ API streams into a unified GraphQL layer with an AI-agent that predicts ad-spend efficiency.", 
+            result: "Marketing teams saved 20 hours per week on reporting and improved ROI by 15%."
+          }
+        ]
     },
     testimonials: {
       tag: 'CLIENT VOICES',
@@ -155,14 +178,26 @@ export const translations = {
     footer: {
       desc: 'Building the future of digital assets in Saudi Arabia with scalable, enterprise-grade architecture.',
       mail: 'hello@nexaar.tech',
+      newsletter: {
+        title: 'Stay Ahead of the Curve',
+        desc: 'Get expert insights on the Saudi tech landscape and digital transformation.',
+        placeholder: 'Enter your email',
+        button: 'Subscribe',
+        success: 'Welcome to the inner circle!',
+      },
       links: {
         services: 'Services',
         explore: 'Explore',
         connect: 'Connect'
       },
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Service',
       rights: 'Nexaar Tech. All rights reserved.',
       location: 'RIYADH, KSA',
-      terms: 'Terms & Conditions'
+    },
+    marquee: {
+      ribbon1: 'Reliable Technology / Clarity in Code / Scalable Execution / Future Ready / Built for Saudi / SME Focused / Think Forward / Digital Excellence',
+      ribbon2: 'Reliable Technology / Clarity in Code / Scalable Execution / Future Ready / Built for Saudi / SME Focused / Think Forward / Digital Excellence'
     }
   },
   ar: {
@@ -191,7 +226,8 @@ export const translations = {
       ]
     },
     hero: {
-      title1: 'حلول رقمية ذكية',
+      title1Accent: 'حلول',
+      title1: ' رقمية ذكية',
       title2: 'للشركات السعودية',
       subtitle: 'نحن نبني المواقع الإلكترونية، تطبيقات الجوال، والمنصات الرقمية التي تساعد الشركات الصغيرة والمتوسطة والناشئة في المملكة العربية السعودية على النمو، التوسع، والعمل بكفاءة. من الفكرة إلى الإطلاق بوضوح، سرعة، ومنهجية.',
       ctaPrimary: 'تحدث معنا عبر واتساب',
@@ -217,7 +253,8 @@ export const translations = {
         { title: 'نطاق وعملية واضحة', desc: 'لا غموض أو مفاجآت خفية. نحدد كل التفاصيل قبل كتابة سطر واحد من التعليمات البرمجية.' },
         { title: 'صديق للشركات الناشئة والمتوسطة', desc: 'حلول عملية عالية التأثير مصممة للسرعة وكفاءة الميزانية، دون مبالغة في الهندسة.' },
         { title: 'تكنولوجيا قابلة للتوسع', desc: 'مصممة للنمو مع عملك باستخدام أسس برمجية قوية تتحمل ضغط الزيارات العالي.' },
-        { title: 'تواصل مباشر', desc: 'تحدث مع أشخاص حقيقيين ومطورين رئيسيين، وليس طبقات من مندوبي المبيعات.' }
+        { title: 'تواصل مباشر', desc: 'تحدث مع أشخاص حقيقيين ومطورين رئيسيين، وليس طبقات من مندوبي المبيعات.' },
+        { title: 'هندسة مستعدة للمستقبل', desc: 'نحن لا نبني لليوم فحسب؛ بل نصمم أسساً تتطور جنباً إلى جنب مع استراتيجية عملك على المدى الطويل.' }
       ]
     },
     modal: {
@@ -269,11 +306,32 @@ export const translations = {
       challenge: 'التحدي',
       stack: 'المجموعة التقنية',
       goBack: 'الرجوع',
-      items: [
-        { id: 1, title: "FINEDGE", category: "منصة التقنية المالية", problem: "تطلب تصور البيانات المعقدة عرضًا فوريًا لتجار الأسهم." },
-        { id: 2, title: "LUMIERE", category: "تطبيق تجارة إلكترونية", problem: "ارتفاع نسبة التخلي عن عربة التسوق بسبب عملية دفع بطيئة ومتعددة الخطوات." },
-        { id: 3, title: "NEXUS", category: "لوحة بيانات الذكاء الاصطناعي", problem: "احتاجت تحليلات التسويق المشتتة إلى مركز قيادة مركزي مدعوم بالذكاء الاصطناعي." }
-      ]
+        items: [
+          { 
+            id: 1, 
+            title: "FINEDGE", 
+            category: "منصة التقنية المالية", 
+            problem: "تطلب تصور البيانات المعقدة عرضًا فوريًا لتجار الأسهم.", 
+            solution: "قمنا بتصميم محرك رسوم بيانية مخصص يعتمد على WebGL يعالج أكثر من 10,000 نقطة بيانات في الثانية مع زمن انتقال صفر.", 
+            result: "زيادة استبقاء المستخدمين بنسبة 40٪ وتقليل حمل الخادم من خلال معالجة البيانات بكفاءة من جانب العميل."
+          },
+          { 
+            id: 2, 
+            title: "LUMIERE", 
+            category: "تطبيق تجارة إلكترونية", 
+            problem: "ارتفاع نسبة التخلي عن عربة التسوق بسبب عملية دفع بطيئة ومتعددة الخطوات.", 
+            solution: "نظام دفع بـ 'نقرة واحدة' مع دمج Apple Pay و STC Pay، مما أدى إلى تبسيط عملية الدفع في صفحة واحدة.", 
+            result: "زيادة مباشرة في معدلات التحويل بنسبة 25٪ خلال الشهر الأول من الإطلاق."
+          },
+          { 
+            id: 3, 
+            title: "NEXUS", 
+            category: "لوحة بيانات الذكاء الاصطناعي", 
+            problem: "احتاجت تحليلات التسويق المشتتة إلى مركز قيادة مركزي مدعوم بالذكاء الاصطناعي.", 
+            solution: "مركزية أكثر من 12 تدفقًا لواجهة برمجة التطبيقات في طبقة GraphQL موحدة مع وكيل ذكاء اصطناعي يتوقع كفاءة الإنفاق الإعلاني.", 
+            result: "وفرت فرق التسويق 20 ساعة أسبوعيًا في إعداد التقارير وحسنت العائد على الاستثمار بنسبة 15٪."
+          }
+        ]
     },
     testimonials: {
       tag: 'أصوات العملاء',
@@ -321,14 +379,26 @@ export const translations = {
     footer: {
       desc: 'بناء مستقبل الأصول الرقمية في المملكة العربية السعودية بهندسة برمجية قابلة للتطوير على مستوى المؤسسات.',
       mail: 'hello@nexaar.tech',
+      newsletter: {
+        title: 'ابق في الطليعة',
+        desc: 'احصل على رؤى الخبراء حول المشهد التقني في السعودية والتحول الرقمي.',
+        placeholder: 'أدخل بريدك الإلكتروني',
+        button: 'اشترك',
+        success: 'مرحباً بك في دائرتنا الخاصة!',
+      },
       links: {
         services: 'الخدمات',
         explore: 'استكشف',
         connect: 'تواصل معنا'
       },
+      privacy: 'سياسة الخصوصية',
+      terms: 'شروط الخدمة',
       rights: 'نكسار تك. جميع الحقوق محفوظة.',
       location: 'الرياض، المملكة العربية السعودية',
-      terms: 'الشروط والأحكام'
+    },
+    marquee: {
+      ribbon1: 'تكنولوجيا موثوقة / وضوح في الكود / تنفيذ قابل للتوسع / مستعد للمستقبل / بني للسعودية / يركز على المشاريع الصغيرة والمتوسطة / فكر للمستقبل / تميز رقمي',
+      ribbon2: 'تكنولوجيا موثوقة / وضوح في الكود / تنفيذ قابل للتوسع / مستعد للمستقبل / بني للسعودية / يركز على المشاريع الصغيرة والمتوسطة / فكر للمستقبل / تميز رقمي'
     }
   }
 };

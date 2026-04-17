@@ -12,7 +12,7 @@ const TechNode = ({ name, category, Icon, color }) => {
 
   return (
     <div
-      className="relative flex-shrink-0 mx-4"
+      className="relative flex-shrink-0 mx-2 md:mx-4"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -23,26 +23,16 @@ const TechNode = ({ name, category, Icon, color }) => {
           scale: hovered ? 1.08 : 1,
         }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="w-40 h-24 rounded-xl border bg-[#1A1A24]/30 flex flex-col items-center justify-center gap-2 cursor-pointer"
+        className="w-32 h-20 md:w-40 md:h-24 rounded-xl border bg-[#1A1A24]/30 flex flex-col items-center justify-center gap-2 cursor-pointer"
         style={{
           filter: hovered ? 'grayscale(0%) opacity(1)' : 'grayscale(100%) opacity(0.5)',
           transition: 'filter 0.2s ease-out',
         }}
       >
-        <Icon size={30} color={hovered ? color : 'currentColor'} />
+        <Icon size={24} className="md:w-[30px] md:h-[30px]" color={hovered ? color : 'currentColor'} />
         <span className="font-display font-bold text-xs text-brand-pure-white tracking-wide">
           {name}
         </span>
-      </motion.div>
-
-      {/* Tooltip Badge */}
-      <motion.div
-        initial={{ opacity: 0, y: 4, scale: 0.9 }}
-        animate={{ opacity: hovered ? 1 : 0, y: hovered ? -4 : 4, scale: hovered ? 1 : 0.9 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="absolute -top-9 left-1/2 -translate-x-1/2 bg-brand-electric-purple text-brand-pure-white text-xs font-body font-medium py-1 px-3 rounded-full whitespace-nowrap pointer-events-none z-20"
-      >
-        {category}
       </motion.div>
     </div>
   );
@@ -77,7 +67,7 @@ const TechStack = () => {
   return (
     <section id="tech-stack" className="bg-brand-deep-navy py-32 overflow-hidden">
       {/* Header */}
-      <div className="max-w-4xl mx-auto px-6 text-center mb-20">
+      <div className="max-w-4xl mx-auto px-6 text-center mb-10 md:mb-12">
         <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
           <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
             <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span>
@@ -95,14 +85,15 @@ const TechStack = () => {
 
       {/* Marquee Lanes */}
       <div
-        className="marquee-container flex flex-col gap-6"
+        className="marquee-container flex flex-col"
+        dir="ltr"
         style={{
           maskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)',
           WebkitMaskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)',
         }}
       >
         {/* Lane 1 — Left to Right */}
-        <div className="relative flex overflow-hidden">
+        <div className="relative flex overflow-visible py-6">
           <div className="flex animate-marquee-left">
             {doubled(laneOne).map((tech, i) => (
               <TechNode key={`l1-${i}`} {...tech} />
@@ -111,7 +102,7 @@ const TechStack = () => {
         </div>
 
         {/* Lane 2 — Right to Left */}
-        <div className="relative flex overflow-hidden">
+        <div className="relative flex overflow-visible py-6">
           <div className="flex animate-marquee-right">
             {doubled(laneTwo).map((tech, i) => (
               <TechNode key={`l2-${i}`} {...tech} />
