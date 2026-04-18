@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useSpring, useTransform } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
-const Counter = ({ value, duration = 2 }) => {
+const Counter = ({ value }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   
@@ -34,8 +34,8 @@ const NumbersThatMatter = () => {
   const checklistItems = t.checklist;
 
   return (
-    <section className="bg-brand-deep-navy py-24 px-6 md:py-32 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
+    <section id="numbers" className="bg-[#0D0D1A] py-12 md:py-28 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
         
         {/* Left Column */}
         <motion.div
@@ -54,7 +54,7 @@ const NumbersThatMatter = () => {
             </span>
           </div>
 
-          <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-7xl text-brand-pure-white leading-tight uppercase mb-8">
+          <h2 className="font-display font-black text-4xl md:text-5xl lg:text-7xl text-brand-pure-white leading-tight uppercase mb-8">
             {t.title}
           </h2>
 
@@ -91,6 +91,8 @@ const NumbersThatMatter = () => {
             <img 
               src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800" 
               alt="Saudi business professional" 
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-brand-deep-navy/20" />
@@ -102,7 +104,7 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="lg:translate-y-1 bg-[#2E1A66] rounded-3xl h-48 lg:h-52 flex flex-col justify-center items-center text-center p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
+            className="lg:translate-y-1 bg-brand-lavender/20 backdrop-blur-xl border border-white/10 rounded-3xl h-48 lg:h-52 flex flex-col justify-center items-center text-center p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
           >
             <h3 className="font-display font-black text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
               <Counter value={50} />+
@@ -118,7 +120,7 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="bg-[#6B20E8] rounded-3xl h-48 lg:h-52 flex flex-col justify-center items-center text-center p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative -mt-4 lg:-mt-8"
+            className="bg-brand-electric-purple rounded-3xl h-48 lg:h-52 flex flex-col justify-center items-center text-center p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative lg:-mt-8"
           >
             <h3 className="font-display font-black text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
               <Counter value={100} />+
@@ -134,11 +136,13 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="lg:translate-y-1 group relative h-64 lg:h-80 rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.03] -mt-4 lg:-mt-8"
+            className="lg:translate-y-1 group relative h-64 lg:h-80 rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.03] lg:-mt-8"
           >
             <img 
               src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" 
               alt="Technology abstract eye" 
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-brand-deep-navy/10" />

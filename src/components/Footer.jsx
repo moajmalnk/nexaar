@@ -1,97 +1,9 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 import { BRAND_CONFIG } from '../utils/constants';
-
-/**
- * ── Sub-Component: Newsletter Form ────────────────────────────────────
- * Handles the logic and micro-interactions for email subscription.
- */
-const NewsletterForm = ({ t }) => {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle, loading, success
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email) return;
-    
-    setStatus('loading');
-    // Simulated API call delay
-    setTimeout(() => {
-      setStatus('success');
-      setEmail('');
-      // Reset after 3 seconds
-      setTimeout(() => setStatus('idle'), 3000);
-    }, 1200);
-  };
-
-  return (
-    <div className="space-y-4">
-      <h4 className="font-display font-bold text-white text-lg tracking-tight">
-        {t.newsletter.title}
-      </h4>
-      <p className="font-body text-brand-soft-lavender/70 text-sm leading-relaxed max-w-xs">
-        {t.newsletter.desc}
-      </p>
-      
-      <form onSubmit={handleSubmit} className="relative mt-6 max-w-md group">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder={t.newsletter.placeholder}
-          required
-          disabled={status === 'success'}
-          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 px-6 pr-32 text-white font-body text-sm outline-none focus:border-brand-electric-purple/50 focus:bg-white/[0.05] transition-all duration-300 placeholder:text-white/20 disabled:opacity-50"
-        />
-        <div className="absolute right-2 top-2 bottom-2">
-          <button
-            type="submit"
-            disabled={status !== 'idle' || !email}
-            className="h-full px-6 rounded-xl bg-brand-electric-purple text-white font-display font-bold text-[10px] uppercase tracking-widest hover:bg-brand-lavender active:scale-95 disabled:opacity-50 disabled:active:scale-100 transition-all duration-300 shadow-lg shadow-brand-electric-purple/20"
-          >
-            <AnimatePresence mode="wait">
-              {status === 'loading' ? (
-                <motion.div
-                  key="loading"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
-                />
-              ) : status === 'success' ? (
-                <motion.span
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-emerald-400"
-                >
-                  ✓
-                </motion.span>
-              ) : (
-                <motion.span key="idle">{t.newsletter.button}</motion.span>
-              )}
-            </AnimatePresence>
-          </button>
-        </div>
-      </form>
-      
-      <AnimatePresence>
-        {status === 'success' && (
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="text-emerald-400 font-body text-xs pt-1"
-          >
-            {t.newsletter.success}
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
 
 /**
  * ── Sub-Component: Link Column ────────────────────────────────────────
@@ -106,15 +18,21 @@ const FooterColumn = ({ title, links }) => (
       <ul className="space-y-4">
         {links.map((link) => (
           <li key={link.name}>
-            <a
-              href={link.href}
-              className="group flex items-center text-brand-soft-lavender/60 hover:text-white font-body text-[14px] transition-all duration-300"
-            >
-              <span className="relative">
+            {link.href ? (
+              <a
+                href={link.href}
+                className="group flex items-center text-brand-soft-lavender/60 hover:text-white font-body text-[14px] transition-all duration-300"
+              >
+                <span className="relative">
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-brand-electric-coral group-hover:w-full transition-all duration-300" />
+                </span>
+              </a>
+            ) : (
+              <span className="text-brand-soft-lavender/60 font-body text-[14px]">
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-brand-electric-coral group-hover:w-full transition-all duration-300" />
               </span>
-            </a>
+            )}
           </li>
         ))}
       </ul>
@@ -170,10 +88,10 @@ const Footer = () => {
 
   const footerLinks = {
     services: [
-      { name: lang === 'ar' ? "تطوير الويب" : "Web Development", href: "#services" },
-      { name: lang === 'ar' ? "تطبيقات الجوال" : "Mobile Apps", href: "#services" },
-      { name: lang === 'ar' ? "تصميم واجهة ومستخدم" : "UI/UX Design", href: "#services" },
-      { name: lang === 'ar' ? "الهوية التجارية" : "Branding", href: "#services" },
+      { name: lang === 'ar' ? "تطوير الويب" : "Web Development" },
+      { name: lang === 'ar' ? "تطبيقات الجوال" : "Mobile Apps" },
+      { name: lang === 'ar' ? "تصميم واجهة ومستخدم" : "UI/UX Design" },
+      { name: lang === 'ar' ? "الهوية التجارية" : "Branding" },
     ],
     company: [
       { name: lang === 'ar' ? "من نحن" : "About Us", href: "#who-it-is-for" },
@@ -185,14 +103,10 @@ const Footer = () => {
 
   return (
     <footer className="bg-brand-deep-navy border-t border-white/[0.05] relative overflow-hidden rtl:text-right text-left">
-      {/* Subtle Background Elements */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-electric-purple/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-electric-coral/5 rounded-full blur-[120px] pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20 lg:pt-32 pb-12 lg:pb-16">
         <div className="codo-grid gap-y-16 lg:gap-y-0">
           
-          {/* Section: Brand & Newsletter */}
+          {/* Section: Brand & Info */}
           <div className="col-span-12 lg:col-span-5 space-y-12">
             <div className="space-y-6">
               <h3 className="font-display font-black text-3xl text-white tracking-tighter">
@@ -208,8 +122,6 @@ const Footer = () => {
                 <SocialLink href="#" icon={InstagramIcon} label="Instagram" />
               </div>
             </div>
-
-            <NewsletterForm t={t} />
           </div>
 
           {/* Section: Links Grid */}
@@ -242,12 +154,12 @@ const Footer = () => {
           </p>
           
           <div className="flex items-center gap-8 text-[12px] font-body text-white/30 tracking-wide">
-            <a href="#" className="hover:text-white transition-colors duration-300">
+            <Link to="/privacy" className="hover:text-white transition-colors duration-300">
               {t.privacy}
-            </a>
-            <a href="#" className="hover:text-white transition-colors duration-300">
+            </Link>
+            <Link to="/terms" className="hover:text-white transition-colors duration-300">
               {t.terms}
-            </a>
+            </Link>
           </div>
         </div>
       </div>
