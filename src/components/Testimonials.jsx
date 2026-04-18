@@ -52,33 +52,20 @@ const Testimonials = () => {
           </p>
         </div>
 
-        {/* Spotlight Grid */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          onMouseLeave={() => setHoveredIndex(null)}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {testimonials.map((testimonial, index) => {
-            const isHovered = hoveredIndex === index;
-            const isAnyHovered = hoveredIndex !== null;
-            
+          {testimonials.map((testimonial) => {
             return (
               <motion.div
                 key={testimonial.id}
                 variants={cardVariants}
-                onMouseEnter={() => setHoveredIndex(index)}
-                animate={{
-                  scale: isHovered ? 1.05 : isAnyHovered ? 0.98 : 1,
-                  opacity: isHovered ? 1 : isAnyHovered ? 0.3 : 1,
-                  filter: isHovered ? "blur(0px)" : isAnyHovered ? "blur(2px)" : "blur(0px)",
-                }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className={`bg-[#1A1A24]/60 backdrop-blur-sm border p-8 rounded-2xl relative transition-colors duration-300 ${
-                  isHovered ? 'border-brand-electric-purple shadow-ambient-glow' : 'border-[#2D2D3A]'
-                } text-left rtl:text-right`}
+                whileHover={{ y: -5, borderColor: 'rgba(107,32,232,0.5)', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
+                className="bg-[#1A1A24]/60 backdrop-blur-sm border border-[#2D2D3A] p-8 rounded-2xl relative transition-all duration-300 text-left rtl:text-right hover:bg-[#1A1A24]/80 flex flex-col h-full"
               >
                 {/* Background Quote Icon */}
                 <div className="absolute top-6 right-8 rtl:left-8 rtl:right-auto pointer-events-none">
@@ -91,7 +78,7 @@ const Testimonials = () => {
                   {testimonial.quote}
                 </p>
 
-                <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                <div className="flex items-center space-x-4 rtl:space-x-reverse mt-auto pt-6 border-t border-white/5">
                   {/* Avatar Section */}
                   <div className="w-12 h-12 rounded-full overflow-hidden border border-brand-electric-purple/30 bg-gradient-to-br from-brand-electric-purple to-brand-lavender flex items-center justify-center text-brand-pure-white font-display font-bold text-sm shrink-0">
                     {testimonial.avatar ? (
