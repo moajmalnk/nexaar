@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { BRAND_CONFIG } from '../utils/constants';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 const CTA = () => {
@@ -45,11 +45,11 @@ const CTA = () => {
   };
 
   return (
-    <section className="bg-brand-deep-navy py-32 px-6 relative overflow-hidden text-center">
+    <section className="bg-brand-deep-navy py-32 relative overflow-hidden text-center">
       {/* Visual Anchor Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-electric-purple/10 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Tag */}
         <div className="mb-8 flex items-center justify-center space-x-2 rtl:space-x-reverse">
           <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">

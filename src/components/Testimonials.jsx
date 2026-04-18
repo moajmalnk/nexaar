@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 const Testimonials = () => {
@@ -33,8 +33,8 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="bg-brand-deep-navy py-32 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-brand-deep-navy py-32 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Header Area */}
         <div className="text-center mb-20">
           <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
@@ -92,9 +92,18 @@ const Testimonials = () => {
                 </p>
 
                 <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                  {/* Avatar Placeholder */}
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-electric-purple to-brand-lavender flex items-center justify-center text-brand-pure-white font-display font-bold text-sm">
-                    {testimonial.name.split(' ').map(n => n[0]).join('')}
+                  {/* Avatar Section */}
+                  <div className="w-12 h-12 rounded-full overflow-hidden border border-brand-electric-purple/30 bg-gradient-to-br from-brand-electric-purple to-brand-lavender flex items-center justify-center text-brand-pure-white font-display font-bold text-sm shrink-0">
+                    {testimonial.avatar ? (
+                      <img 
+                        src={testimonial.avatar} 
+                        alt={testimonial.name} 
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      testimonial.name.split(' ').map(n => n[0]).join('')
+                    )}
                   </div>
                   <div className="text-left rtl:text-right">
                     <h4 className="font-display font-bold text-brand-pure-white">

@@ -62,6 +62,7 @@ export const translations = {
       desc: 'Share your vision with Nexaar. We\'ll review your project and get back to you within 24 hours.',
       fullName: 'Full Name',
       company: 'Company',
+      phone: 'Phone Number',
       businessSector: 'Business Sector',
       vision: 'Your Vision',
       visionPlaceholder: 'Tell us about your project goals...',
@@ -137,12 +138,12 @@ export const translations = {
       title: 'TRUSTED BY VISIONARIES',
       desc: 'We focus on long-term relationships built on trust, transparency, and results within the Saudi tech ecosystem.',
       items: [
-        { id: 1, name: "Ahmed Al-Fadhel", role: "Founder, SaaS Connect Riyadh", quote: "Nexaar didn't just write code; they challenged our assumptions and improved our core product logic. True technical partners." },
-        { id: 2, name: "Sarah Al-Ghamdi", role: "CEO, RetailNova", quote: "The speed at which they moved from wireframes to a fully functional MVP was staggering. Clear communication, zero hidden surprises." },
-        { id: 3, name: "Omar Tariq", role: "CTO, FinFlow", quote: "Finding developers who understand scalable architecture is hard. Finding a team that cares about the business outcome is rarer. Nexaar delivers both." },
-        { id: 4, name: "Layla Hassan", role: "Operations Lead, HealthSync", quote: "Their focus on a clean, maintainable digital foundation saved us months of technical debt down the line." },
-        { id: 5, name: "Faisal Bin Youssef", role: "Co-Founder, EduTech KSA", quote: "We came to them with an idea; they handed us a market-ready platform. The design is world-class, and the performance is flawless." },
-        { id: 6, name: "Nadia Malik", role: "Director, UrbanLogistics", quote: "Professionalism at its peak. Their discovery phase aligned our entire team, and the delivery was exactly on schedule." }
+        { id: 1, name: "Ahmed Al-Fadhel", role: "Founder, SaaS Connect Riyadh", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150", quote: "Nexaar didn't just write code; they challenged our assumptions and improved our core product logic. True technical partners." },
+        { id: 2, name: "Sarah Al-Ghamdi", role: "CEO, RetailNova", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150", quote: "The speed at which they moved from wireframes to a fully functional MVP was staggering. Clear communication, zero hidden surprises." },
+        { id: 3, name: "Omar Tariq", role: "CTO, FinFlow", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150", quote: "Finding developers who understand scalable architecture is hard. Finding a team that cares about the business outcome is rarer. Nexaar delivers both." },
+        { id: 4, name: "Layla Hassan", role: "Operations Lead, HealthSync", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150", quote: "Their focus on a clean, maintainable digital foundation saved us months of technical debt down the line." },
+        { id: 5, name: "Faisal Bin Youssef", role: "Co-Founder, EduTech KSA", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150", quote: "We came to them with an idea; they handed us a market-ready platform. The design is world-class, and the performance is flawless." },
+        { id: 6, name: "Nadia Malik", role: "Director, UrbanLogistics", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=150&h=150", quote: "Professionalism at its peak. Their discovery phase aligned our entire team, and the delivery was exactly on schedule." }
       ]
     },
     stats: {
@@ -194,6 +195,58 @@ export const translations = {
       terms: 'Terms of Service',
       rights: 'Nexaar Tech. All rights reserved.',
       location: 'RIYADH, KSA',
+    },
+    legal: {
+      privacy: {
+        title: 'Privacy Policy',
+        lastUpdated: 'April 2026',
+        sections: [
+          {
+            title: 'Information We Collect',
+            content: [
+              'We collect information that you provide directly to us through project inquiries and consultations.',
+              'This may include your name, email address, company details, and project visions.'
+            ]
+          },
+          {
+            title: 'How We Use Your Data',
+            content: [
+              'We use your data to build tailored digital solutions and coordinate project timelines.',
+              'We do not sell your personal data to third parties.'
+            ]
+          },
+          {
+            title: 'Data Security',
+            content: [
+              'Nexaar employs enterprise-grade encryption and security protocols to protect your project data during development and deployment.'
+            ]
+          }
+        ]
+      },
+      terms: {
+        title: 'Terms of Service',
+        lastUpdated: 'April 2026',
+        sections: [
+          {
+            title: 'Engagement & Scope',
+            content: [
+              'Project scopes are defined and agreed upon before work begins. Any shifts in scope may impact timelines and costs.'
+            ]
+          },
+          {
+            title: 'Intellectual Property',
+            content: [
+              'Upon full payment, the client owns the copyright of the final deliverables unless otherwise specified in the service agreement.'
+            ]
+          },
+          {
+            title: 'Confidentiality',
+            content: [
+              'We maintain strict confidentiality regarding all client business logic and project details shared during our partnership.'
+            ]
+          }
+        ]
+      }
     },
     marquee: {
       ribbon1: 'Reliable Technology / Clarity in Code / Scalable Execution / Future Ready / Built for Saudi / SME Focused / Think Forward / Digital Excellence',
@@ -263,6 +316,7 @@ export const translations = {
       desc: 'شاركنا رؤيتك. سنراجع مشروعك ونتواصل معك خلال 24 ساعة.',
       fullName: 'الاسم الكامل',
       company: 'الشركة',
+      phone: 'رقم الجوال',
       businessSector: 'قطاع الأعمال',
       vision: 'رؤيتك',
       visionPlaceholder: 'أخبرنا عن أهداف مشروعك...',
@@ -338,12 +392,12 @@ export const translations = {
       title: 'موثوق من قبل المبدعين',
       desc: 'نركز على العلاقات طويلة الأمد القائمة على الثقة والشفافية والنتائج داخل منظومة التقنية السعودية.',
       items: [
-        { id: 1, name: "أحمد الفاضل", role: "مؤسس، SaaS Connect الرياض", quote: "نكسار لم يكتفوا بكتابة الكود؛ لقد تحدوا افتراضاتنا وحسنوا المنطق الأساسي لمنتجنا. شركاء تقنيون حقيقيون." },
-        { id: 2, name: "سارة الغامدي", role: "الرئيس التنفيذي، RetailNova", quote: "السرعة التي انتقلوا بها من المخططات الأولية إلى منتج أولي كامل الوظائف كانت مذهلة. تواصل واضح، ولا مفاجآت خفية." },
-        { id: 3, name: "عمر طارق", role: "المدير التقني، FinFlow", quote: "من الصعب العثور على مطورين يفهمون الهندسة البرمجية القابلة للتوسع. العثور على فريق يهتم بنتيجة العمل أندر. نكسار تقدم كلاهما." },
-        { id: 4, name: "ليلى حسن", role: "مسؤول العمليات، HealthSync", quote: "تركيزهم على أساس رقمي نظيف وقابل للصيانة وفر علينا شهورًا من الديون التقنية في المستقبل." },
-        { id: 5, name: "فيصل بن يوسف", role: "شريك مؤسس، EduTech KSA", quote: "جئنا إليهم بفكرة؛ سلمونا منصة جاهزة للسوق. التصميم عالمي المستوى والأداء مثالي." },
-        { id: 6, name: "نادية مالك", role: "مديرة، UrbanLogistics", quote: "الاحترافية في ذروتها. مرحلة الاكتشاف الخاصة بهم وحدت فريقنا بالكامل، وكان التسليم في الموعد المحدد تمامًا." }
+        { id: 1, name: "أحمد الفاضل", role: "مؤسس، SaaS Connect الرياض", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150", quote: "نكسار لم يكتفوا بكتابة الكود؛ لقد تحدوا افتراضاتنا وحسنوا المنطق الأساسي لمنتجنا. شركاء تقنيون حقيقيون." },
+        { id: 2, name: "سارة الغامدي", role: "الرئيس التنفيذي، RetailNova", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150", quote: "السرعة التي انتقلوا بها من المخططات الأولية إلى منتج أولي كامل الوظائف كانت مذهلة. تواصل واضح، ولا مفاجآت خفية." },
+        { id: 3, name: "عمر طارق", role: "المدير التقني، FinFlow", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150", quote: "من الصعب العثور على مطورين يفهمون الهندسة البرمجية القابلة للتوسع. العثور على فريق يهتم بنتيجة العمل أندر. نكسار تقدم كلاهما." },
+        { id: 4, name: "ليلى حسن", role: "مسؤول العمليات، HealthSync", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150", quote: "تركيزهم على أساس رقمي نظيف وقابل للصيانة وفر علينا شهورًا من الديون التقنية في المستقبل." },
+        { id: 5, name: "فيصل بن يوسف", role: "شريك مؤسس، EduTech KSA", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150", quote: "جئنا إليهم بفكرة؛ سلمونا منصة جاهزة للسوق. التصميم عالمي المستوى والأداء مثالي." },
+        { id: 6, name: "نادية مالك", role: "مديرة، UrbanLogistics", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=150&h=150", quote: "الاحترافية في ذروتها. مرحلة الاكتشاف الخاصة بهم وحدت فريقنا بالكامل، وكان التسليم في الموعد المحدد تمامًا." }
       ]
     },
     stats: {
@@ -395,6 +449,58 @@ export const translations = {
       terms: 'شروط الخدمة',
       rights: 'نكسار تك. جميع الحقوق محفوظة.',
       location: 'الرياض، المملكة العربية السعودية',
+    },
+    legal: {
+      privacy: {
+        title: 'سياسة الخصوصية',
+        lastUpdated: 'أبريل 2026',
+        sections: [
+          {
+            title: 'المعلومات التي نجمعها',
+            content: [
+              'نجمع المعلومات التي تقدمها لنا مباشرة من خلال استفسارات المشروع والاستشارات.',
+              'قد يشمل ذلك اسمك وبريدك الإلكتروني وتفاصيل الشركة ورؤى المشروع.'
+            ]
+          },
+          {
+            title: 'كيفية استخدام بياناتك',
+            content: [
+              'نستخدم بياناتك لبناء حلول رقمية مخصصة وتنسيق الجداول الزمنية للمشروع.',
+              'نحن لا نبيع بياناتك الشخصية لأطراف ثالثة.'
+            ]
+          },
+          {
+            title: 'أمن البيانات',
+            content: [
+              'توظف نكسار بروتوكولات تشفير وأمان على مستوى المؤسسات لحماية بيانات مشروعك أثناء التطوير والنشر.'
+            ]
+          }
+        ]
+      },
+      terms: {
+        title: 'شروط الخدمة',
+        lastUpdated: 'أبريل 2026',
+        sections: [
+          {
+            title: 'الارتباط والنطاق',
+            content: [
+              'يتم تحديد نطاقات المشروع والاتفاق عليها قبل بدء العمل. قد يؤثر أي تغيير في النطاق على الجداول الزمنية والتكاليف.'
+            ]
+          },
+          {
+            title: 'الملكية الفكرية',
+            content: [
+              'عند سداد المبلغ بالكامل، يمتلك العميل حقوق الطبع والنشر للمخرجات النهائية ما لم ينص على خلاف ذلك في اتفاقية الخدمة.'
+            ]
+          },
+          {
+            title: 'السرية',
+            content: [
+              'نحافظ على سرية تامة فيما يتعلق بجميع منطق أعمال العميل وتفاصيل المشروع التي تتم مشاركتها أثناء شراكتنا.'
+            ]
+          }
+        ]
+      }
     },
     marquee: {
       ribbon1: 'تكنولوجيا موثوقة / وضوح في الكود / تنفيذ قابل للتوسع / مستعد للمستقبل / بني للسعودية / يركز على المشاريع الصغيرة والمتوسطة / فكر للمستقبل / تميز رقمي',

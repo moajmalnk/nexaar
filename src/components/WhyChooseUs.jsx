@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 const PillarCard = ({ card, index, progress, totalCards, t }) => {
@@ -50,7 +50,7 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
           <span className="inline-block px-4 py-2 mb-4 md:mb-6 rounded-full bg-brand-electric-purple/10 text-brand-electric-purple text-xs font-bold tracking-widest uppercase border border-brand-electric-purple/20 transition-colors duration-300 group-hover:bg-brand-electric-purple/20">
             {t.pillarLabel}
           </span>
-          <h3 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-brand-pure-white mb-4 md:mb-6 tracking-tight">
+          <h3 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-brand-pure-white mb-4 md:mb-6 tracking-tight">
             {card.title}
           </h3>
           <p className="font-body text-brand-soft-lavender/90 text-base md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
@@ -80,7 +80,7 @@ const WhyChooseUs = () => {
   return (
     <section id="why-us" className="relative bg-brand-deep-navy">
       {/* Introduction Header - standard flow */}
-      <div className="relative pt-32 pb-16 px-6 max-w-7xl mx-auto text-center z-10">
+      <div className="relative pt-12 md:pt-28 pb-10 px-6 max-w-7xl mx-auto text-center z-10">
         <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
           <span className="font-body font-medium text-sm text-brand-pure-white flex items-center text-center">
             <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
@@ -88,7 +88,7 @@ const WhyChooseUs = () => {
             <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
           </span>
         </div>
-        <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-brand-pure-white uppercase mb-8 tracking-tight">
+        <h2 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-brand-pure-white uppercase mb-8 tracking-tight">
           {t.title} <span className="text-brand-electric-purple">{t.titleAccent}</span>
         </h2>
         <p className="font-body text-brand-soft-lavender text-lg md:text-xl max-w-3xl mx-auto leading-relaxed opacity-90">

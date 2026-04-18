@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 import { BRAND_CONFIG } from '../utils/constants';
@@ -32,7 +32,7 @@ const STACKS = [
 ];
 
 /* ─── ProjectCard ───────────────────────────────────────────────── */
-const ProjectCard = ({ project, index, onClick, t, lang }) => {
+const ProjectCard = ({ project, index, onClick }) => {
   const reduceMotion = useReducedMotion();
   const cardRef = useRef(null);
   const [hovered, setHovered] = useState(false);
@@ -61,6 +61,8 @@ const ProjectCard = ({ project, index, onClick, t, lang }) => {
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
           />
         </motion.div>
@@ -151,7 +153,7 @@ const Portfolio = () => {
   }));
 
   return (
-    <section id="portfolio" className="bg-brand-deep-navy pt-20 pb-16 relative overflow-hidden">
+    <section id="portfolio" className="bg-brand-deep-navy py-12 md:py-28 relative overflow-hidden">
 
       {/* Subtle ambient blob */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vh] bg-brand-electric-purple/[0.04] blur-[100px] pointer-events-none" />

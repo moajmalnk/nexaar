@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 import Orb from './Orb';
 
@@ -35,9 +35,9 @@ const WhoThisIsFor = () => {
   return (
     <motion.section 
       id="who-it-is-for" 
-      className="relative z-20 bg-brand-deep-navy py-24 px-6 md:py-32 overflow-hidden"
+      className="relative z-20 bg-brand-deep-navy py-24 md:py-32 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto codo-grid items-center">
+      <div className="max-w-7xl mx-auto px-6 codo-grid items-center">
         {/* Left Column: Spans 6 on desktop */}
         <motion.div
           className="col-span-12 lg:col-span-6"

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 const MarqueeRibbon = ({ text, direction = 1, bgColor, speed = 30, entranceDelay = 0 }) => {

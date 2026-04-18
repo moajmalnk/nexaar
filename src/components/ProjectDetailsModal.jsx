@@ -1,18 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BRAND_CONFIG } from '../utils/constants';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 
 const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
   const { lang } = useLanguage();
-  const [activeImage, setActiveImage] = useState(0);
   const scrollContainerRef = useRef(null);
 
   // Disable body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      setActiveImage(0); // reset on open
       if (scrollContainerRef.current) scrollContainerRef.current.scrollTop = 0;
     } else {
       document.body.style.overflow = 'unset';

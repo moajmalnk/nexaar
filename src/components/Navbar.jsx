@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { BRAND_CONFIG } from '../utils/constants';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 const getNavLinks = (lang) => [
-  { name: translations[lang].nav.home,      href: '#home' },
-  { name: translations[lang].nav.who,       href: '#who-it-is-for' },
-  { name: translations[lang].nav.services,  href: '#services' },
-  { name: translations[lang].nav.why,       href: '#why-us' },
-  { name: translations[lang].nav.process,   href: '#process' },
-  { name: translations[lang].nav.portfolio, href: '#portfolio' },
-  { name: translations[lang].nav.tech,      href: '#tech-stack' },
+  { name: translations[lang].nav.home,      href: '/#home' },
+  { name: translations[lang].nav.who,       href: '/#who-it-is-for' },
+  { name: translations[lang].nav.services,  href: '/#services' },
+  { name: translations[lang].nav.why,       href: '/#why-us' },
+  { name: translations[lang].nav.process,   href: '/#process' },
+  { name: translations[lang].nav.portfolio, href: '/#portfolio' },
+  { name: translations[lang].nav.tech,      href: '/#tech-stack' },
 ];
 
 const SECTION_IDS = [
@@ -95,15 +96,15 @@ const DesktopNav = ({ activeLink, hovered, onHover, onClick, onMobileOpen, varia
       }}
     >
       <div className="flex items-center gap-5">
-        <a
-          href="/"
+        <Link
+          to="/"
           className={`font-display font-extrabold text-[15px] tracking-[0.22em] transition-colors duration-500 ${
             isPill ? 'text-brand-pure-white' : 'text-brand-electric-purple'
           }`}
           style={{ textShadow: isPill ? '0 0 18px rgba(255,255,255,0.3)' : '0 0 14px rgba(107,32,232,0.55)' }}
         >
           {BRAND_CONFIG.name}
-        </a>
+        </Link>
         <span className="h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
       </div>
 
@@ -216,11 +217,13 @@ export default function Navbar() {
           }
         }
       };
+      
+      const currentMenuButton = menuButtonRef.current;
       window.addEventListener('keydown', handleKey);
       return () => {
         window.removeEventListener('keydown', handleKey);
         document.body.style.overflow = 'unset';
-        menuButtonRef.current?.focus();
+        currentMenuButton?.focus();
       };
     }
   }, [isMobileOpen]);
@@ -253,29 +256,26 @@ export default function Navbar() {
     });
 
     return () => observer.disconnect();
-  }, []); // intentionally empty — langRef handles live lang without re-subscribing
+  }, []); // observe once on mount
 
   // FIX #2 — when the user switches language, re-resolve the active label
   // so the highlight doesn't break on language toggle mid-scroll.
   useEffect(() => {
-    setActiveLink((prev) => {
-      const prevIndex = getNavLinks('en').findIndex(l => {
-        // match by href position — language-agnostic
-        return getNavLinks('en').find(el => el.name === prev)
-          ? getNavLinks('en').indexOf(getNavLinks('en').find(el => el.name === prev))
-          : -1;
-      });
-      // Simpler: find which section is currently "active" by matching
-      // across both languages via index position
-      const enLinks = getNavLinks('en');
-      const arLinks = getNavLinks('ar');
-      const combinedLinks = [...enLinks, ...arLinks];
-      const matchedIndex = combinedLinks.findIndex(l => l.name === prev);
-      if (matchedIndex === -1) return translations[lang].nav.home;
+    // Simpler: find which section is currently "active" by matching
+    // across both languages via index position
+    const enLinks = getNavLinks('en');
+    const arLinks = getNavLinks('ar');
+    const combinedLinks = [...enLinks, ...arLinks];
+    const matchedIndex = combinedLinks.findIndex(l => l.name === activeLink);
+    
+    if (matchedIndex !== -1) {
       const normalizedIndex = matchedIndex % enLinks.length;
-      return getNavLinks(lang)[normalizedIndex]?.name ?? translations[lang].nav.home;
-    });
-  }, [lang]);
+      const newLabel = getNavLinks(lang)[normalizedIndex]?.name ?? translations[lang].nav.home;
+      if (newLabel !== activeLink) {
+        requestAnimationFrame(() => setActiveLink(newLabel));
+      }
+    }
+  }, [lang, activeLink]);
 
   const handleLinkClick = (name) => {
     setActiveLink(name);
@@ -503,15 +503,15 @@ function DesktopNavWithExpanded({
       }}
     >
       <div className="flex items-center gap-5">
-        <a
-          href="/"
+        <Link
+          to="/"
           className={`font-display font-extrabold text-[15px] tracking-[0.22em] transition-colors duration-500 ${
             isPill ? 'text-brand-pure-white' : 'text-brand-electric-purple'
           }`}
           style={{ textShadow: isPill ? '0 0 18px rgba(255,255,255,0.3)' : '0 0 14px rgba(107,32,232,0.55)' }}
         >
           {BRAND_CONFIG.name}
-        </a>
+        </Link>
         <span className="h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
       </div>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 const Services = () => {
@@ -43,10 +43,9 @@ const Services = () => {
   return (
     <section 
       id="services" 
-      className="bg-brand-deep-navy py-24 md:py-32 px-6 overflow-hidden"
+      className="bg-[#0D0D1A] py-12 md:py-28 relative overflow-hidden"
     >
-      {/* Reduced to max-w-5xl for even smaller cards and more side padding */}
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Header Area */}
         <motion.div 
           initial="hidden"
@@ -64,7 +63,7 @@ const Services = () => {
           </motion.div>
           <motion.h2 
             variants={itemVariants}
-            className="font-display font-bold text-4xl md:text-5xl text-brand-pure-white tracking-tight text-center"
+            className="font-display font-black text-4xl md:text-5xl text-brand-pure-white tracking-tight text-center"
           >
             {t.title}
           </motion.h2>
@@ -89,6 +88,8 @@ const Services = () => {
                 <motion.img 
                   src={service.image} 
                   alt={service.title}
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { BRAND_CONFIG } from '../utils/constants';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 /* ─── Masked Vertical Slide wrapper ─────────────────────────────────── */
@@ -53,9 +53,9 @@ const Hero = () => {
         loop
         muted
         playsInline
-        poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920"
         className="absolute inset-0 w-full h-full object-cover z-0 opacity-50"
       >
+        <source src="/videos/background.hevc" type="video/mp4; codecs=hvc1" />
         <source src="/videos/background.mp4" type="video/mp4" />
       </video>
 
@@ -72,47 +72,56 @@ const Hero = () => {
 
 
       {/* Content layer — always above the canvas */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 md:pt-36 pb-16 md:pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 md:pt-28 pb-10 md:pb-20">
         <div className="codo-grid">
 
-          {/* Headline: spans most of the grid */}
-          <div className="col-span-12 lg:col-start-2 lg:col-span-10 text-center">
-            <MaskSlide delay={0.3} duration={0.8}>
-              <h1 className="text-4xl sm:text-6xl md:text-[80px] font-display font-bold text-brand-pure-white uppercase leading-[0.95] tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
-                {lang === 'ar' ? (
-                  <>
-                    <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
-                    {t.title1}
-                  </>
-                ) : (
-                  <>
-                    {t.title1}
-                    <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
-                  </>
-                )}
-              </h1>
-            </MaskSlide>
+          {/* Headline Container with Mobile Anchor */}
+          <div className="col-span-12 lg:col-start-2 lg:col-span-10 text-center relative">
+            
+            {/* Mobile-Only Ambient Glow for depth */}
+            <div className="absolute inset-x-0 -top-10 -bottom-10 bg-brand-electric-purple/10 blur-[80px] rounded-full block md:hidden pointer-events-none" />
 
-            <MaskSlide delay={0.45} duration={0.8}>
-              <h1 className="text-4xl sm:text-6xl md:text-[80px] font-display font-bold text-brand-pure-white uppercase leading-[0.95] mb-4 tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
-                {t.title2}
-              </h1>
-            </MaskSlide>
+            <div className="relative z-10">
+              <MaskSlide delay={0.3} duration={0.8}>
+                <h1 className="text-5xl sm:text-6xl md:text-[80px] font-display font-black text-brand-pure-white uppercase leading-[1.1] md:leading-[0.95] tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+                  {lang === 'ar' ? (
+                    <>
+                      <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
+                      {t.title1}
+                    </>
+                  ) : (
+                    <>
+                      {t.title1}
+                      <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
+                    </>
+                  )}
+                </h1>
+              </MaskSlide>
+
+              <MaskSlide delay={0.45} duration={0.8}>
+                <h1 className="text-5xl sm:text-6xl md:text-[80px] font-display font-black text-brand-pure-white uppercase leading-[1.1] md:leading-[0.95] mb-6 tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+                  {t.title2}
+                </h1>
+              </MaskSlide>
+            </div>
           </div>
 
           {/* Subtext: centered within grid */}
-          <div className="col-span-12 lg:col-start-3 lg:col-span-8 text-center">
+          <div className="col-span-12 lg:col-start-3 lg:col-span-8 text-center relative z-10">
             <MaskSlide delay={0.65} duration={0.8}>
-              <p className="text-brand-soft-lavender text-lg md:text-xl font-body font-normal max-w-3xl mx-auto mb-6 leading-relaxed opacity-90">
+              <p className="text-brand-soft-lavender text-base md:text-xl font-body font-normal max-w-3xl mx-auto mb-10 leading-relaxed opacity-90 px-4 md:px-0">
                 {t.subtitle}
               </p>
             </MaskSlide>
           </div>
 
           {/* CTA buttons: premium design */}
-          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-5">
+          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10">
+            {/* Background Glow for CTAs on Mobile */}
+            <div className="absolute inset-0 bg-brand-electric-purple/15 blur-[60px] rounded-full block md:hidden pointer-events-none" />
+
             <FadeUp delay={0.9}>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5">
 
                 {/* ── Primary CTA: WhatsApp Elite Link ── */}
                 <EliteButton
@@ -121,7 +130,7 @@ const Hero = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="cta"
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto min-w-[200px]"
                   icon={
                     <svg className="w-5 h-5 opacity-0 -translate-x-2 rtl:translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -135,7 +144,7 @@ const Hero = () => {
                 <EliteButton
                   onClick={() => setIsModalOpen(true)}
                   variant="outline"
-                  className="w-full sm:sm:w-auto"
+                  className="w-full sm:w-auto min-w-[200px]"
                   icon={
                     <svg className="w-4 h-4 opacity-0 -translate-x-2 rtl:translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />

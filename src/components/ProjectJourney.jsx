@@ -1,39 +1,132 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
+
+// ─── Sub-Component: Desktop Journey Step ──────────────────────────────
+// This safely houses the useTransform hook at the top level of its own lifecycle.
+const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topOffset }) => {
+  const stepProgressStart = (index - 0.2) / 5; // steps.length is 5
+  const opacity = useTransform(springProgress, [stepProgressStart, stepProgressStart + 0.1], [0.4, 1]);
+
+  return (
+    <div 
+      className={`absolute w-[42%] ${shouldBeOnLeft ? 'left-0' : 'right-0'}`}
+      style={{ top: `${topOffset}px` }}
+    >
+      <motion.div
+        style={{ opacity }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="relative bg-[#0D0D1A]/90 border border-brand-electric-purple/20 p-8 rounded-2xl shadow-ambient overflow-hidden text-left rtl:text-right">
+          <div className={`absolute top-0 opacity-10 ${isEven ? 'right-0' : 'left-0'} w-24 h-24 bg-brand-electric-purple/30 blur-2xl rounded-full`} />
+          <div className="flex items-center gap-3 mb-4 rtl:flex-row-reverse">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-brand-electric-purple/30 bg-brand-electric-purple/10 font-display text-xs font-bold text-brand-electric-purple">
+              {step.id}
+            </span>
+            <div className="h-px flex-1 bg-gradient-to-r from-brand-electric-purple/40 to-transparent rtl:bg-gradient-to-l" />
+          </div>
+          <div className="relative z-10">
+            <h3 className="font-display font-bold text-2xl text-brand-pure-white mb-2 uppercase tracking-tight">
+              {step.title}
+            </h3>
+            <p className="font-body text-brand-soft-lavender text-base leading-relaxed opacity-80">
+              {step.desc}
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+// ─── Sub-Component: Mobile Journey Step ───────────────────────────────
+const MobileStep = ({ step, index, springProgress, isRTL, totalSteps }) => {
+  const stepProgressStart = (index / totalSteps);
+  const opacity = useTransform(springProgress, [stepProgressStart - 0.1, stepProgressStart], [0.4, 1]);
+  const scale = useTransform(springProgress, [stepProgressStart - 0.05, stepProgressStart], [1, 1.4]);
+  const dotOpacity = useTransform(springProgress, [stepProgressStart - 0.05, stepProgressStart], [0, 1]);
+
+  return (
+    <div className="relative pl-14 rtl:pl-0 rtl:pr-14">
+      {/* Timeline Node */}
+      <div className="absolute left-0 rtl:left-auto rtl:right-0 top-0 flex flex-col items-center">
+        <motion.div 
+          style={{ scale }}
+          className="w-11 h-11 rounded-full bg-brand-deep-navy border border-white/10 flex items-center justify-center z-20 shadow-xl"
+        >
+          <span className="font-display font-black text-xs text-brand-electric-purple">
+            {step.id}
+          </span>
+        </motion.div>
+        <motion.div 
+          style={{ opacity: dotOpacity }}
+          className="absolute top-0 w-11 h-11 rounded-full border border-brand-electric-purple shadow-[0_0_10px_rgba(107,32,232,0.5)] z-10"
+        />
+      </div>
+
+      {/* Card Content */}
+      <motion.div
+        style={{ opacity }}
+        initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="relative bg-white/[0.02] border border-white/5 p-6 rounded-2xl shadow-lg"
+      >
+        <h3 className="font-display font-bold text-xl text-brand-pure-white mb-3 uppercase tracking-tight">
+          {step.title}
+        </h3>
+        <p className="font-body text-brand-soft-lavender/70 text-base leading-relaxed">
+          {step.desc}
+        </p>
+        <div className="absolute bottom-0 right-0 w-12 h-12 bg-gradient-to-br from-transparent to-brand-electric-purple/5 pointer-events-none rounded-br-2xl" />
+      </motion.div>
+    </div>
+  );
+};
 
 const ProjectJourney = () => {
   const { lang } = useLanguage();
   const t = translations[lang].journey;
   const containerRef = useRef(null);
   const isRTL = lang === 'ar';
-  
-  const steps = t.steps.map((step, i) => ({
+
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const steps = useMemo(() => t.steps.map((step, i) => ({
     id: `0${i + 1}`,
     ...step
-  }));
+  })), [t.steps]);
 
-  // ─── SVG Snake Path Calculations ───────────────────────────────────────
-  const cardAreaWidth = 900;        
-  const rowHeight = 220;            
+  // SVG snake path calculations
+  const isMobile = windowWidth < 768;
+  const cardAreaWidth = isMobile ? windowWidth - 48 : 900;
+  const rowHeight = isMobile ? 320 : 220;
   const totalRows = steps.length;
   const svgHeight = rowHeight * totalRows;
   const svgWidth = cardAreaWidth;
 
-  const leftX = 100;               
-  const rightX = svgWidth - 100;   
-  const curveRadius = 60;          
-  const nodeY = (i) => rowHeight * i + rowHeight / 2; 
+  const leftX = isMobile ? 30 : 100;               
+  const rightX = svgWidth - (isMobile ? 30 : 100);   
+  const curveRadius = isMobile ? 40 : 60;          
 
-  // Memoize path and length
   const { pathD, totalPathLen } = useMemo(() => {
     let d = '';
     const horizontalLen = rightX - leftX;
-    const curveLen = Math.PI * curveRadius + rowHeight;
+    const computeNodeY = (i) => rowHeight * i + rowHeight / 2;
     
     for (let i = 0; i < totalRows; i++) {
-      const y = nodeY(i);
+      const y = computeNodeY(i);
       const rowStartsRight = isRTL ? (i % 2 === 0) : (i % 2 !== 0);
       const startX = rowStartsRight ? rightX : leftX;
       const endX = rowStartsRight ? leftX : rightX;
@@ -42,7 +135,7 @@ const ProjectJourney = () => {
       d += ` L ${endX} ${y}`;
 
       if (i < totalRows - 1) {
-        const nextY = nodeY(i + 1);
+        const nextY = computeNodeY(i + 1);
         if (rowStartsRight) {
           d += ` C ${endX - curveRadius} ${y}, ${endX - curveRadius} ${nextY}, ${leftX} ${nextY}`;
         } else {
@@ -50,13 +143,16 @@ const ProjectJourney = () => {
         }
       }
     }
-    return { pathD: d, totalPathLen: totalRows * horizontalLen + (totalRows - 1) * curveLen };
+    return { pathD: d, totalPathLen: totalRows * horizontalLen + (totalRows - 1) * 300 }; 
   }, [totalRows, isRTL, rightX, leftX, curveRadius, rowHeight]);
 
-  const nodePositions = steps.map((_, i) => {
-    const goingRight = i % 2 === 0;
-    return { x: (leftX + rightX) / 2, y: nodeY(i), alignRight: !goingRight };
-  });
+  const nodePositions = useMemo(() => {
+    const computeNodeY = (i) => rowHeight * i + rowHeight / 2;
+    return steps.map((_, i) => ({
+      x: (leftX + rightX) / 2,
+      y: computeNodeY(i)
+    }));
+  }, [steps, leftX, rightX, rowHeight]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -75,37 +171,46 @@ const ProjectJourney = () => {
     <section 
       ref={containerRef}
       id="process" 
-      className="bg-brand-deep-navy py-32 px-6 relative overflow-hidden"
+      className="bg-brand-deep-navy py-12 md:py-28 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="codo-grid mb-24">
+        <div className="codo-grid mb-16 md:mb-24">
           <div className="col-span-12 text-center">
-            <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse"
+            >
               <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
                 <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
                 {t.tag} 
                 <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
               </span>
-            </div>
-            <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-brand-pure-white uppercase leading-[1.1] text-center">
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="font-display font-black text-4xl md:text-6xl text-brand-pure-white uppercase leading-[1.1] text-center"
+            >
               {t.title}
-            </h2>
+            </motion.h2>
           </div>
         </div>
 
+        {/* ─── DESKTOP VIEW ─── */}
         <div 
-          className="relative min-h-[auto] md:min-h-[var(--md-height)] flex flex-col gap-5 md:block py-6 md:py-0" 
-          style={{ '--md-height': `${svgHeight}px` }}
+          className="hidden md:block relative" 
+          style={{ height: `${svgHeight}px`, width: `${svgWidth}px`, margin: '0 auto' }}
         >
-          {/* Desktop SVG Snake Tracking */}
           <svg
-            className="absolute inset-0 w-full h-full hidden md:block z-0 pointer-events-none"
+            className="absolute inset-0 w-full h-full z-0 pointer-events-none"
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            preserveAspectRatio="xMidYMid meet"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
           >
-            <path d={pathD} stroke="#2D2D3A" strokeWidth="2" fill="none" strokeLinecap="round" />
+            <path d={pathD} stroke="#2D2D3A" strokeWidth="2" strokeOpacity="0.3" fill="none" strokeLinecap="round" />
             <motion.path
               d={pathD} stroke="url(#snakeGradient)" strokeWidth="3" fill="none" strokeLinecap="round"
               strokeDasharray={totalPathLen} style={{ strokeDashoffset }} filter="url(#snakeGlow)"
@@ -122,81 +227,65 @@ const ProjectJourney = () => {
               </filter>
             </defs>
 
-            {nodePositions.map((pos, i) => (
-              <g key={i}>
-                <circle cx={pos.x} cy={pos.y} r="14" fill="#0D0D1A" stroke="#2D2D3A" strokeWidth="2" />
-                <motion.circle
-                  cx={pos.x} cy={pos.y} r="7" fill="#6B20E8"
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true, margin: "-30%" }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                />
-                <motion.circle
-                  cx={pos.x} cy={pos.y} r="7" fill="none" stroke="#6B20E8" strokeWidth="2"
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 2.5, opacity: [0, 0.6, 0] }}
-                  viewport={{ once: true, margin: "-30%" }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                />
-              </g>
-            ))}
-          </svg>
-
-          <div className="relative z-10">
-            {steps.map((step, index) => {
-              const shouldBeOnLeft = isRTL ? (index % 2 !== 0) : (index % 2 === 0);
-              const topOffset = nodePositions[index].y - 50; 
-              
-              // Localized reactive highlight logic: stay active once reached
-              const isActive = useTransform(springProgress, 
-                [(index - 0.4) / steps.length, index / steps.length], 
-                [0.15, 1]
-              );
-              
-              const pulseScale = useTransform(springProgress, 
-                [(index - 0.2) / steps.length, index / steps.length], 
-                [1, 1.04]
-              );
-
+            {nodePositions.map((pos, i) => {
+              const rowStartsRight = isRTL ? (i % 2 === 0) : (i % 2 !== 0);
+              const cardX = rowStartsRight ? leftX : rightX;
               return (
-                <div 
-                  key={step.id} 
-                  className={`relative w-full md:absolute md:w-[42%] md:top-[var(--md-top)] ${shouldBeOnLeft ? 'md:left-0 md:right-auto' : 'md:right-0 md:left-auto'}`}
-                  style={{ '--md-top': `${topOffset}px` }}
-                >
-                  <motion.div
-                    style={{ opacity: isActive, scale: pulseScale }}
-                    initial={{ opacity: 0, y: 40, x: 0 }}
-                    whileInView={{ opacity: 1, y: 0, x: 0 }}
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.08 }}
-                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                    className="relative bg-white/[0.02] md:bg-[#0D0D1A]/60 backdrop-blur-xl border border-white/5 md:border-brand-electric-purple/20 p-7 md:p-8 rounded-2xl shadow-ambient overflow-hidden group text-left rtl:text-right"
-                  >
-                    <span className={`hidden md:block absolute top-3 ${shouldBeOnLeft ? 'right-4 rtl:left-4' : 'left-4 rtl:right-4'} font-display font-black text-6xl text-[#2D2D3A] opacity-30 select-none group-hover:text-brand-electric-purple/20 transition-colors duration-500`}>
-                      {step.id}
-                    </span>
-
-                    <div className="flex items-center gap-3 mb-4 rtl:flex-row-reverse">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-brand-electric-purple/30 bg-brand-electric-purple/10 font-display text-xs font-bold text-brand-electric-purple">
-                        {step.id}
-                      </span>
-                      <div className="h-px flex-1 bg-gradient-to-r from-brand-electric-purple/40 to-transparent rtl:bg-gradient-to-l" />
-                    </div>
-
-                    <div className="relative z-10">
-                      <h3 className="font-display font-bold text-xl md:text-2xl text-brand-pure-white mb-3 uppercase tracking-tight">
-                        {step.title}
-                      </h3>
-                      <p className="font-body text-brand-soft-lavender text-base leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                        {step.desc}
-                      </p>
-                    </div>
-                  </motion.div>
-                </div>
+                <g key={i}>
+                  <circle cx={cardX} cy={pos.y} r="14" fill="#0D0D1A" stroke="#2D2D3A" strokeWidth="2" />
+                  <motion.circle
+                    cx={cardX} cy={pos.y} r="7" fill="#6B20E8"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                  />
+                </g>
               );
             })}
+          </svg>
+
+          <div className="relative z-10 w-full h-full">
+            {steps.map((step, index) => {
+              const isEven = index % 2 === 0;
+              const shouldBeOnLeft = isRTL ? !isEven : isEven;
+              const topOffset = nodePositions[index].y - 100; 
+
+              return (
+                <DesktopStep 
+                  key={step.id} 
+                  step={step} 
+                  index={index} 
+                  springProgress={springProgress} 
+                  isEven={isEven} 
+                  shouldBeOnLeft={shouldBeOnLeft} 
+                  topOffset={topOffset}
+                  isRTL={isRTL}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ─── MOBILE VIEW ─── */}
+        <div className="block md:hidden relative pt-4 pb-12">
+          <div className="absolute top-0 bottom-0 left-[21px] rtl:left-auto rtl:right-[21px] w-0.5 bg-white/5 z-0">
+            <motion.div 
+              style={{ height: useTransform(springProgress, [0, 1], ["0%", "100%"]) }}
+              className="w-full bg-gradient-to-b from-brand-electric-purple via-brand-lavender to-brand-electric-coral shadow-[0_0_15px_rgba(107,32,232,0.4)]"
+            />
+          </div>
+
+          <div className="relative z-10 space-y-16">
+            {steps.map((step, index) => (
+              <MobileStep 
+                key={`m-${step.id}`} 
+                step={step} 
+                index={index} 
+                springProgress={springProgress} 
+                isRTL={isRTL} 
+                totalSteps={steps.length}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
 
@@ -63,8 +63,8 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="bg-brand-deep-navy py-32 px-6">
-      <div className="max-w-3xl mx-auto">
+    <section id="faq" className="bg-brand-deep-navy py-12 md:py-28">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Header Area */}
         <div className="text-center mb-16">
           <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
@@ -74,7 +74,7 @@ const FAQ = () => {
               <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
             </span>
           </div>
-          <h2 className="font-display font-extrabold text-4xl md:text-5xl text-brand-pure-white uppercase text-center">
+          <h2 className="font-display font-black text-4xl md:text-5xl text-brand-pure-white uppercase text-center">
             {t.title}
           </h2>
         </div>

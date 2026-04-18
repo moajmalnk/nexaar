@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
+import { BRAND_CONFIG } from '../utils/constants';
 import EliteButton from './shared/EliteButton';
 
-const EliteDropdown = ({ label, options, value, onChange, placeholder, lang }) => {
+const EliteDropdown = ({ label, options, value, onChange, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -85,6 +86,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
     company: '',
+    phone: '',
     sector: '',
     projectType: '',
     message: ''
@@ -96,7 +98,26 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // Construct WhatsApp Message
+    const text = `*New Consultation Request from Nexaar Website*
+    
+*Name:* ${formData.name}
+*Company:* ${formData.company || 'N/A'}
+*Phone:* ${formData.phone}
+*Sector:* ${formData.sector || 'N/A'}
+*Project:* ${formData.projectType || 'N/A'}
+
+*Vision:*
+${formData.message}`;
+
+    const whatsappUrl = `https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
+    
+    // Artificial delay for UX "Elite" feel
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    window.open(whatsappUrl, '_blank');
+    
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
@@ -154,6 +175,15 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                           value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})}
                         />
                       </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="font-display text-[10px] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.phone}</label>
+                      <input 
+                        required type="tel" placeholder="+966 5X XXX XXXX"
+                        className="w-full bg-brand-charcoal/50 border border-brand-electric-purple/10 text-brand-pure-white px-5 py-4 rounded-xl outline-none focus:border-brand-electric-purple/50 transition-all font-body text-left rtl:text-right"
+                        value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
