@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import LegalPage from './pages/LegalPage';
 import { LanguageProvider } from './context/LanguageProvider';
 import LanguageLoader from './components/shared/LanguageLoader';
+import Lenis from 'lenis';
 
 // Helper component to reset scroll position on route changes
 const ScrollToTop = () => {
@@ -17,6 +18,22 @@ const ScrollToTop = () => {
 };
 
 function App() {
+  useEffect(() => {
+    // Initialize Lenis for smooth scrolling
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <LanguageProvider>
       <div className="bg-brand-deep-navy min-h-screen text-brand-pure-white selection:bg-brand-electric-purple/30">

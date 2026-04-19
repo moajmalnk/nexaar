@@ -81,7 +81,7 @@ const Services = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group relative rounded-2xl overflow-hidden aspect-square md:aspect-[4/4.5] bg-brand-charcoal cursor-pointer border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-elite-glow hover:border-brand-electric-purple/50"
+              className="group relative rounded-2xl overflow-hidden aspect-square md:aspect-[4/4.5] bg-brand-charcoal cursor-pointer border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-elite-glow hover:border-white/20"
             >
               {/* Layer 1: Scale-In Image Zoom */}
               <div className="absolute inset-0 overflow-hidden">
@@ -99,7 +99,7 @@ const Services = () => {
 
               {/* Layer 3: Focused Text Content */}
               <div className="relative h-full flex flex-col justify-end p-6 md:p-8 text-left rtl:text-right">
-                <h3 className="font-display font-bold text-xl md:text-2xl text-brand-pure-white mb-2 tracking-tight transition-colors duration-300 group-hover:text-brand-electric-purple">
+                <h3 className="font-display font-bold text-xl md:text-2xl text-brand-pure-white mb-2 tracking-tight transition-colors duration-300">
                   {service.title}
                 </h3>
                 <p className="font-body text-brand-soft-lavender/70 text-sm md:text-base leading-relaxed">
