@@ -111,7 +111,7 @@ const TechStack = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="font-display font-black text-4xl md:text-6xl text-brand-pure-white uppercase tracking-tight mb-6 text-center"
+          className="font-display font-black text-4xl md:text-6xl text-brand-pure-white uppercase tracking-tight rtl:tracking-normal rtl:normal-case mb-6 text-center"
         >
           {t.title}
         </motion.h2>
@@ -128,9 +128,9 @@ const TechStack = () => {
       </div>
 
       {/* ─── UNIFIED MARQUEE VIEW ─── */}
-      <div className="relative w-full max-w-[100vw]">
-        <MarqueeRow items={row1} direction={isRTL ? 'right' : 'left'} />
-        <MarqueeRow items={row2} direction={isRTL ? 'left' : 'right'} />
+      <div className="relative w-full max-w-[100vw]" dir="ltr">
+        <MarqueeRow items={row1} direction="left" />
+        <MarqueeRow items={row2} direction="right" />
 
         {/* Static Background Accents */}
         <div className="absolute top-1/2 left-0 w-32 md:w-64 h-32 md:h-64 bg-brand-electric-purple/10 blur-3xl rounded-full pointer-events-none" />

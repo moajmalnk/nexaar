@@ -60,7 +60,19 @@
   }
 
   [dir="rtl"] {
-    @apply font-arabic text-right;
+    @apply font-arabic text-right tracking-normal normal-case;
+  }
+
+  [dir="rtl"] h1, 
+  [dir="rtl"] h2, 
+  [dir="rtl"] h3, 
+  [dir="rtl"] h4, 
+  [dir="rtl"] h5, 
+  [dir="rtl"] h6,
+  [dir="rtl"] p,
+  [dir="rtl"] span,
+  [dir="rtl"] button {
+    @apply tracking-normal normal-case;
   }
 
   /* Hide Navbar when Modals/Drawer are open */

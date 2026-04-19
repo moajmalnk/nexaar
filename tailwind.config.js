@@ -18,8 +18,8 @@ export default {
         }
       },
       fontFamily: {
-        display: ['Montserrat', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        display: ['Montserrat', 'IBM Plex Arabic', 'sans-serif'],
+        body: ['Inter', 'IBM Plex Arabic', 'sans-serif'],
         arabic: ['IBM Plex Arabic', 'sans-serif'],
       },
       fontSize: {

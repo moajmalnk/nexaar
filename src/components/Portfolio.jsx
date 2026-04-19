@@ -37,8 +37,11 @@ const ProjectCard = ({ project, index, onClick }) => {
   const cardRef = useRef(null);
   const [hovered, setHovered] = useState(false);
 
+  // Skip parallax on mobile — eliminates per-card scroll listeners
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const { scrollYProgress } = useScroll({ target: cardRef, offset: ['start end', 'end start'] });
   const imageY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
+  const shouldParallax = !reduceMotion && !isMobile;
 
   return (
     <motion.article
@@ -55,8 +58,8 @@ const ProjectCard = ({ project, index, onClick }) => {
       {/* Image */}
       <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[4/3] xl:aspect-[16/9] overflow-hidden">
         <motion.div
-          className="absolute inset-0 w-full h-[115%] -top-[7.5%]"
-          style={!reduceMotion ? { y: imageY } : {}}
+          className={`absolute inset-0 w-full ${shouldParallax ? 'h-[115%] -top-[7.5%]' : 'h-full'}`}
+          style={shouldParallax ? { y: imageY } : {}}
         >
           <img
             src={project.image}
