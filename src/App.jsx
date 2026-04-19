@@ -54,8 +54,6 @@ function App() {
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      anchors: true,
-      stopInertiaOnNavigate: true,
       prevent: (node) => node?.closest?.('[data-lenis-prevent]'),
     });
 
