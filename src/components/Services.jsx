@@ -52,7 +52,7 @@ const Services = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <motion.div variants={itemVariants} className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
             <span className="font-body font-medium text-sm text-brand-pure-white flex items-center text-center">
@@ -63,7 +63,8 @@ const Services = () => {
           </motion.div>
           <motion.h2 
             variants={itemVariants}
-            className="font-display font-black text-4xl md:text-5xl text-brand-pure-white tracking-tight text-center"
+            className="font-display font-black text-brand-pure-white tracking-tight text-center"
+            style={{fontSize: 'clamp(1.85rem, 8vw, 3.1rem)'}}
           >
             {t.title}
           </motion.h2>
@@ -81,7 +82,7 @@ const Services = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group relative rounded-2xl overflow-hidden aspect-square md:aspect-[4/4.5] bg-brand-charcoal cursor-pointer border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-elite-glow hover:border-white/20"
+              className="group relative rounded-2xl overflow-hidden min-h-[280px] sm:min-h-0 aspect-auto sm:aspect-square md:aspect-[4/4.5] bg-brand-charcoal cursor-pointer border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-elite-glow hover:border-white/20"
             >
               {/* Layer 1: Scale-In Image Zoom */}
               <div className="absolute inset-0 overflow-hidden">

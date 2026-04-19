@@ -103,8 +103,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-brand-deep-navy border-t border-white/[0.05] relative overflow-hidden rtl:text-right text-left">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20 lg:pt-32 pb-12 lg:pb-16">
-        <div className="codo-grid gap-y-16 lg:gap-y-0">
+      <div className="max-w-7xl mx-auto px-5 lg:px-12 pt-12 lg:pt-32 pb-10 lg:pb-16">
+        <div className="codo-grid gap-y-10 lg:gap-y-0">
           
           {/* Section: Brand & Info */}
           <div className="col-span-12 lg:col-span-5 space-y-12">
@@ -126,11 +126,11 @@ const Footer = () => {
 
           {/* Section: Links Grid */}
           <div className="col-span-12 lg:col-span-6 lg:col-start-7">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
               <FooterColumn title={t.links.services} links={footerLinks.services} />
               <FooterColumn title={t.links.explore} links={footerLinks.company} />
               
-              <div className="col-span-1 md:col-span-1 space-y-6">
+              <div className="col-span-2 md:col-span-1 space-y-6">
                 <h4 className="font-display font-bold text-xs text-white/40 uppercase tracking-[0.2em]">
                   {t.links.connect}
                 </h4>
@@ -148,12 +148,12 @@ const Footer = () => {
         </div>
 
         {/* Section: Legal Bar */}
-        <div className="mt-20 lg:mt-32 pt-10 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+        <div className="mt-10 lg:mt-32 pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
           <p className="font-body text-white/20">
             © {currentYear} {t.rights}
           </p>
           
-          <div className="flex items-center gap-8 text-[12px] font-body text-white/30 tracking-wide">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-[12px] font-body text-white/30 tracking-wide">
             <Link to="/privacy" className="hover:text-white transition-colors duration-300">
               {t.privacy}
             </Link>

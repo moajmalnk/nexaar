@@ -26,10 +26,13 @@ const EliteButton = ({
   };
 
   const currentStyles = `${baseStyles} ${variantStyles[variant] || variantStyles.cta} ${className}`;
+  const wantsFullWidth = /\bw-full\b/.test(className);
+  const returnsAutoAtSm = /\bsm:w-auto\b/.test(className);
+  const wrapperStyles = wantsFullWidth ? `w-full${returnsAutoAtSm ? ' sm:w-auto' : ''}` : 'inline-block';
 
   return (
     <motion.div
-      className={as === 'a' ? 'inline-block' : 'block'}
+      className={wrapperStyles}
       whileTap={{ scale: 0.96 }}
     >
       <Component

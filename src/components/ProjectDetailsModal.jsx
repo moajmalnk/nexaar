@@ -1,22 +1,43 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BRAND_CONFIG } from '../utils/constants';
 import { useLanguage } from '../hooks/useLanguage';
+import { lockPageScroll } from '../utils/scrollLock';
 
 const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
   const { lang } = useLanguage();
   const scrollContainerRef = useRef(null);
+  const handleClose = useCallback((event) => {
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
+    onClose?.();
+  }, [onClose]);
 
   // Disable body scroll when modal is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
+    if (!isOpen) return undefined;
+
+    const unlockScroll = lockPageScroll();
+
+    requestAnimationFrame(() => {
       if (scrollContainerRef.current) scrollContainerRef.current.scrollTop = 0;
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; };
+    });
+
+    return unlockScroll;
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        handleClose(event);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleClose, isOpen]);
 
   if (!project) return null;
 
@@ -31,9 +52,21 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={handleClose}
             className="absolute inset-0 bg-brand-deep-navy/90 backdrop-blur-2xl"
           />
+
+          <button
+            type="button"
+            onPointerDown={(event) => event.stopPropagation()}
+            onClick={handleClose}
+            className="fixed right-4 top-4 z-[130] flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white shadow-ambient backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:bg-brand-electric-purple active:scale-95 md:right-8 md:top-8 rtl:right-auto rtl:left-4 md:rtl:left-8"
+            aria-label={lang === 'ar' ? 'إغلاق تفاصيل المشروع' : 'Close project details'}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
 
           {/* Modal Container */}
           <motion.div
@@ -43,16 +76,6 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="relative w-full max-w-7xl h-[100dvh] md:h-[90dvh] bg-[#0A0A14] md:border border-white/10 md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden"
           >
-            {/* Close Button (Floating on mobile, absolute on desktop) */}
-            <button 
-              onClick={onClose}
-              className="absolute top-4 md:top-6 right-4 md:right-6 rtl:right-auto rtl:left-4 md:rtl:left-6 w-12 h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-brand-electric-purple transition-all duration-300 z-50 group hover:scale-105 active:scale-95 shadow-ambient"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
-
             {/* ==== LEFT COLUMN (Details) ==== */}
             <div 
               data-lenis-prevent

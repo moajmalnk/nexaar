@@ -10,17 +10,17 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => {
     <div className="border-b border-[#2D2D3A]">
       <button
         onClick={onClick}
-        className="w-full flex justify-between items-center py-6 text-left rtl:text-right cursor-pointer group outline-none"
+        className="w-full flex justify-between items-start gap-4 py-6 text-left rtl:text-right cursor-pointer group outline-none"
       >
         <span className={`font-display font-bold text-xl md:text-2xl transition-colors duration-300 ${
           isOpen ? 'text-brand-electric-purple' : 'text-brand-pure-white group-hover:text-brand-electric-purple'
-        }`}>
+        } flex-1`}>
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="text-brand-electric-purple flex-shrink-0 ml-4 rtl:ml-0 rtl:mr-4"
+          className="text-brand-electric-purple flex-shrink-0 mt-0.5"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -38,7 +38,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <p className="font-body text-brand-soft-lavender text-lg leading-relaxed pb-6 pr-12 rtl:pr-0 rtl:pl-12">
+            <p className="font-body text-brand-soft-lavender text-base md:text-lg leading-relaxed pb-6 pr-0 md:pr-12 rtl:pr-0 rtl:pl-0 md:rtl:pl-12">
               {answer}
             </p>
           </motion.div>

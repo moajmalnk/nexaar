@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { BRAND_CONFIG } from '../utils/constants';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
+import { lockPageScroll } from '../utils/scrollLock';
 
 const getNavLinks = (lang) => [
   { name: translations[lang].nav.home,      href: '/#home' },
@@ -69,20 +70,16 @@ const DesktopNav = ({ activeLink, hovered, onHover, onClick, onMobileOpen, varia
   return (
     <motion.div
       key={variant}
-      initial={isPill ? { opacity: 0, y: -20, scale: 0.97 } : { opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={isPill ? { opacity: 0, y: -12, scale: 0.97 } : { opacity: 0, y: -8 }}
-      transition={{ type: 'spring', stiffness: isPill ? 260 : 280, damping: isPill ? 22 : 26 }}
-      className={`absolute inset-x-0 mx-auto flex items-center ${
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className={`absolute inset-x-0 mx-auto flex items-center justify-between ${
         isPill
-          ? 'w-max top-5 gap-5 md:gap-7 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
-          : 'top-0 justify-between px-10 md:px-16 h-[72px]'
+          ? 'left-4 right-4 md:left-auto md:right-auto md:w-max top-5 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
+          : 'top-0 px-10 md:px-16 h-[72px]'
       }`}
       style={{
-        /* FIX #6 — on mobile the pill only shows logo+hamburger; make the
-           pill itself non-interactive on mobile so it doesn't eat touches
-           that belong to the open drawer below it. The hamburger button
-           inside still gets pointer-events via its own element. */
         pointerEvents: 'auto',
         background: isPill ? 'rgba(13,13,26,0.92)' : 'rgba(13,13,26,0.98)',
         border: isPill ? '1px solid rgba(107,32,232,0.42)' : 'none',
@@ -199,7 +196,7 @@ export default function Navbar() {
   // Focus Trap & Restore
   useEffect(() => {
     if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
+      const unlockScroll = lockPageScroll();
       const focusable = drawerRef.current?.querySelectorAll(
         'button, a, [tabindex]:not([tabindex="-1"])'
       );
@@ -222,8 +219,8 @@ export default function Navbar() {
       window.addEventListener('keydown', handleKey);
       return () => {
         window.removeEventListener('keydown', handleKey);
-        document.body.style.overflow = 'unset';
-        currentMenuButton?.focus();
+        unlockScroll();
+        currentMenuButton?.focus({ preventScroll: true });
       };
     }
   }, [isMobileOpen]);
@@ -444,7 +441,7 @@ export default function Navbar() {
                   <span>{t.getStarted}</span>
                   {/* FIX #5 — valid Tailwind class for arrow nudge on hover */}
                   <svg
-                    className={`w-4 h-4 transition-transform duration-200 group-hover:${lang === 'ar' ? '-translate-x-0.5' : 'translate-x-0.5'}`}
+                    className={`w-4 h-4 transition-transform duration-200 ${lang === 'ar' ? 'group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -481,14 +478,14 @@ function DesktopNavWithExpanded({
   return (
     <motion.div
       key={variant}
-      initial={isPill ? { opacity: 0, y: -20, scale: 0.97 } : { opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={isPill ? { opacity: 0, y: -12, scale: 0.97 } : { opacity: 0, y: -8 }}
-      transition={{ type: 'spring', stiffness: isPill ? 260 : 280, damping: isPill ? 22 : 26 }}
-      className={`absolute inset-x-0 mx-auto flex items-center ${
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className={`absolute inset-x-0 mx-auto flex items-center justify-between ${
         isPill
-          ? 'w-max top-5 gap-5 md:gap-7 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
-          : 'top-0 justify-between px-10 md:px-16 h-[72px]'
+          ? 'left-4 right-4 md:left-auto md:right-auto md:w-max top-5 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
+          : 'top-0 px-10 md:px-16 h-[72px]'
       }`}
       style={{
         background: isPill ? 'rgba(13,13,26,0.92)' : 'rgba(13,13,26,0.98)',

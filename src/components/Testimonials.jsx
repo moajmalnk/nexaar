@@ -32,10 +32,10 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="bg-brand-deep-navy py-32 overflow-hidden">
+    <section className="bg-brand-deep-navy py-12 md:py-28 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Area */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
             <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
               <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
@@ -46,7 +46,7 @@ const Testimonials = () => {
           <h2 className="font-display font-extrabold text-4xl md:text-6xl text-brand-pure-white mb-6 uppercase tracking-tight text-center">
             {t.title}
           </h2>
-          <p className="font-body font-medium text-xl text-brand-soft-lavender max-w-2xl mx-auto leading-relaxed text-center">
+          <p className="font-body font-medium text-lg md:text-xl text-brand-soft-lavender max-w-2xl mx-auto leading-relaxed text-center">
             {t.desc}
           </p>
         </div>
@@ -64,7 +64,7 @@ const Testimonials = () => {
                 key={testimonial.id}
                 variants={cardVariants}
                 whileHover={{ y: -5, borderColor: 'rgba(107,32,232,0.5)', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
-                className="bg-[#1A1A24]/60 backdrop-blur-sm border border-[#2D2D3A] p-8 rounded-2xl relative transition-all duration-300 text-left rtl:text-right hover:bg-[#1A1A24]/80 flex flex-col h-full"
+                className="bg-[#1A1A24]/60 backdrop-blur-sm border border-[#2D2D3A] p-6 md:p-8 rounded-2xl relative transition-all duration-300 text-left rtl:text-right hover:bg-[#1A1A24]/80 flex flex-col h-full"
               >
                 {/* Background Quote Icon */}
                 <div className="absolute top-6 right-8 rtl:left-8 rtl:right-auto pointer-events-none">

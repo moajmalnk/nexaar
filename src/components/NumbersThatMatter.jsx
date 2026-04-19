@@ -54,11 +54,11 @@ const NumbersThatMatter = () => {
             </span>
           </div>
 
-          <h2 className="font-display font-black text-4xl md:text-5xl lg:text-7xl text-brand-pure-white leading-tight uppercase mb-8">
+          <h2 className="font-display font-black text-brand-pure-white leading-tight uppercase mb-6 md:mb-8" style={{fontSize: 'clamp(2rem, 9vw, 4.5rem)'}}>
             {t.title}
           </h2>
 
-          <p className="font-body font-medium text-xl text-brand-soft-lavender max-w-md mb-12">
+          <p className="font-body font-medium text-base md:text-xl text-brand-soft-lavender max-w-md mb-8 md:mb-12">
             {t.desc}
           </p>
 
@@ -79,14 +79,14 @@ const NumbersThatMatter = () => {
         </motion.div>
 
         {/* Right Column - Bento Grid */}
-        <div className="grid grid-cols-2 gap-x-2 gap-y-0 lg:gap-x-3 lg:gap-y-0 relative items-center">
+        <div className="grid grid-cols-2 gap-3 lg:gap-x-3 lg:gap-y-0 relative items-center">
           
           {/* Card 1 - Image */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="group relative h-64 lg:h-80 rounded-2xl overflow-hidden shadow-ambient transition-transform duration-500 hover:scale-[1.03]"
+            className="group relative h-44 sm:h-64 lg:h-80 rounded-2xl overflow-hidden shadow-ambient transition-transform duration-500 hover:scale-[1.03]"
           >
             <img 
               src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800" 
@@ -104,9 +104,9 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="lg:translate-y-1 bg-brand-lavender/20 backdrop-blur-xl border border-white/10 rounded-3xl h-48 lg:h-52 flex flex-col justify-center items-center text-center p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
+            className="lg:translate-y-1 bg-brand-lavender/20 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-3 sm:p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
           >
-            <h3 className="font-display font-black text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
+            <h3 className="font-display font-black text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
               <Counter value={50} />+
             </h3>
             <p className="font-body font-bold text-brand-pure-white text-xs lg:text-sm uppercase tracking-tight">
@@ -120,9 +120,9 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="bg-brand-electric-purple rounded-3xl h-48 lg:h-52 flex flex-col justify-center items-center text-center p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative lg:-mt-8"
+            className="bg-brand-electric-purple rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-3 sm:p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative lg:-mt-8"
           >
-            <h3 className="font-display font-black text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
+            <h3 className="font-display font-black text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
               <Counter value={100} />+
             </h3>
             <p className="font-body font-bold text-brand-pure-white text-xs lg:text-sm uppercase tracking-tight">
@@ -136,7 +136,7 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="lg:translate-y-1 group relative h-64 lg:h-80 rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.03] lg:-mt-8"
+            className="lg:translate-y-1 group relative h-44 sm:h-64 lg:h-80 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.03] lg:-mt-8"
           >
             <img 
               src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" 
