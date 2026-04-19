@@ -28,6 +28,7 @@ export const lockPageScroll = () => {
     body.style.position = 'fixed';
     body.style.top = `-${savedScrollY}px`;
     body.style.width = '100%';
+    body.classList.add('body-lock');
 
     if (scrollbarWidth > 0) {
       body.style.paddingRight = `${scrollbarWidth}px`;
@@ -56,6 +57,7 @@ export const lockPageScroll = () => {
     lenis?.resize?.();
     lenis?.scrollTo?.(savedScrollY, { immediate: true, force: true });
 
+    body.classList.remove('body-lock');
     requestAnimationFrame(() => {
       lenis?.start?.();
     });

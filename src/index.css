@@ -62,6 +62,13 @@
   [dir="rtl"] {
     @apply font-arabic text-right;
   }
+
+  /* Hide Navbar when Modals/Drawer are open */
+  body.body-lock .nav-main-wrapper {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+  }
 }
 
 @layer components {
@@ -290,10 +297,25 @@
   @media (max-width: 767px) {
     html {
       scroll-padding-top: 88px;
+
+      /* ── Mobile Scroll Snapping ── */
+      scroll-snap-type: y proximity;
     }
 
     section {
       scroll-margin-top: 88px;
+      scroll-snap-align: start;
+    }
+
+    footer {
+      scroll-snap-align: start;
+    }
+
+    /* Opt-out class for sections incompatible with snapping
+       (e.g. sticky-stacking cards, decorative ribbons) */
+    .snap-exclude {
+      scroll-snap-align: none !important;
+      scroll-snap-type: none !important;
     }
   }
 
