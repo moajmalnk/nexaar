@@ -14,9 +14,6 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
   const rawScale = useTransform(progress, [rangeStart, rangeEnd], [1, targetScale]);
   const scale = (index === totalCards - 1 || reduceMotion) ? 1 : rawScale;
 
-  // Responsive sticky top: smaller offset on mobile
-  const stickyTop = `calc(10vh + border-box + ${index * 20}px)`;
-
   return (
     <div
       className="h-[85vh] md:h-screen w-full sticky top-0"
@@ -24,7 +21,7 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
     >
       <div className="h-full w-full flex items-start justify-center px-4 md:px-8">
         <motion.div
-          style={{ scale, top: `calc(10vh + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 16 : 28)}px)` }}
+          style={{ scale, top: `calc(82px + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 16 : 28)}px)` }}
           className="relative w-full max-w-5xl rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-6 md:p-12 lg:p-16 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-6 md:gap-12 lg:gap-16 origin-top group overflow-hidden"
         >
           {/* Background and lighting effects */}

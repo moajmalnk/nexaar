@@ -38,44 +38,8 @@ const WhoThisIsFor = () => {
       className="relative z-20 bg-brand-deep-navy py-16 md:py-32 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Centered Header Area */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="flex flex-col items-center text-center mb-12 md:mb-20"
-        >
-          {/* Section Tag */}
-          <motion.div variants={itemVariants} className="mb-6 flex items-center justify-center space-x-2 rtl:space-x-reverse">
-            <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
-              <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
-              {t.tag} 
-              <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
-            </span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h2 
-            variants={itemVariants}
-            className="font-display font-extrabold text-4xl md:text-5xl lg:text-7xl text-brand-pure-white leading-[1.05] mb-8"
-          >
-            {t.title} <br className="hidden lg:block" />
-            {t.titleAccent}
-          </motion.h2>
-
-          {/* Body Text */}
-          <motion.p 
-            variants={itemVariants}
-            className="font-body text-brand-soft-lavender text-lg md:text-xl max-w-3xl leading-relaxed opacity-90 mx-auto"
-          >
-            {t.description}
-          </motion.p>
-        </motion.div>
-
-        {/* Content Grid: Checklist & Orb */}
-        <div className="codo-grid items-center">
-          {/* Left Column: Checklist */}
+        <div className="codo-grid items-center relative z-10">
+          {/* Left Column: Content */}
           <motion.div
             className="col-span-12 lg:col-span-6 order-2 lg:order-1"
             variants={containerVariants}
@@ -83,6 +47,33 @@ const WhoThisIsFor = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
+            {/* Section Tag */}
+            <motion.div variants={itemVariants} className="mb-6 flex items-center space-x-2 rtl:space-x-reverse">
+              <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
+                <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
+                {t.tag} 
+                <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
+              </span>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h2 
+              variants={itemVariants}
+              className="font-display font-extrabold text-4xl md:text-5xl lg:text-7xl text-brand-pure-white leading-[1.05] mb-8"
+            >
+              {t.title} <br className="hidden lg:block" />
+              <span className="text-brand-electric-purple">{t.titleAccent}</span>
+            </motion.h2>
+
+            {/* Body Text */}
+            <motion.p 
+              variants={itemVariants}
+              className="font-body text-brand-soft-lavender text-lg md:text-xl max-w-xl leading-relaxed opacity-90 mb-12"
+            >
+              {t.description}
+            </motion.p>
+
+            {/* Checklist */}
             <div className="space-y-6">
               {checklistItems.map((item, index) => (
                 <motion.div 
