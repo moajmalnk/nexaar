@@ -16,12 +16,17 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
 
   return (
     <div
-      className="h-[85svh] md:h-screen w-full sticky top-0"
+      className="h-[100svh] md:h-screen w-full sticky top-0"
       style={{ zIndex: index + 1 }}
     >
-      <div className="h-full w-full flex items-start justify-center px-4 md:px-8">
+      <div className="h-full w-full flex items-center md:items-start justify-center px-4 md:px-8">
         <motion.div
-          style={{ scale, top: `calc(82px + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 16 : 28)}px)` }}
+          style={{ 
+            scale, 
+            top: typeof window !== 'undefined' && window.innerWidth < 768 
+              ? `${index * 16}px` 
+              : `calc(82px + ${index * 28}px)` 
+          }}
           className="relative w-full max-w-5xl rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-6 md:p-12 lg:p-16 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-6 md:gap-12 lg:gap-16 origin-top group overflow-hidden"
         >
           {/* Background and lighting effects */}
