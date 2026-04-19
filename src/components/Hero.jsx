@@ -45,7 +45,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#0D0D1A]"
+      className="relative min-h-[100svh] md:min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#0D0D1A]"
     >
       {/* Background Video */}
       <video

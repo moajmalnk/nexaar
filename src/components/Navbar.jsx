@@ -349,8 +349,8 @@ export default function Navbar() {
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 // FIX #1 — prevent overflow on small screens (iPhone SE = 667px viewport)
-                // dvh falls back to vh in older browsers gracefully
-                maxHeight: 'calc(100dvh - 120px)',
+                // svh falls back gracefully on older devices, keeping layout perfectly stable
+                maxHeight: 'calc(100svh - 120px)',
                 overflowY: 'auto',
                 // smooth momentum scroll on iOS
                 WebkitOverflowScrolling: 'touch',

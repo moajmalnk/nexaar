@@ -28,7 +28,7 @@ const LegalPage = ({ type }) => {
   };
 
   return (
-    <div className="bg-brand-deep-navy min-h-screen pt-32 pb-20 px-6">
+    <div className="bg-brand-deep-navy min-h-[100svh] md:min-h-screen pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial="hidden"

@@ -73,7 +73,7 @@ function App() {
 
   return (
     <LanguageProvider>
-      <div className="bg-brand-deep-navy min-h-screen text-brand-pure-white selection:bg-brand-electric-purple/30">
+      <div className="bg-brand-deep-navy min-h-[100svh] md:min-h-screen text-brand-pure-white selection:bg-brand-electric-purple/30">
         <LanguageLoader />
         <ScrollToTop />
         <Navbar />
