@@ -66,7 +66,7 @@ const TaglineBridge = () => {
   return (
     <section
       id="tagline-bridge"
-      className="relative bg-brand-deep-navy overflow-hidden z-30 pointer-events-none -my-4 md:-my-10 snap-exclude"
+      className="relative bg-brand-deep-navy overflow-hidden z-30 pointer-events-none -my-4 md:-my-10"
     >
       {/* Wrapper with rotation */}
       <div className="relative -mx-[10%] py-20 md:py-20" style={{ transform: 'rotate(-2deg)' }}>
