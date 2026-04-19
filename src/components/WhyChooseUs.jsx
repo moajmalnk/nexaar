@@ -16,7 +16,7 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
 
   return (
     <div
-      className="h-[85vh] md:h-screen w-full sticky top-0"
+      className="h-[85svh] md:h-screen w-full sticky top-0"
       style={{ zIndex: index + 1 }}
     >
       <div className="h-full w-full flex items-start justify-center px-4 md:px-8">
@@ -115,7 +115,7 @@ const WhyChooseUs = () => {
         ))}
       </div>
 
-      <div className="h-[20vh]" />
+      <div className="h-[20svh] md:h-[20vh]" />
     </section>
   );
 };
