@@ -165,19 +165,19 @@ const Portfolio = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+          className="flex flex-col items-center text-center gap-5"
         >
           <div>
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center justify-center gap-2 mb-3">
               <span className="text-brand-electric-purple font-display font-black text-xs tracking-[0.25em] uppercase">[</span>
               <span className="font-body text-brand-pure-white/60 text-xs tracking-widest uppercase">{t.tag}</span>
               <span className="text-brand-electric-purple font-display font-black text-xs tracking-[0.25em] uppercase">]</span>
             </div>
-            <h2 className="font-display font-black text-brand-pure-white uppercase tracking-tight leading-tight md:leading-none" style={{fontSize: 'clamp(1.85rem, 8vw, 3.75rem)'}}>
+            <h2 className="font-display font-black text-brand-pure-white uppercase tracking-tight leading-tight" style={{fontSize: 'clamp(1.85rem, 8vw, 3.75rem)'}}>
               {t.title}
             </h2>
           </div>
-          <p className="font-body text-base text-brand-soft-lavender/70 max-w-sm leading-relaxed md:text-right rtl:md:text-left">
+          <p className="font-body text-base text-brand-soft-lavender/70 max-w-2xl leading-relaxed mx-auto">
             {t.desc}
           </p>
         </motion.div>
@@ -188,8 +188,8 @@ const Portfolio = () => {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          style={{ originX: 0 }}
-          className="mt-8 h-px bg-gradient-to-r from-brand-electric-purple/50 via-brand-electric-purple/10 to-transparent"
+          style={{ originX: 0.5 }}
+          className="mt-8 h-px bg-gradient-to-r from-transparent via-brand-electric-purple/50 to-transparent"
         />
       </div>
 

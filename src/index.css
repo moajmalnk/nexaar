@@ -72,14 +72,6 @@
 }
 
 @layer components {
-  .btn-primary {
-    @apply bg-brand-electric-purple text-brand-pure-white font-body font-medium py-3 px-8 rounded-xl transition-all duration-200 active:scale-95 shadow-ambient;
-  }
-
-  .btn-secondary {
-    @apply bg-brand-lavender text-brand-pure-white font-body font-medium py-3 px-8 rounded-xl transition-all duration-200 active:scale-95 shadow-ambient;
-  }
-
   .btn-cta {
     @apply relative overflow-hidden font-display font-medium py-4 px-10 rounded-xl uppercase tracking-[0.18em] text-sm text-brand-pure-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)];
     background: linear-gradient(135deg, #FF5C35 0%, #FF8A35 50%, #FF5C35 100%);
@@ -119,21 +111,6 @@
     100% { transform: skewX(-20deg) translateX(150%); }
   }
 
-  .card {
-    @apply bg-brand-pure-white border border-brand-soft-lavender p-6 rounded-2xl transition-all duration-300 shadow-ambient;
-  }
-
-  .card-tinted {
-    @apply bg-brand-soft-lavender p-6 rounded-2xl transition-all duration-300 shadow-ambient;
-  }
-
-  .btn-outline-brand {
-    @apply relative border-2 border-brand-electric-purple text-brand-pure-white font-display font-medium py-4 px-8 rounded-xl uppercase tracking-[0.18em] text-sm transition-all duration-500 ease-out hover:bg-brand-electric-purple/10 shadow-ambient outline-none;
-  }
-
-  .btn-outline-brand:hover {
-    @apply -translate-y-1 shadow-elite-glow border-brand-lavender;
-  }
 }
 
 @layer utilities {
@@ -212,11 +189,6 @@
     100% { filter: brightness(1); }
   }
   
-  .stagger-1 { animation-delay: 80ms; }
-  .stagger-2 { animation-delay: 160ms; }
-  .stagger-3 { animation-delay: 240ms; }
-  .stagger-4 { animation-delay: 320ms; }
-
   /* Dual-Lane Infinite Marquee */
   @keyframes marqueeLeft {
     0% { transform: translateX(0); }
@@ -282,40 +254,13 @@
     @apply py-12 md:py-28 px-6 md:px-12;
   }
 
-  /* Prevent flex/grid overflow */
-  .min-w-0-safe {
-    min-width: 0;
-  }
-
-  /* Global Overflow fix for mobile */
-  .overflow-fix {
-    width: 100%;
-    overflow-x: hidden;
-    position: relative;
-  }
-
   @media (max-width: 767px) {
     html {
       scroll-padding-top: 88px;
-
-      /* ── Mobile Scroll Snapping ── */
-      scroll-snap-type: y proximity;
     }
 
     section {
       scroll-margin-top: 88px;
-      scroll-snap-align: start;
-    }
-
-    footer {
-      scroll-snap-align: start;
-    }
-
-    /* Opt-out class for sections incompatible with snapping
-       (e.g. sticky-stacking cards, decorative ribbons) */
-    .snap-exclude {
-      scroll-snap-align: none !important;
-      scroll-snap-type: none !important;
     }
   }
 

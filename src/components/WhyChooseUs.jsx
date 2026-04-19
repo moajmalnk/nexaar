@@ -80,7 +80,7 @@ const WhyChooseUs = () => {
     <section
       id="why-us"
       ref={sectionRef}
-      className="relative bg-brand-deep-navy snap-exclude"
+      className="relative bg-brand-deep-navy"
     >
       <div className="relative pt-12 md:pt-32 pb-8 md:pb-12 px-5 max-w-7xl mx-auto text-center">
         <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
