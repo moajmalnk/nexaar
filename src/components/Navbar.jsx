@@ -84,7 +84,7 @@ const DesktopNav = ({ activeLink, hovered, onHover, onClick, onMobileOpen, varia
            that belong to the open drawer below it. The hamburger button
            inside still gets pointer-events via its own element. */
         pointerEvents: 'auto',
-        background: isPill ? 'rgba(13,13,26,0.55)' : 'rgba(13,13,26,0.82)',
+        background: isPill ? 'rgba(13,13,26,0.92)' : 'rgba(13,13,26,0.98)',
         border: isPill ? '1px solid rgba(107,32,232,0.42)' : 'none',
         borderBottom: isPill ? 'none' : '1px solid rgba(107,32,232,0.22)',
         backdropFilter: isPill ? 'blur(16px)' : 'blur(20px)',
@@ -296,7 +296,7 @@ export default function Navbar() {
   return (
     // FIX #4 — honour iOS notch / dynamic island safe-area at the top
     <header
-      className="fixed top-0 left-0 w-full z-50 pointer-events-none"
+      className="fixed top-0 left-0 w-full z-[999] pointer-events-none"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       <div className="relative h-24 pointer-events-auto">
@@ -491,7 +491,7 @@ function DesktopNavWithExpanded({
           : 'top-0 justify-between px-10 md:px-16 h-[72px]'
       }`}
       style={{
-        background: isPill ? 'rgba(13,13,26,0.55)' : 'rgba(13,13,26,0.82)',
+        background: isPill ? 'rgba(13,13,26,0.92)' : 'rgba(13,13,26,0.98)',
         border: isPill ? '1px solid rgba(107,32,232,0.42)' : 'none',
         borderBottom: isPill ? 'none' : '1px solid rgba(107,32,232,0.22)',
         backdropFilter: isPill ? 'blur(16px)' : 'blur(20px)',

@@ -45,7 +45,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#0D0D1A]"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#0D0D1A]"
     >
       {/* Background Video */}
       <video
@@ -72,7 +72,7 @@ const Hero = () => {
 
 
       {/* Content layer — always above the canvas */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 md:pt-28 pb-10 md:pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 md:pt-28 pb-8 md:pb-20">
         <div className="codo-grid">
 
           {/* Headline Container with Mobile Anchor */}
@@ -83,7 +83,7 @@ const Hero = () => {
 
             <div className="relative z-10">
               <MaskSlide delay={0.3} duration={0.8}>
-                <h1 className="text-5xl sm:text-6xl md:text-[80px] font-display font-black text-brand-pure-white uppercase leading-[1.1] md:leading-[0.95] tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+                <h1 className="text-4xl sm:text-5xl md:text-[80px] font-display font-black text-brand-pure-white uppercase leading-[1.15] md:leading-[0.95] tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
                   {lang === 'ar' ? (
                     <>
                       <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
@@ -99,7 +99,7 @@ const Hero = () => {
               </MaskSlide>
 
               <MaskSlide delay={0.45} duration={0.8}>
-                <h1 className="text-5xl sm:text-6xl md:text-[80px] font-display font-black text-brand-pure-white uppercase leading-[1.1] md:leading-[0.95] mb-6 tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+                <h1 className="text-4xl sm:text-5xl md:text-[80px] font-display font-black text-brand-pure-white uppercase leading-[1.15] md:leading-[0.95] mb-4 md:mb-6 tracking-tighter drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
                   {t.title2}
                 </h1>
               </MaskSlide>
@@ -109,14 +109,14 @@ const Hero = () => {
           {/* Subtext: centered within grid */}
           <div className="col-span-12 lg:col-start-3 lg:col-span-8 text-center relative z-10">
             <MaskSlide delay={0.65} duration={0.8}>
-              <p className="text-brand-soft-lavender text-base md:text-xl font-body font-normal max-w-3xl mx-auto mb-10 leading-relaxed opacity-90 px-4 md:px-0">
+              <p className="hidden md:block text-brand-soft-lavender text-base md:text-xl font-body font-normal max-w-3xl mx-auto mb-10 leading-relaxed opacity-90 px-4 md:px-0">
                 {t.subtitle}
               </p>
             </MaskSlide>
           </div>
 
           {/* CTA buttons: premium design */}
-          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10">
+          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10 mb-6 md:mb-0">
             {/* Background Glow for CTAs on Mobile */}
             <div className="absolute inset-0 bg-brand-electric-purple/15 blur-[60px] rounded-full block md:hidden pointer-events-none" />
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
@@ -6,7 +6,6 @@ import { translations } from '../utils/translations';
 const Testimonials = () => {
   const { lang } = useLanguage();
   const t = translations[lang].testimonials;
-  const [hoveredIndex, setHoveredIndex] = useState(null);
   
   const testimonials = t.items;
 

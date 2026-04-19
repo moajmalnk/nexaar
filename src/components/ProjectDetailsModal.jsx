@@ -54,7 +54,10 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
             </button>
 
             {/* ==== LEFT COLUMN (Details) ==== */}
-            <div className="w-full md:w-[45%] lg:w-[40%] flex flex-col flex-1 overflow-y-auto custom-scrollbar md:border-r border-white/5 order-2 md:order-1 relative z-20 bg-[#0A0A14] md:bg-transparent shadow-[0_-20px_30px_rgba(10,10,20,1)] md:shadow-none pb-6 md:pb-0">
+            <div 
+              data-lenis-prevent
+              className="w-full md:w-[45%] lg:w-[40%] flex flex-col flex-1 overflow-y-auto custom-scrollbar md:border-r border-white/5 order-2 md:order-1 relative z-20 bg-[#0A0A14] md:bg-transparent shadow-[0_-20px_30px_rgba(10,10,20,1)] md:shadow-none pb-6 md:pb-0"
+            >
               <div className="p-6 sm:p-8 md:p-10 lg:p-14 flex-1">
                 
                 {/* Header Title Layer */}
@@ -151,6 +154,7 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
               {/* Image Stack / Slider */}
               <div 
                 ref={scrollContainerRef}
+                data-lenis-prevent
                 className="w-full h-full overflow-x-auto overflow-y-hidden md:overflow-x-hidden md:overflow-y-auto snap-x snap-mandatory md:snap-y md:snap-mandatory custom-scrollbar md:scroll-smooth hide-scrollbar flex flex-row md:flex-col"
               >
                 {gallery.map((img, i) => (
