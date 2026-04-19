@@ -46,11 +46,11 @@ const MarqueeRibbon = ({ text, direction = 1, bgColor, speed = 30, entranceDelay
   );
 
   return (
-    <div className={`${bgColor} py-3 md:py-5 overflow-hidden w-full`} dir="ltr">
+    <div className={`${bgColor} py-5 md:py-5 overflow-hidden w-full`} dir="ltr">
       <motion.div
         initial={{ x: '100vw' }} // Start way off to the right
         animate={controls}
-        className="flex items-center w-max font-body font-normal text-brand-pure-white text-base sm:text-xl md:text-3xl lg:text-5xl tracking-tight whitespace-nowrap"
+        className="flex items-center w-max font-body font-normal text-brand-pure-white text-2xl sm:text-3xl md:text-3xl lg:text-5xl tracking-tight whitespace-nowrap"
       >
         {/* Repeat content for seamless loop */}
         {content}{content}{content}{content}{content}{content}
@@ -66,10 +66,10 @@ const TaglineBridge = () => {
   return (
     <section
       id="tagline-bridge"
-      className="relative bg-brand-deep-navy overflow-hidden z-30 pointer-events-none -my-4 md:-my-10"
+      className="relative bg-brand-deep-navy overflow-hidden z-30 pointer-events-none -my-4 md:-my-10 snap-exclude"
     >
       {/* Wrapper with rotation */}
-      <div className="relative -mx-[10%] py-12 md:py-20" style={{ transform: 'rotate(-2deg)' }}>
+      <div className="relative -mx-[10%] py-20 md:py-20" style={{ transform: 'rotate(-2deg)' }}>
         
         {/* Ribbon 1 — Front (Top) */}
         {/* Staggered entrance: Top enters slightly after Bottom */}

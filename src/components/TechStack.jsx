@@ -9,10 +9,10 @@ import { translations } from '../utils/translations';
 
 const TechNode = ({ name, Icon, color }) => {
   return (
-    <div className="relative group p-0.5">
-      <div className="w-16 h-16 md:w-32 md:h-20 lg:w-40 lg:h-24 rounded-xl border border-white/10 bg-[#1A1A24]/30 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all duration-300 hover:border-brand-electric-purple/50 hover:bg-[#1A1A24]/50 group">
-        <Icon size={24} className="md:w-[30px] md:h-[30px] grayscale group-hover:grayscale-0 transition-all duration-300" color={color} />
-        <span className="hidden md:block font-display font-bold text-xs text-brand-pure-white tracking-wide opacity-50 group-hover:opacity-100">
+    <div className="relative group mx-3 md:mx-4 lg:mx-6 shrink-0">
+      <div className="w-16 h-16 md:w-36 md:h-24 lg:w-44 lg:h-28 rounded-xl border border-white/10 bg-[#1A1A24]/30 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-300 hover:border-brand-electric-purple/50 hover:bg-[#1A1A24]/50 group">
+        <Icon size={32} className="md:w-[36px] md:h-[36px] grayscale group-hover:grayscale-0 transition-all duration-300" color={color} />
+        <span className="hidden md:block font-display font-bold text-sm lg:text-base text-brand-pure-white tracking-wide opacity-50 group-hover:opacity-100">
           {name}
         </span>
       </div>
@@ -38,19 +38,28 @@ const MarqueeRow = ({ items, direction = 'left' }) => {
   const scrollX = direction === 'left' ? ["0%", "-50%"] : ["-50%", "0%"];
   
   return (
-    <div className="flex overflow-hidden py-4 mask-fade-edges">
+    <div className="flex overflow-hidden py-4 md:py-6 mask-fade-edges w-full">
       <motion.div
         animate={{ x: scrollX }}
         transition={{
-          duration: 30,
+          duration: 40,
           repeat: Infinity,
           ease: "linear",
         }}
-        className="flex whitespace-nowrap will-change-transform"
+        className="flex whitespace-nowrap will-change-transform w-max"
       >
         {/* Duplicate items for infinite loop */}
         {[...items, ...items].map((tech, i) => (
-          <EliteMobileCard key={`${tech.name}-${i}`} {...tech} />
+          <div key={`${tech.name}-${i}`} className="shrink-0 flex items-center">
+            {/* Mobile Card */}
+            <div className="block md:hidden">
+              <EliteMobileCard {...tech} />
+            </div>
+            {/* Desktop Card */}
+            <div className="hidden md:block">
+              <TechNode {...tech} />
+            </div>
+          </div>
         ))}
       </motion.div>
     </div>
@@ -118,32 +127,14 @@ const TechStack = () => {
         </motion.p>
       </div>
 
-      {/* ─── DESKTOP VIEW: CLEAN STATIC GRID ─── */}
-      <div className="hidden md:block max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-4 lg:grid-cols-6 gap-6">
-          {allTech.map((tech, i) => (
-            <motion.div
-              key={tech.name}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="flex justify-center"
-            >
-              <TechNode {...tech} />
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* ─── MOBILE VIEW: ELITE BENTO MARQUEE ─── */}
-      <div className="block md:hidden">
+      {/* ─── UNIFIED MARQUEE VIEW ─── */}
+      <div className="relative w-full max-w-[100vw]">
         <MarqueeRow items={row1} direction={isRTL ? 'right' : 'left'} />
         <MarqueeRow items={row2} direction={isRTL ? 'left' : 'right'} />
 
         {/* Static Background Accents */}
-        <div className="absolute top-1/2 left-0 w-32 h-32 bg-brand-electric-purple/10 blur-3xl rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-32 h-32 bg-brand-lavender/10 blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-32 md:w-64 h-32 md:h-64 bg-brand-electric-purple/10 blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-32 md:w-64 h-32 md:h-64 bg-brand-lavender/10 blur-3xl rounded-full pointer-events-none" />
       </div>
     </section>
   );

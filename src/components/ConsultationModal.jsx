@@ -151,7 +151,10 @@ ${formData.message}`;
               </svg>
             </button>
             
-            <div className="flex-1 overflow-y-auto p-8 md:p-12">
+            <div 
+              data-lenis-prevent
+              className="flex-1 overflow-y-auto p-8 md:p-12 custom-scrollbar"
+            >
               {!isSubmitted ? (
                 <>
                   <div className="mb-10 text-center md:text-left rtl:md:text-right text-left rtl:text-right">

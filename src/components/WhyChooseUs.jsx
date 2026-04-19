@@ -14,36 +14,41 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
   const rawScale = useTransform(progress, [rangeStart, rangeEnd], [1, targetScale]);
   const scale = (index === totalCards - 1 || reduceMotion) ? 1 : rawScale;
 
-  const stickyTop = `calc(10vh + ${index * 28}px)`;
+  // Responsive sticky top: smaller offset on mobile
+  const stickyTop = `calc(10vh + border-box + ${index * 20}px)`;
 
   return (
     <div
-      className="h-screen w-full sticky top-0"
+      className="h-[85vh] md:h-screen w-full sticky top-0"
       style={{ zIndex: index + 1 }}
     >
       <div className="h-full w-full flex items-start justify-center px-4 md:px-8">
         <motion.div
-          style={{ scale, top: stickyTop }}
-          className="relative w-full max-w-5xl rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-8 md:p-12 lg:p-16 flex flex-col lg:flex-row items-center gap-8 md:gap-16 origin-top group overflow-hidden"
+          style={{ scale, top: `calc(10vh + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 16 : 28)}px)` }}
+          className="relative w-full max-w-5xl rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-6 md:p-12 lg:p-16 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-6 md:gap-12 lg:gap-16 origin-top group overflow-hidden"
         >
+          {/* Background and lighting effects */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#12122A] to-[#0D0D1A] pointer-events-none" />
+          <div className="absolute inset-[0px] top-0 h-[2px] bg-gradient-to-r from-transparent via-brand-electric-purple to-transparent opacity-60 md:opacity-0" />
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30 pointer-events-none" />
-          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-brand-electric-purple/10 blur-[120px] pointer-events-none rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:translate-x-0 md:left-0 md:-translate-y-1/2 w-64 md:w-96 h-64 md:h-96 bg-brand-electric-purple/10 blur-[80px] md:blur-[120px] pointer-events-none rounded-full" />
 
-          <div className="relative shrink-0 flex items-center justify-center h-28 w-28 md:h-44 md:w-44 bg-brand-deep-navy border border-brand-electric-purple/20 rounded-[2.5rem] shadow-ambient group-hover:border-brand-electric-purple/50 group-hover:shadow-elite-glow transition-all duration-500">
-            <span className="font-display font-black text-5xl md:text-7xl text-brand-electric-purple/90 drop-shadow-[0_0_20px_rgba(157,0,255,0.4)]">
+          {/* Number Badge */}
+          <div className="relative shrink-0 flex items-center justify-center h-20 w-20 md:h-32 md:w-32 lg:h-44 lg:w-44 bg-brand-deep-navy border border-brand-electric-purple/20 rounded-2xl lg:rounded-[2.5rem] shadow-ambient group-hover:border-brand-electric-purple/50 group-hover:shadow-elite-glow transition-all duration-500">
+            <span className="font-display font-black text-3xl md:text-5xl lg:text-7xl text-brand-electric-purple/90 drop-shadow-[0_0_20px_rgba(157,0,255,0.4)]">
               {card.id}
             </span>
           </div>
 
-          <div className="relative flex-1 text-center lg:text-left rtl:lg:text-right">
-            <span className="inline-block px-4 py-2 mb-4 md:mb-6 rounded-full bg-brand-electric-purple/10 text-brand-electric-purple text-xs font-bold tracking-widest uppercase border border-brand-electric-purple/20 transition-colors duration-300 group-hover:bg-brand-electric-purple/20">
+          {/* Content */}
+          <div className="relative flex-1 text-center md:text-left rtl:md:text-right">
+            <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 mb-3 md:mb-6 rounded-full bg-brand-electric-purple/10 text-brand-electric-purple text-[10px] md:text-xs font-bold tracking-widest uppercase border border-brand-electric-purple/20 transition-colors duration-300 group-hover:bg-brand-electric-purple/20">
               {t.pillarLabel}
             </span>
-            <h3 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-brand-pure-white mb-4 md:mb-6 tracking-tight">
+            <h3 className="font-display font-black text-2xl md:text-3xl lg:text-5xl text-brand-pure-white mb-3 md:mb-6 tracking-tight">
               {card.title}
             </h3>
-            <p className="font-body text-brand-soft-lavender/90 text-base md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
+            <p className="font-body text-brand-soft-lavender/90 text-sm md:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto md:mx-0">
               {card.desc}
             </p>
           </div>
@@ -53,40 +58,7 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
   );
 };
 
-/* ─── Mobile: Staggered Reveal Card ──────────────────────────── */
-const MobileCard = ({ card, index, t }) => {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
-      className="relative rounded-2xl border border-white/10 overflow-hidden bg-gradient-to-br from-[#12122A] to-[#0D0D1A] shadow-[0_10px_40px_rgba(0,0,0,0.4)]"
-    >
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-brand-electric-purple to-transparent" />
-
-      <div className="relative p-5 flex items-start gap-4 rtl:flex-row-reverse">
-        <div className="shrink-0 flex items-center justify-center h-12 w-12 rounded-xl bg-brand-deep-navy border border-brand-electric-purple/20">
-          <span className="font-display font-black text-xl text-brand-electric-purple">
-            {card.id}
-          </span>
-        </div>
-
-        <div className="flex-1 min-w-0 text-left rtl:text-right">
-          <span className="inline-block mb-2 px-3 py-1 rounded-full bg-brand-electric-purple/10 border border-brand-electric-purple/20 text-brand-electric-purple text-[10px] font-bold uppercase tracking-widest">
-            {t.pillarLabel}
-          </span>
-          <h3 className="font-display font-black text-lg leading-tight text-brand-pure-white mb-2 tracking-tight">
-            {card.title}
-          </h3>
-          <p className="font-body text-brand-soft-lavender/80 text-sm leading-relaxed">
-            {card.desc}
-          </p>
-        </div>
-      </div>
-    </motion.article>
-  );
-};
+/* Removed MobileCard, using PillarCard for all sizes */
 
 /* ─── Main Component ─────────────────────────────────────────── */
 const WhyChooseUs = () => {
@@ -108,7 +80,7 @@ const WhyChooseUs = () => {
     <section
       id="why-us"
       ref={sectionRef}
-      className="relative bg-brand-deep-navy overflow-x-hidden"
+      className="relative bg-brand-deep-navy snap-exclude"
     >
       <div className="relative pt-12 md:pt-32 pb-8 md:pb-12 px-5 max-w-7xl mx-auto text-center">
         <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
@@ -129,16 +101,9 @@ const WhyChooseUs = () => {
         </p>
       </div>
 
-      {/* Mobile layout */}
-      <div className="md:hidden px-4 pb-16 space-y-4">
-        {cards.map((card, i) => (
-          <MobileCard key={`m-${card.id}`} card={card} index={i} t={t} />
-        ))}
-      </div>
-
-      {/* Desktop sticky-stack layout */}
+      {/* Sticky-stack layout for all screens */}
       <div
-        className="hidden md:block"
+        className="relative"
         style={{ height: `${cards.length * 100}vh` }}
       >
         {cards.map((card, i) => (
@@ -153,7 +118,7 @@ const WhyChooseUs = () => {
         ))}
       </div>
 
-      <div className="hidden md:block h-[20vh]" />
+      <div className="h-[20vh]" />
     </section>
   );
 };

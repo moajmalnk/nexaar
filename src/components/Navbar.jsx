@@ -76,7 +76,7 @@ const DesktopNav = ({ activeLink, hovered, onHover, onClick, onMobileOpen, varia
       transition={{ duration: 0.3, ease: 'easeOut' }}
       className={`absolute inset-x-0 mx-auto flex items-center justify-between ${
         isPill
-          ? 'left-4 right-4 md:left-auto md:right-auto md:w-max top-5 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
+          ? 'left-4 right-4 md:left-0 md:right-0 md:w-max top-5 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
           : 'top-0 px-10 md:px-16 h-[72px]'
       }`}
       style={{
@@ -153,19 +153,29 @@ const DesktopNav = ({ activeLink, hovered, onHover, onClick, onMobileOpen, varia
         </motion.a>
       </div>
 
-      {/* FIX #7 — aria-expanded reflects actual open state */}
-      <button
-        ref={menuButtonRef}
-        className="md:hidden text-brand-pure-white p-1 rounded-lg hover:bg-white/5 transition-colors"
-        onClick={onMobileOpen}
-        aria-label="Open menu"
-        aria-expanded={false}      // passed as prop below in the real usage — see Navbar
-        aria-controls="mobile-drawer"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-        </svg>
-      </button>
+      {/* Mobile Right Controls */}
+      <div className="flex md:hidden items-center gap-2">
+        <button
+          onClick={toggleLanguage}
+          className="font-display font-bold text-[11px] tracking-widest text-brand-pure-white/80 hover:text-white transition-colors uppercase px-2 focus:outline-none"
+          aria-label="Toggle Language"
+        >
+          {lang === 'en' ? 'عربي' : 'EN'}
+        </button>
+        <span className="h-[14px] w-px bg-brand-electric-purple/30 shrink-0" />
+        <button
+          ref={menuButtonRef}
+          className="text-brand-pure-white p-1 rounded-lg hover:bg-white/5 transition-colors"
+          onClick={onMobileOpen}
+          aria-label="Open menu"
+          aria-expanded={false}      // passed as prop below in the real usage — see Navbar
+          aria-controls="mobile-drawer"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
     </motion.div>
   );
 };
@@ -296,7 +306,7 @@ export default function Navbar() {
       className="fixed top-0 left-0 w-full z-[999] pointer-events-none"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
-      <div className="relative h-24 pointer-events-auto">
+      <div className="relative h-24 pointer-events-auto nav-main-wrapper transition-all duration-500">
         {/* FIX #7 — pass isMobileOpen so aria-expanded is live */}
         <DesktopNavWithExpanded
           variant="pill"
@@ -332,7 +342,7 @@ export default function Navbar() {
               aria-label="Mobile Navigation"
               variants={drawerVariants}
               initial="closed" animate="open" exit="closed"
-              className="fixed top-24 left-4 right-4 z-[70] p-6 flex flex-col pointer-events-auto rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] no-scrollbar"
+              className="fixed top-24 left-4 right-4 z-[70] p-5 flex flex-col pointer-events-auto rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] no-scrollbar"
               style={{
                 background: 'rgba(13,13,26,0.72)',
                 border: '1px solid rgba(107,32,232,0.45)',
@@ -352,7 +362,7 @@ export default function Navbar() {
                 style={{ background: 'radial-gradient(circle, rgba(107,32,232,0.3) 0%, transparent 70%)' }}
               />
 
-              <div className="flex justify-between items-center mb-6 px-2">
+              <div className="flex justify-between items-center mb-4 px-2">
                 <span
                   className="font-display font-extrabold text-[14px] tracking-[0.22em] text-brand-pure-white"
                   style={{ textShadow: '0 0 12px rgba(255,255,255,0.3)' }}
@@ -381,7 +391,7 @@ export default function Navbar() {
                       <a
                         href={link.href}
                         onClick={() => handleLinkClick(link.name)}
-                        className="relative group flex items-center py-3 px-4 rounded-2xl transition-all duration-300"
+                        className="relative group flex items-center py-2.5 px-4 rounded-2xl transition-all duration-300"
                       >
                         <AnimatePresence>
                           {isActive && (
@@ -419,17 +429,7 @@ export default function Navbar() {
 
               {/* mt-auto pushes footer to bottom only when there's room;
                   if the drawer scrolls it simply follows the content */}
-              <div className="mt-auto pt-8 border-t border-brand-electric-purple/20 flex flex-col gap-4">
-                <button
-                  onClick={toggleLanguage}
-                  className="flex items-center justify-center gap-3 w-full font-display font-bold text-[11px] tracking-[0.2em] text-brand-pure-white/60 hover:text-white transition-all duration-300 uppercase py-3 px-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.08] group"
-                  aria-label="Toggle Language"
-                >
-                  <span className={lang === 'en' ? 'text-brand-coral' : 'opacity-40'}>EN</span>
-                  <span className="w-1 h-1 rounded-full bg-white/20" />
-                  <span className={lang === 'ar' ? 'text-brand-coral' : 'opacity-40'}>AR</span>
-                </button>
-
+              <div className="mt-auto pt-5 border-t border-brand-electric-purple/20 flex flex-col gap-4">
                 <motion.a
                   href={`https://wa.me/${BRAND_CONFIG.whatsapp}`}
                   target="_blank"
@@ -484,7 +484,7 @@ function DesktopNavWithExpanded({
       transition={{ duration: 0.3, ease: 'easeOut' }}
       className={`absolute inset-x-0 mx-auto flex items-center justify-between ${
         isPill
-          ? 'left-4 right-4 md:left-auto md:right-auto md:w-max top-5 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
+          ? 'left-4 right-4 md:left-0 md:right-0 md:w-max top-5 rounded-full px-5 py-2.5 md:px-6 md:py-3.5'
           : 'top-0 px-10 md:px-16 h-[72px]'
       }`}
       style={{
@@ -560,19 +560,29 @@ function DesktopNavWithExpanded({
         </motion.a>
       </div>
 
-      {/* FIX #7 — aria-expanded is now the live isMobileOpen boolean */}
-      <button
-        ref={menuButtonRef}
-        className="md:hidden text-brand-pure-white p-1 rounded-lg hover:bg-white/5 transition-colors"
-        onClick={onMobileOpen}
-        aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
-        aria-expanded={isMobileOpen}
-        aria-controls="mobile-drawer"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-        </svg>
-      </button>
+      {/* Mobile Right Controls */}
+      <div className="flex md:hidden items-center gap-2">
+        <button
+          onClick={toggleLanguage}
+          className="font-display font-bold text-[11px] tracking-widest text-brand-pure-white/80 hover:text-white transition-colors uppercase px-2 focus:outline-none"
+          aria-label="Toggle Language"
+        >
+          {lang === 'en' ? 'عربي' : 'EN'}
+        </button>
+        <span className="h-[14px] w-px bg-brand-electric-purple/30 shrink-0" />
+        <button
+          ref={menuButtonRef}
+          className="text-brand-pure-white p-1 rounded-lg hover:bg-white/5 transition-colors"
+          onClick={onMobileOpen}
+          aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMobileOpen}
+          aria-controls="mobile-drawer"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
     </motion.div>
   );
 }
