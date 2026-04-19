@@ -159,7 +159,7 @@ const Portfolio = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vh] bg-brand-electric-purple/[0.04] blur-[100px] pointer-events-none" />
 
       {/* ── Header ── */}
-      <div className="max-w-7xl mx-auto px-6 mb-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 mb-10 md:mb-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ const Portfolio = () => {
               <span className="font-body text-brand-pure-white/60 text-xs tracking-widest uppercase">{t.tag}</span>
               <span className="text-brand-electric-purple font-display font-black text-xs tracking-[0.25em] uppercase">]</span>
             </div>
-            <h2 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-brand-pure-white uppercase tracking-tighter leading-none">
+            <h2 className="font-display font-black text-brand-pure-white uppercase tracking-tight leading-tight md:leading-none" style={{fontSize: 'clamp(1.85rem, 8vw, 3.75rem)'}}>
               {t.title}
             </h2>
           </div>
@@ -220,7 +220,7 @@ const Portfolio = () => {
             href={`https://wa.me/${BRAND_CONFIG.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-brand-electric-purple/30 text-brand-pure-white/80 font-display text-sm uppercase tracking-widest hover:border-brand-electric-purple/70 hover:text-brand-pure-white transition-all duration-300"
+            className="group inline-flex w-full justify-center sm:w-auto items-center gap-3 px-6 py-3 rounded-xl border border-brand-electric-purple/30 text-brand-pure-white/80 font-display text-sm uppercase tracking-widest hover:border-brand-electric-purple/70 hover:text-brand-pure-white transition-all duration-300"
           >
             <span>{lang === 'ar' ? 'ابدأ مشروعك' : 'Start Your Project'}</span>
           </a>

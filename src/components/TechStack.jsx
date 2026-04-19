@@ -21,7 +21,7 @@ const TechNode = ({ name, Icon, color }) => {
 };
 
 const EliteMobileCard = ({ name, Icon, color }) => (
-  <div className="flex flex-col items-center justify-center w-24 h-24 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-sm mx-2">
+  <div className="flex flex-col items-center justify-center w-24 h-24 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-sm mx-1.5 sm:mx-2 shrink-0">
     <div 
       className="p-3 rounded-xl mb-1"
       style={{ backgroundColor: `${color}15` }}
@@ -81,7 +81,7 @@ const TechStack = () => {
   const row2 = allTech.slice(6, 12);
 
   return (
-    <section id="tech-stack" className="bg-brand-deep-navy py-12 md:py-28 overflow-hidden">
+    <section id="tech-stack" className="relative bg-brand-deep-navy py-12 md:py-28 overflow-hidden">
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 text-center mb-12 md:mb-20">
         <motion.div 
@@ -112,7 +112,7 @@ const TechStack = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="font-body font-medium text-xl text-brand-soft-lavender leading-relaxed text-center"
+          className="font-body font-medium text-lg md:text-xl text-brand-soft-lavender leading-relaxed text-center"
         >
           {t.desc}
         </motion.p>

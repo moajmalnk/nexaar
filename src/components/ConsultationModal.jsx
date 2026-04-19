@@ -4,6 +4,7 @@ import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 import { BRAND_CONFIG } from '../utils/constants';
 import EliteButton from './shared/EliteButton';
+import { lockPageScroll } from '../utils/scrollLock';
 
 const EliteDropdown = ({ label, options, value, onChange, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,6 +95,11 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    return lockPageScroll();
+  }, [isOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
