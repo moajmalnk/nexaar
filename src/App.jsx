@@ -46,17 +46,18 @@ const ScrollToTop = () => {
 
 function App() {
   useEffect(() => {
-    // Initialize Lenis for smooth scrolling
-    // Disable smooth scroll on mobile so CSS scroll-snap works cleanly
+    // Skip Lenis on mobile — native scroll stops exactly where your finger lifts
     const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
+
+    // Desktop-only: smooth scrolling via Lenis
     const lenis = new Lenis({
       autoRaf: true,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: !isMobile,
-      touchMultiplier: isMobile ? 1 : undefined,
+      smoothWheel: true,
       prevent: (node) => node?.closest?.('[data-lenis-prevent]'),
     });
 
