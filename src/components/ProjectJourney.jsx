@@ -12,7 +12,7 @@ const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topO
   return (
     <div 
       className={`absolute w-[42%] ${shouldBeOnLeft ? 'left-0' : 'right-0'}`}
-      style={{ top: `${topOffset}px` }}
+      style={{ top: topOffset }}
     >
       <motion.div
         style={{ opacity }}
@@ -112,8 +112,10 @@ const ProjectJourney = () => {
   const isMobile = windowWidth < 768;
   const cardAreaWidth = isMobile ? windowWidth - 48 : 900;
   const rowHeight = isMobile ? 320 : 220;
+  const rowHeightRem = rowHeight / 16;
   const totalRows = steps.length;
   const svgHeight = rowHeight * totalRows;
+  const svgHeightRem = svgHeight / 16;
   const svgWidth = cardAreaWidth;
 
   const leftX = isMobile ? 30 : 100;               
@@ -171,9 +173,9 @@ const ProjectJourney = () => {
     <section 
       ref={containerRef}
       id="process" 
-      className="bg-brand-deep-navy py-12 md:py-28 relative overflow-hidden"
+      className="bg-brand-deep-navy section-padding relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding">
         <div className="codo-grid mb-16 md:mb-24">
           <div className="col-span-12 text-center">
             <motion.div 
@@ -203,7 +205,7 @@ const ProjectJourney = () => {
         {/* ─── DESKTOP VIEW ─── */}
         <div 
           className="hidden md:block relative" 
-          style={{ height: `${svgHeight}px`, width: `${svgWidth}px`, margin: '0 auto' }}
+          style={{ height: `${svgHeightRem}rem`, width: `${svgWidth / 16}rem`, margin: '0 auto' }}
         >
           <svg
             className="absolute inset-0 w-full h-full z-0 pointer-events-none"
@@ -248,7 +250,7 @@ const ProjectJourney = () => {
             {steps.map((step, index) => {
               const isEven = index % 2 === 0;
               const shouldBeOnLeft = isRTL ? !isEven : isEven;
-              const topOffset = nodePositions[index].y - 100; 
+              const topOffset = (nodePositions[index].y / 16) - 6.25; 
 
               return (
                 <DesktopStep 
@@ -258,7 +260,7 @@ const ProjectJourney = () => {
                   springProgress={springProgress} 
                   isEven={isEven} 
                   shouldBeOnLeft={shouldBeOnLeft} 
-                  topOffset={topOffset}
+                  topOffset={`${topOffset}rem`}
                   isRTL={isRTL}
                 />
               );
@@ -290,8 +292,8 @@ const ProjectJourney = () => {
         </div>
       </div>
 
-      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-brand-electric-purple/5 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-brand-lavender/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[25rem] h-[25rem] bg-brand-electric-purple/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[25rem] h-[25rem] bg-brand-lavender/5 blur-[100px] rounded-full pointer-events-none" />
     </section>
   );
 };

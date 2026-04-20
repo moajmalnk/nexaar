@@ -28,8 +28,8 @@ const LegalPage = ({ type }) => {
   };
 
   return (
-    <div className="bg-brand-deep-navy min-h-[100svh] md:min-h-screen pt-32 pb-20 px-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="bg-brand-deep-navy min-h-screen pt-32 pb-20 px-6">
+      <div className="max-w-4xl w-[92%] mx-auto">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -55,7 +55,7 @@ const LegalPage = ({ type }) => {
                     <span className="text-brand-electric-purple text-lg opacity-50">{idx + 1}.</span>
                     {section.title}
                   </h2>
-                  <div className="text-brand-soft-lavender/70 font-body text-[16px] leading-[1.8] space-y-4">
+                  <div className="text-brand-soft-lavender/70 font-body text-[1rem] leading-[1.8] space-y-4">
                     {section.content.map((p, pIdx) => (
                       <p key={pIdx}>{p}</p>
                     ))}

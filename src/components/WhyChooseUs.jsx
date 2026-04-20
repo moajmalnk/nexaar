@@ -14,25 +14,14 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
   const rawScale = useTransform(progress, [rangeStart, rangeEnd], [1, targetScale]);
   const scale = (index === totalCards - 1 || reduceMotion) ? 1 : rawScale;
 
-  // Stagger math for perfect absolute centering
-  // We offset cards symmetrically so the block's physical center binds to viewport center
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const gap = isMobile ? 16 : 28;
-  const centerBalance = ((totalCards - 1) * gap) / 2;
-  const topOffset = (index * gap) - centerBalance;
-
   return (
     <div
-      className="h-[100svh] md:h-screen w-full sticky top-0"
+      className="h-[85vh] md:h-screen w-full sticky top-0"
       style={{ zIndex: index + 1 }}
     >
-      {/* Universally items-center for perfectly balanced display */}
-      <div className="h-full w-full flex items-center justify-center px-4 md:px-8">
+      <div className="h-full w-full flex items-start justify-center px-4 md:px-8">
         <motion.div
-          style={{ 
-            scale, 
-            top: `${topOffset}px` 
-          }}
+          style={{ scale, top: `calc(5.125rem + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 1.75)}rem)` }}
           className="relative w-full max-w-5xl rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-6 md:p-12 lg:p-16 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-6 md:gap-12 lg:gap-16 origin-top group overflow-hidden"
         >
           {/* Background and lighting effects */}
@@ -50,7 +39,7 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
 
           {/* Content */}
           <div className="relative flex-1 text-center md:text-left rtl:md:text-right">
-            <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 mb-3 md:mb-6 rounded-full bg-brand-electric-purple/10 text-brand-electric-purple text-[10px] md:text-xs font-bold tracking-widest uppercase border border-brand-electric-purple/20 transition-colors duration-300 group-hover:bg-brand-electric-purple/20">
+            <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 mb-3 md:mb-6 rounded-full bg-brand-electric-purple/10 text-brand-electric-purple text-[0.625rem] md:text-xs font-bold tracking-widest uppercase border border-brand-electric-purple/20 transition-colors duration-300 group-hover:bg-brand-electric-purple/20">
               {t.pillarLabel}
             </span>
             <h3 className="font-display font-black text-2xl md:text-3xl lg:text-5xl text-brand-pure-white mb-3 md:mb-6 tracking-tight">
@@ -90,7 +79,7 @@ const WhyChooseUs = () => {
       ref={sectionRef}
       className="relative bg-brand-deep-navy"
     >
-      <div className="relative pt-12 md:pt-32 pb-8 md:pb-12 px-5 max-w-7xl mx-auto text-center">
+      <div className="relative pt-12 md:pt-32 pb-8 md:pb-12 px-5 max-w-[1240px] w-[92%] mx-auto text-center">
         <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
           <span className="font-body font-medium text-sm text-brand-pure-white flex items-center text-center opacity-80">
             <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span>
@@ -126,7 +115,7 @@ const WhyChooseUs = () => {
         ))}
       </div>
 
-      <div className="h-[20svh] md:h-[20vh]" />
+      <div className="h-[20vh]" />
     </section>
   );
 };

@@ -23,11 +23,11 @@ export default {
         arabic: ['IBM Plex Arabic', 'sans-serif'],
       },
       fontSize: {
-        'h1': ['72px', { lineHeight: '1.2', fontWeight: '800' }],
-        'h2': ['48px', { lineHeight: '1.2', fontWeight: '800' }],
-        'h3': ['32px', { lineHeight: '1.2', fontWeight: '800' }],
-        'body': ['16px', { lineHeight: '1.5', fontWeight: '400' }],
-        'caption': ['12px', { lineHeight: '1.5', fontWeight: '400' }],
+        'h1': ['clamp(2.5rem, 6vw + 1rem, 4.5rem)', { lineHeight: '1.1', fontWeight: '800' }],
+        'h2': ['clamp(2rem, 4vw + 1rem, 3rem)', { lineHeight: '1.15', fontWeight: '800' }],
+        'h3': ['clamp(1.5rem, 3vw + 0.5rem, 2rem)', { lineHeight: '1.2', fontWeight: '800' }],
+        'body': ['1rem', { lineHeight: '1.6', fontWeight: '400' }],
+        'caption': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
       },
       animation: {
         'slide-in': 'slideIn 0.3s ease-out forwards',

@@ -25,9 +25,9 @@ export const translations = {
       ]
     },
     hero: {
-      title1: 'Smart Digital ',
+      title1: 'Tech ',
       title1Accent: 'Solutions',
-      title2: 'For Saudi Businesses',
+      title2: 'for Saudi Businesses',
       subtitle: 'We build websites, mobile apps, and digital platforms that help SMEs and startups in Saudi Arabia grow, scale, and operate efficiently. From idea to launch with clarity, speed and structure.',
       ctaPrimary: 'Talk to Us on WhatsApp',
       ctaSecondary: 'Get a Free Consultation',
@@ -279,9 +279,9 @@ export const translations = {
       ]
     },
     hero: {
-      title1Accent: 'حلول',
-      title1: ' رقمية ذكية',
-      title2: 'للشركات السعودية',
+      title1Accent: 'تقنية',
+      title1: 'حلول ',
+      title2: 'للأعمال السعودية',
       subtitle: 'نحن نبني المواقع الإلكترونية، تطبيقات الجوال، والمنصات الرقمية التي تساعد الشركات الصغيرة والمتوسطة والناشئة في المملكة العربية السعودية على النمو، التوسع، والعمل بكفاءة. من الفكرة إلى الإطلاق بوضوح، سرعة، ومنهجية.',
       ctaPrimary: 'تحدث معنا عبر واتساب',
       ctaSecondary: 'احصل على استشارة مجانية',

@@ -14,7 +14,7 @@ const Testimonials = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
       },
     },
   };
@@ -25,15 +25,15 @@ const Testimonials = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.4,
+        duration: 0.6,
         ease: "easeOut",
       },
     },
   };
 
   return (
-    <section className="bg-brand-deep-navy py-12 md:py-28 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-brand-deep-navy section-padding overflow-hidden">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding">
         {/* Header Area */}
         <div className="text-center mb-12 md:mb-20">
           <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">

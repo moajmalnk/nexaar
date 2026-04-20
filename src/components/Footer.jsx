@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 import { BRAND_CONFIG } from '../utils/constants';
+import NexaarLogo from './shared/NexaarLogo';
 
 /**
  * ── Sub-Component: Link Column ────────────────────────────────────────
@@ -21,7 +22,7 @@ const FooterColumn = ({ title, links }) => (
             {link.href ? (
               <a
                 href={link.href}
-                className="group flex items-center text-brand-soft-lavender/60 hover:text-white font-body text-[14px] transition-all duration-300"
+                className="group flex items-center text-brand-soft-lavender/60 hover:text-white font-body text-[0.875rem] transition-all duration-300"
               >
                 <span className="relative">
                   {link.name}
@@ -29,7 +30,7 @@ const FooterColumn = ({ title, links }) => (
                 </span>
               </a>
             ) : (
-              <span className="text-brand-soft-lavender/60 font-body text-[14px]">
+              <span className="text-brand-soft-lavender/60 font-body text-[0.875rem]">
                 {link.name}
               </span>
             )}
@@ -103,16 +104,17 @@ const Footer = () => {
 
   return (
     <footer className="bg-brand-deep-navy border-t border-white/[0.05] relative overflow-hidden rtl:text-right text-left">
-      <div className="max-w-7xl mx-auto px-5 lg:px-12 pt-12 lg:pt-32 pb-10 lg:pb-16">
+      <div className="max-w-[1240px] w-[92%] mx-auto px-5 lg:px-12 pt-12 lg:pt-32 pb-10 lg:pb-16">
         <div className="codo-grid gap-y-10 lg:gap-y-0">
           
           {/* Section: Brand & Info */}
           <div className="col-span-12 lg:col-span-5 space-y-12">
             <div className="space-y-6">
-              <h3 className="font-display font-black text-3xl text-white tracking-tighter">
-                {BRAND_CONFIG.name}<span className="text-brand-electric-purple text-lg ml-1 rtl:mr-1 rtl:ml-0">®</span>
-              </h3>
-              <p className="font-body text-brand-soft-lavender/60 max-w-sm leading-relaxed text-[15px]">
+              <div className="flex items-center">
+                <NexaarLogo size="lg" color="white" />
+                <span className="text-brand-electric-purple text-lg ml-1 rtl:mr-1 rtl:ml-0 font-display font-black">®</span>
+              </div>
+              <p className="font-body text-brand-soft-lavender/60 max-w-sm leading-relaxed text-[0.9375rem]">
                 {t.desc}
               </p>
               
@@ -135,10 +137,10 @@ const Footer = () => {
                   {t.links.connect}
                 </h4>
                 <div className="space-y-4">
-                  <a href={`mailto:${t.mail}`} className="block font-body text-brand-soft-lavender/60 hover:text-white text-[14px] transition-colors break-words">
+                  <a href={`mailto:${t.mail}`} className="block font-body text-brand-soft-lavender/60 hover:text-white text-[0.875rem] transition-colors break-words">
                     {t.mail}
                   </a>
-                  <p className="font-display font-bold text-[10px] text-brand-electric-purple uppercase tracking-widest border border-brand-electric-purple/20 px-3 py-1.5 rounded-full inline-block">
+                  <p className="font-display font-bold text-[0.625rem] text-brand-electric-purple uppercase tracking-widest border border-brand-electric-purple/20 px-3 py-1.5 rounded-full inline-block">
                     {t.location}
                   </p>
                 </div>
@@ -153,7 +155,7 @@ const Footer = () => {
             © {currentYear} {t.rights}
           </p>
           
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-[12px] font-body text-white/30 tracking-wide">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-[0.75rem] font-body text-white/30 tracking-wide">
             <Link to="/privacy" className="hover:text-white transition-colors duration-300">
               {t.privacy}
             </Link>

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 import { BRAND_CONFIG } from '../utils/constants';
-import EliteButton from './shared/EliteButton';
+import Button from './shared/Button';
 import { lockPageScroll } from '../utils/scrollLock';
 
 const EliteDropdown = ({ label, options, value, onChange, placeholder }) => {
@@ -23,7 +23,7 @@ const EliteDropdown = ({ label, options, value, onChange, placeholder }) => {
 
   return (
     <div className="space-y-2 relative" ref={dropdownRef}>
-      <label className="font-display text-[10px] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">
+      <label className="font-display text-[0.625rem] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">
         {label}
       </label>
       
@@ -169,7 +169,7 @@ ${formData.message}`;
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="font-display text-[10px] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.fullName}</label>
+                        <label className="font-display text-[0.625rem] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.fullName}</label>
                         <input 
                           required type="text" placeholder="John Doe"
                           className="w-full bg-brand-charcoal/50 border border-brand-electric-purple/10 text-brand-pure-white px-5 py-4 rounded-xl outline-none focus:border-brand-electric-purple/50 transition-all font-body text-left rtl:text-right"
@@ -177,7 +177,7 @@ ${formData.message}`;
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="font-display text-[10px] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.company}</label>
+                        <label className="font-display text-[0.625rem] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.company}</label>
                         <input 
                           type="text" placeholder="Acme Corp"
                           className="w-full bg-brand-charcoal/50 border border-brand-electric-purple/10 text-brand-pure-white px-5 py-4 rounded-xl outline-none focus:border-brand-electric-purple/50 transition-all font-body text-left rtl:text-right"
@@ -187,7 +187,7 @@ ${formData.message}`;
                     </div>
 
                     <div className="space-y-2">
-                      <label className="font-display text-[10px] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.phone}</label>
+                      <label className="font-display text-[0.625rem] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.phone}</label>
                       <input 
                         required type="tel" placeholder="+966 5X XXX XXXX"
                         className="w-full bg-brand-charcoal/50 border border-brand-electric-purple/10 text-brand-pure-white px-5 py-4 rounded-xl outline-none focus:border-brand-electric-purple/50 transition-all font-body text-left rtl:text-right"
@@ -215,7 +215,7 @@ ${formData.message}`;
                     </div>
 
                     <div className="space-y-2">
-                      <label className="font-display text-[10px] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.vision}</label>
+                      <label className="font-display text-[0.625rem] uppercase tracking-widest text-brand-pure-white/40 ml-1 rtl:mr-1">{t.vision}</label>
                       <textarea 
                         required rows="3" placeholder={t.visionPlaceholder}
                         className="w-full bg-brand-charcoal/50 border border-brand-electric-purple/10 text-brand-pure-white px-5 py-4 rounded-xl outline-none focus:border-brand-electric-purple/50 transition-all font-body resize-none text-left rtl:text-right"
@@ -223,9 +223,9 @@ ${formData.message}`;
                       />
                     </div>
 
-                    <EliteButton type="submit" variant="cta" isLoading={isSubmitting} loadingText="..." className="w-full uppercase tracking-widest font-bold">
+                    <Button type="submit" variant="primary" isLoading={isSubmitting} loadingText="..." className="w-full" caps={true}>
                       {t.submit}
-                    </EliteButton>
+                    </Button>
                   </form>
                 </>
               ) : (
@@ -241,9 +241,9 @@ ${formData.message}`;
                   <p className="font-body text-brand-soft-lavender opacity-70 mb-10 max-w-sm mx-auto">
                     {t.successDesc.replace('{name}', formData.name.split(' ')[0])}
                   </p>
-                  <EliteButton onClick={onClose} variant="outline" className="w-full">
+                  <Button onClick={onClose} variant="outline" className="w-full">
                     {t.return}
-                  </EliteButton>
+                  </Button>
                 </div>
               )}
             </div>

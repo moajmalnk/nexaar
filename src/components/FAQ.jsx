@@ -63,8 +63,8 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="bg-brand-deep-navy py-12 md:py-28">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="faq" className="bg-brand-deep-navy section-padding">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding">
         {/* Header Area */}
         <div className="text-center mb-16">
           <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
