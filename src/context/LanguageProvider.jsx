@@ -2,10 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { LanguageContext } from './LanguageContext';
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('nexaar_lang');
+      if (saved) return saved;
+      
+      const browserLang = navigator.language || (navigator.languages && navigator.languages[0]);
+      if (browserLang && browserLang.toLowerCase().startsWith('ar')) {
+        return 'ar';
+      }
+    }
+    return 'en';
+  });
+  
   const [isChanging, setIsChanging] = useState(false);
 
   useEffect(() => {
+    // Persist language choice
+    localStorage.setItem('nexaar_lang', lang);
+    
     // Update document direction and lang attribute
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';

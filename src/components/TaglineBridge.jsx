@@ -77,7 +77,7 @@ const TaglineBridge = () => {
           text={t.ribbon1}
           direction={-1}
           bgColor="bg-[#6B20E8] shadow-[0_4px_20px_rgba(107,32,232,0.4)]"
-          speed={30}
+          speed={60}
           entranceDelay={0.5} 
         />
 
@@ -88,7 +88,7 @@ const TaglineBridge = () => {
             text={t.ribbon2}
             direction={1}
             bgColor="bg-[#4C1BAF] shadow-[0_4px_20px_rgba(76,27,175,0.3)]"
-            speed={35}
+            speed={70}
             entranceDelay={0.2}
           />
         </div>

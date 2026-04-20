@@ -21,8 +21,8 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
     >
       <div className="h-full w-full flex items-start justify-center px-4 md:px-8">
         <motion.div
-          style={{ scale, top: `calc(5.125rem + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 1.75)}rem)` }}
-          className="relative w-full max-w-5xl rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-6 md:p-12 lg:p-16 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-6 md:gap-12 lg:gap-16 origin-top group overflow-hidden"
+          style={{ scale, top: `calc(5.5rem + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 1.25 : 2.25)}rem)` }}
+          className="relative w-full max-w-5xl min-h-[380px] md:min-h-[440px] rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-8 md:p-12 lg:p-16 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-8 md:gap-12 lg:gap-16 origin-top group overflow-hidden"
         >
           {/* Background and lighting effects */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#12122A] to-[#0D0D1A] pointer-events-none" />
@@ -101,7 +101,7 @@ const WhyChooseUs = () => {
       {/* Sticky-stack layout for all screens */}
       <div
         className="relative"
-        style={{ height: `${cards.length * 100}vh` }}
+        style={{ height: `${cards.length * 105}vh` }}
       >
         {cards.map((card, i) => (
           <PillarCard
