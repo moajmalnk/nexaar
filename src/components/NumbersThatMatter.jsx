@@ -46,7 +46,7 @@ const NumbersThatMatter = () => {
           className="text-left rtl:text-right"
         >
           {/* Tag */}
-          <div className="mb-6 flex items-center space-x-2 rtl:space-x-reverse">
+          <div className="mb-6 flex items-center justify-center lg:justify-start space-x-2 rtl:space-x-reverse">
             <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
               <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
               {t.tag} 
@@ -54,23 +54,23 @@ const NumbersThatMatter = () => {
             </span>
           </div>
 
-          <h2 className="text-brand-pure-white mb-6 md:mb-8">
+          <h2 className="text-brand-pure-white text-3xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 md:mb-8 leading-[1.1] text-center lg:text-left rtl:lg:text-right">
             {t.title}
           </h2>
 
-          <p className="text-brand-soft-lavender max-w-md mb-8 md:mb-12">
+          <p className="text-brand-soft-lavender max-w-md mb-8 md:mb-12 text-center lg:text-left rtl:lg:text-right mx-auto lg:mx-0">
             {t.desc}
           </p>
 
-          <div className="space-y-6">
+          <div className="space-y-6 flex flex-col items-center lg:items-start mb-12 lg:mb-0">
             {checklistItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-4">
+              <div key={index} className="flex items-center gap-4 w-full max-w-xs md:max-w-md lg:max-w-none">
                 <div className="flex-shrink-0">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-brand-electric-purple">
                     <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span className="font-body font-semibold text-brand-pure-white text-lg">
+                <span className="font-body font-semibold text-brand-pure-white text-lg text-left rtl:text-right">
                   {item}
                 </span>
               </div>
@@ -104,12 +104,12 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.08, ease: "easeOut" }}
-            className="lg:translate-y-1 bg-brand-lavender/20 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-3 sm:p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
+            className="lg:translate-y-1 bg-brand-lavender/20 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-5 md:p-8 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
           >
-            <h3 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1 leading-[1.1]">
+            <h3 className="font-display font-extrabold text-4xl md:text-5xl lg:text-7xl xl:text-8xl text-brand-pure-white/40 mb-1 leading-[1.1]">
               <Counter value={50} />+
             </h3>
-            <p className="font-body font-bold text-brand-pure-white text-xs lg:text-sm uppercase tracking-tight">
+            <p className="font-body font-bold text-brand-pure-white text-[0.625rem] md:text-xs lg:text-sm uppercase tracking-tight">
               {t.delivered}
             </p>
           </motion.div>
@@ -120,12 +120,12 @@ const NumbersThatMatter = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.16, ease: "easeOut" }}
-            className="bg-brand-electric-purple rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-3 sm:p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative lg:-mt-8"
+            className="bg-brand-electric-purple rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-5 md:p-8 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative lg:-mt-8"
           >
-            <h3 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1 leading-[1.1]">
+            <h3 className="font-display font-extrabold text-4xl md:text-5xl lg:text-7xl xl:text-8xl text-brand-pure-white/40 mb-1 leading-[1.1]">
               <Counter value={100} />+
             </h3>
-            <p className="font-body font-bold text-brand-pure-white text-xs lg:text-sm uppercase tracking-tight">
+            <p className="font-body font-bold text-brand-pure-white text-[0.625rem] md:text-xs lg:text-sm uppercase tracking-tight">
               {t.supported}
             </p>
           </motion.div>
