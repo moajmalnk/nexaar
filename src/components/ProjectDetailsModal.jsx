@@ -74,7 +74,7 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-7xl h-[100dvh] md:h-[90dvh] bg-[#0A0A14] md:border border-white/10 md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden"
+            className="relative w-full max-w-[1240px] w-[92%] h-[100dvh] md:h-[90dvh] bg-[#0A0A14] md:border border-white/10 md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden mx-auto"
           >
             {/* ==== LEFT COLUMN (Details) ==== */}
             <div 
@@ -85,7 +85,7 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
                 
                 {/* Header Title Layer */}
                 <div className="mb-8 md:mb-12 pt-2 md:pt-0">
-                  <span className="w-fit px-3 py-1 rounded-full bg-brand-electric-purple/10 border border-brand-electric-purple/20 text-brand-electric-purple text-[10px] font-bold tracking-widest uppercase mb-4 inline-block">
+                  <span className="w-fit px-3 py-1 rounded-full bg-brand-electric-purple/10 border border-brand-electric-purple/20 text-brand-electric-purple text-[0.625rem] font-bold tracking-widest uppercase mb-4 inline-block">
                     {project.category}
                   </span>
                   <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-brand-pure-white uppercase tracking-tighter leading-[0.95] md:leading-[0.9]">
@@ -99,7 +99,7 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
                 <div className="space-y-12">
                   {/* The Problem */}
                   <div className="space-y-4">
-                    <h4 className="text-brand-electric-purple font-display font-bold text-[11px] uppercase tracking-[0.25em] flex items-center gap-2">
+                    <h4 className="text-brand-electric-purple font-display font-bold text-[0.6875rem] uppercase tracking-[0.25em] flex items-center gap-2">
                       <span className="w-4 h-px bg-brand-electric-purple"></span>
                       {lang === 'ar' ? 'التحدي' : 'The Challenge'}
                     </h4>
@@ -110,7 +110,7 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
 
                   {/* The Solution */}
                   <div className="space-y-4">
-                    <h4 className="text-brand-electric-purple font-display font-bold text-[11px] uppercase tracking-[0.25em] flex items-center gap-2">
+                    <h4 className="text-brand-electric-purple font-display font-bold text-[0.6875rem] uppercase tracking-[0.25em] flex items-center gap-2">
                       <span className="w-4 h-px bg-brand-electric-purple"></span>
                       {lang === 'ar' ? 'الحل' : 'The Solution'}
                     </h4>
@@ -121,7 +121,7 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
 
                   {/* The Result */}
                   <div className="space-y-4">
-                    <h4 className="text-brand-electric-purple font-display font-bold text-[11px] uppercase tracking-[0.25em] flex items-center gap-2">
+                    <h4 className="text-brand-electric-purple font-display font-bold text-[0.6875rem] uppercase tracking-[0.25em] flex items-center gap-2">
                       <span className="w-4 h-px bg-brand-electric-purple"></span>
                       {lang === 'ar' ? 'النتيجة' : 'The Result'}
                     </h4>
@@ -135,14 +135,14 @@ const ProjectDetailsModal = ({ project, isOpen, onClose }) => {
 
                 {/* Tech Stack */}
                 <div className="space-y-4 mb-10">
-                  <h4 className="text-brand-pure-white/40 font-display font-bold text-[10px] uppercase tracking-[0.2em]">
+                  <h4 className="text-brand-pure-white/40 font-display font-bold text-[0.625rem] uppercase tracking-[0.2em]">
                     {lang === 'ar' ? 'المجموعة التقنية' : 'Technology Stack'}
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((item, i) => (
                       <span 
                         key={i} 
-                        className="px-2.5 py-1.5 sm:px-3 border border-white/10 rounded-lg text-brand-pure-white/80 text-[10px] font-body uppercase tracking-widest bg-[#151522]"
+                        className="px-2.5 py-1.5 sm:px-3 border border-white/10 rounded-lg text-brand-pure-white/80 text-[0.625rem] font-body uppercase tracking-widest bg-[#151522]"
                       >
                         {item}
                       </span>

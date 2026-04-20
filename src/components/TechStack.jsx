@@ -11,7 +11,7 @@ const TechNode = ({ name, Icon, color }) => {
   return (
     <div className="relative group mx-3 md:mx-4 lg:mx-6 shrink-0">
       <div className="w-16 h-16 md:w-36 md:h-24 lg:w-44 lg:h-28 rounded-xl border border-white/10 bg-[#1A1A24]/30 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-300 hover:border-brand-electric-purple/50 hover:bg-[#1A1A24]/50 group">
-        <Icon size={32} className="md:w-[36px] md:h-[36px] grayscale group-hover:grayscale-0 transition-all duration-300" color={color} />
+        <Icon size={32} className="md:w-[2.25rem] md:h-[2.25rem] grayscale group-hover:grayscale-0 transition-all duration-300" color={color} />
         <span className="hidden md:block font-display font-bold text-sm lg:text-base text-brand-pure-white tracking-wide opacity-50 group-hover:opacity-100">
           {name}
         </span>
@@ -28,7 +28,7 @@ const EliteMobileCard = ({ name, Icon, color }) => (
     >
       <Icon size={24} color={color} />
     </div>
-    <span className="font-display font-medium text-[10px] text-white/60 tracking-tight">
+    <span className="font-display font-medium text-[0.625rem] text-white/60 tracking-tight">
       {name}
     </span>
   </div>
@@ -90,9 +90,9 @@ const TechStack = () => {
   const row2 = allTech.slice(6, 12);
 
   return (
-    <section id="tech-stack" className="relative bg-brand-deep-navy py-12 md:py-28 overflow-hidden">
+    <section id="tech-stack" className="relative bg-brand-deep-navy section-padding overflow-hidden">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 text-center mb-12 md:mb-20">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding text-center mb-12 md:mb-20">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

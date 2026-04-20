@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Arabic:wght@400;700&family=Inter:wght@400;500&family=Montserrat:ital,wght@0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Arabic:wght@400;700&family=Inter:wght@400;500;600&family=Montserrat:ital,wght@0,600;0,800;1,600;1,800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,19 +6,20 @@
 
 @layer base {
   html {
-    scroll-padding-top: 96px;
+    scroll-padding-top: 7.5rem; /* 120px - Added breathing room for headers */
     overflow-x: clip;
   }
 
   body {
     @apply font-body text-brand-pure-white bg-brand-deep-navy antialiased;
+    @apply leading-[1.6]; /* Standard comfortable line height */
     overflow-x: clip;
     width: 100%;
     overscroll-behavior-x: none;
   }
 
   section {
-    scroll-margin-top: 96px;
+    scroll-margin-top: 7.5rem;
   }
 
   /* Lenis smooth scrolling compatibility */
@@ -40,23 +41,35 @@
   }
 
   h1 {
-    @apply font-display text-h1 uppercase tracking-tight;
+    @apply font-display uppercase tracking-tight;
+    font-size: clamp(2.5rem, 6vw + 1rem, 4.5rem); /* 40px to 72px */
+    line-height: 1.1;
+    font-weight: 800;
   }
 
   h2 {
-    @apply font-display text-h2 uppercase tracking-tight;
+    @apply font-display uppercase tracking-tight;
+    font-size: clamp(2rem, 4vw + 1rem, 3rem); /* 32px to 48px */
+    line-height: 1.15;
+    font-weight: 800;
   }
 
   h3 {
-    @apply font-display text-h3 uppercase tracking-tight;
+    @apply font-display uppercase tracking-tight;
+    font-size: clamp(1.5rem, 3vw + 0.5rem, 2rem); /* 24px to 32px */
+    line-height: 1.2;
+    font-weight: 800;
   }
 
   p {
-    @apply font-body text-body;
+    @apply font-body;
+    font-size: 1rem; /* 16px */
+    line-height: 1.6;
   }
 
   .tagline {
     @apply font-display italic;
+    font-style: italic;
   }
 
   [dir="rtl"] {
@@ -83,55 +96,13 @@
   }
 }
 
-@layer components {
-  .btn-cta {
-    @apply relative overflow-hidden font-display font-medium py-4 px-10 rounded-xl uppercase tracking-[0.18em] text-sm text-brand-pure-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)];
-    background: linear-gradient(135deg, #FF5C35 0%, #FF8A35 50%, #FF5C35 100%);
-    background-size: 200% auto;
-    box-shadow: 
-      0 4px 15px rgba(255, 92, 53, 0.3),
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  }
-
-  .btn-cta::before {
-    content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transform: skewX(-20deg) translateX(-150%);
-  }
-
-  .btn-cta:hover {
-    @apply -translate-y-1 scale-[1.03];
-    background-position: right center;
-    box-shadow: 
-      0 12px 30px rgba(255, 92, 53, 0.45),
-      0 0 20px rgba(255, 92, 53, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-  }
-
-  .btn-cta:hover::before {
-    @apply opacity-100;
-    animation: shimmer 1.2s infinite;
-  }
-
-  .btn-cta:active {
-    @apply scale-95 translate-y-0 shadow-none transition-none;
-  }
-
-  @keyframes shimmer {
-    0% { transform: skewX(-20deg) translateX(-150%); }
-    100% { transform: skewX(-20deg) translateX(150%); }
-  }
-
-}
-
 @layer utilities {
   /* --- Custom Global UI (Codo Standards) --- */
   
   /* Branded Slim Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 0.375rem;
+    height: 0.375rem;
   }
   ::-webkit-scrollbar-track {
     background: #0D0D1A;
@@ -231,8 +202,8 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 0.375rem;
+    height: 0.375rem;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
@@ -261,18 +232,29 @@
     scrollbar-width: none;
   }
 
-  /* Responsive Spacing Utilities */
+  /* Responsive Spacing Utilities using Fluid Typography Principles */
   .section-padding {
-    @apply py-12 md:py-28 px-6 md:px-12;
+    padding-top: clamp(3rem, 6vw + 1rem, 7rem); /* 48px to 112px */
+    padding-bottom: clamp(3rem, 6vw + 1rem, 7rem);
+  }
+
+  .section-padding-lg {
+    padding-top: clamp(4rem, 8vw + 1rem, 9rem); /* 64px to 144px */
+    padding-bottom: clamp(4rem, 8vw + 1rem, 9rem);
+  }
+
+  .container-padding {
+    padding-left: clamp(1.5rem, 4vw, 3rem); /* 24px to 48px */
+    padding-right: clamp(1.5rem, 4vw, 3rem);
   }
 
   @media (max-width: 767px) {
     html {
-      scroll-padding-top: 88px;
+      scroll-padding-top: 6.5rem; /* Increased for mobile */
     }
 
     section {
-      scroll-margin-top: 88px;
+      scroll-margin-top: 6.5rem;
     }
   }
 

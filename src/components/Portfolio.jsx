@@ -49,7 +49,7 @@ const ProjectCard = ({ project, index, onClick }) => {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.55, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => onClick(project)}
@@ -74,7 +74,7 @@ const ProjectCard = ({ project, index, onClick }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D1A] via-[#0D0D1A]/10 to-transparent pointer-events-none" />
 
         {/* Category badge */}
-        <span className="absolute top-4 right-4 rtl:right-auto rtl:left-4 px-3 py-1 rounded-full bg-brand-electric-purple/20 backdrop-blur-md border border-brand-electric-purple/30 text-brand-pure-white text-[10px] font-bold tracking-widest uppercase">
+        <span className="absolute top-4 right-4 rtl:right-auto rtl:left-4 px-3 py-1 rounded-full bg-brand-electric-purple/20 backdrop-blur-md border border-brand-electric-purple/30 text-brand-pure-white text-[0.625rem] font-bold tracking-widest uppercase">
           {project.category}
         </span>
 
@@ -124,7 +124,7 @@ const ProjectCard = ({ project, index, onClick }) => {
           {project.tech.map((item, i) => (
             <span
               key={i}
-              className="px-2.5 py-1 border border-white/10 rounded-full text-brand-pure-white/70 text-[10px] font-body uppercase tracking-widest bg-white/[0.04]"
+              className="px-2.5 py-1 border border-white/10 rounded-full text-brand-pure-white/70 text-[0.625rem] font-body uppercase tracking-widest bg-white/[0.04]"
             >
               {item}
             </span>
@@ -156,18 +156,18 @@ const Portfolio = () => {
   }));
 
   return (
-    <section id="portfolio" className="bg-brand-deep-navy py-12 md:py-28 relative overflow-hidden">
+    <section id="portfolio" className="bg-brand-deep-navy section-padding relative overflow-hidden">
 
       {/* Subtle ambient blob */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vh] bg-brand-electric-purple/[0.04] blur-[100px] pointer-events-none" />
 
       {/* ── Header ── */}
-      <div className="max-w-7xl mx-auto px-6 mb-10 md:mb-12 relative z-10">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding mb-10 md:mb-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex flex-col items-center text-center gap-5"
         >
           <div>
@@ -197,7 +197,7 @@ const Portfolio = () => {
       </div>
 
       {/* ── Cards Grid ── */}
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project, index) => (
             <ProjectCard

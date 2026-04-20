@@ -10,7 +10,7 @@ const Counter = ({ value }) => {
   const spring = useSpring(0, {
     stiffness: 40,
     damping: 15,
-  });
+  }, { duration: 0.6, ease: "easeOut" }); // Use duration from shared motion logic
 
   const displayValue = useTransform(spring, (current) => Math.round(current));
 
@@ -34,15 +34,15 @@ const NumbersThatMatter = () => {
   const checklistItems = t.checklist;
 
   return (
-    <section id="numbers" className="bg-[#0D0D1A] py-12 md:py-28 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
+    <section id="numbers" className="bg-brand-deep-navy section-padding relative overflow-hidden">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
         
         {/* Left Column */}
         <motion.div
           initial={{ opacity: 0, x: lang === 'ar' ? 30 : -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-left rtl:text-right"
         >
           {/* Tag */}
@@ -54,11 +54,11 @@ const NumbersThatMatter = () => {
             </span>
           </div>
 
-          <h2 className="font-display font-black text-brand-pure-white leading-tight uppercase mb-6 md:mb-8" style={{fontSize: 'clamp(2rem, 9vw, 4.5rem)'}}>
+          <h2 className="text-brand-pure-white mb-6 md:mb-8">
             {t.title}
           </h2>
 
-          <p className="font-body font-medium text-base md:text-xl text-brand-soft-lavender max-w-md mb-8 md:mb-12">
+          <p className="text-brand-soft-lavender max-w-md mb-8 md:mb-12">
             {t.desc}
           </p>
 
@@ -103,10 +103,10 @@ const NumbersThatMatter = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.08, ease: "easeOut" }}
             className="lg:translate-y-1 bg-brand-lavender/20 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-3 sm:p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
           >
-            <h3 className="font-display font-black text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
+            <h3 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1 leading-[1.1]">
               <Counter value={50} />+
             </h3>
             <p className="font-body font-bold text-brand-pure-white text-xs lg:text-sm uppercase tracking-tight">
@@ -119,10 +119,10 @@ const NumbersThatMatter = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.16, ease: "easeOut" }}
             className="bg-brand-electric-purple rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-3 sm:p-6 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative lg:-mt-8"
           >
-            <h3 className="font-display font-black text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1">
+            <h3 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-8xl text-brand-pure-white/40 mb-1 leading-[1.1]">
               <Counter value={100} />+
             </h3>
             <p className="font-body font-bold text-brand-pure-white text-xs lg:text-sm uppercase tracking-tight">
@@ -135,7 +135,7 @@ const NumbersThatMatter = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.24, ease: "easeOut" }}
             className="lg:translate-y-1 group relative h-44 sm:h-64 lg:h-80 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.03] lg:-mt-8"
           >
             <img 

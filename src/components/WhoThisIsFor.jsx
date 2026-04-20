@@ -35,9 +35,9 @@ const WhoThisIsFor = () => {
   return (
     <motion.section 
       id="who-it-is-for" 
-      className="relative z-20 bg-brand-deep-navy py-16 md:py-32 overflow-hidden"
+      className="relative z-20 bg-brand-deep-navy section-padding-lg overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding relative z-10">
         <div className="codo-grid items-center relative z-10">
           {/* Left Column: Content */}
           <motion.div
@@ -110,10 +110,10 @@ const WhoThisIsFor = () => {
           </motion.div>
 
           {/* Right Column: Orb */}
-          <div className="col-span-12 lg:col-span-6 relative flex min-h-[260px] w-full items-center justify-center md:min-h-[500px] order-1 lg:order-2 mb-12 lg:mb-0">
+          <div className="col-span-12 lg:col-span-6 relative flex min-h-[16.25rem] w-full items-center justify-center md:min-h-[31.25rem] order-1 lg:order-2 mb-12 lg:mb-0">
             <div className="absolute inset-0 bg-brand-electric-purple/10 blur-[100px] rounded-full scale-90" />
             
-            <div className="relative z-10 w-full h-[280px] sm:h-[350px] md:h-[500px] flex items-center justify-center">
+            <div className="relative z-10 w-full h-[17.5rem] sm:h-[21.875rem] md:h-[31.25rem] flex items-center justify-center">
               <Orb
                 hoverIntensity={2}
                 rotateOnHover
