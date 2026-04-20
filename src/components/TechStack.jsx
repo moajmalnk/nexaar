@@ -111,7 +111,7 @@ const TechStack = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="font-display font-black text-4xl md:text-6xl text-brand-pure-white uppercase tracking-tight rtl:tracking-normal rtl:normal-case mb-6 text-center"
+          className="font-display font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-brand-pure-white uppercase tracking-tight rtl:tracking-normal rtl:normal-case mb-6 text-center"
         >
           {t.title}
         </motion.h2>

@@ -250,11 +250,17 @@ const ProjectJourney = () => {
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
             fill="none"
           >
-            <path d={pathD} stroke="#2D2D3A" strokeWidth="2" strokeOpacity="0.3" fill="none" strokeLinecap="round" />
-            <motion.path
-              d={pathD} stroke="url(#snakeGradient)" strokeWidth="3" fill="none" strokeLinecap="round"
-              strokeDasharray={totalPathLen} style={{ strokeDashoffset }} filter="url(#snakeGlow)"
+            {/* Full Glowing Static Path (The "Already There" Cinematic Track) */}
+            <path 
+              d={pathD} 
+              stroke="url(#snakeGradient)" 
+              strokeWidth="4" 
+              fill="none" 
+              strokeLinecap="round" 
+              filter="url(#snakeGlow)"
+              strokeOpacity="0.7"
             />
+            {/* The orange comet glides over this pre-existing glowing track */}
             <defs>
               <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#6B20E8" />
@@ -344,10 +350,11 @@ const ProjectJourney = () => {
 
         {/* ─── MOBILE VIEW ─── */}
         <div className="block md:hidden relative pt-4 pb-12">
-          <div className="absolute top-0 bottom-0 left-[21px] rtl:left-auto rtl:right-[21px] w-0.5 bg-white/5 z-0">
+          <div className="absolute top-0 bottom-0 left-[21px] rtl:left-auto rtl:right-[21px] w-0.5 bg-gradient-to-b from-brand-electric-purple via-brand-lavender to-brand-electric-coral shadow-[0_0_10px_rgba(107,32,232,0.3)] z-0 opacity-40">
+            {/* The "Orange Ring" equivalent for mobile - a gliding dot */}
             <motion.div 
-              style={{ height: useTransform(springProgress, [0, 1], ["0%", "100%"]) }}
-              className="w-full bg-gradient-to-b from-brand-electric-purple via-brand-lavender to-brand-electric-coral shadow-[0_0_15px_rgba(107,32,232,0.4)]"
+              style={{ top: useTransform(springProgress, [0, 1], ["0%", "100%"]) }}
+              className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-electric-coral shadow-[0_0_15px_#FF5C35] z-10"
             />
           </div>
 

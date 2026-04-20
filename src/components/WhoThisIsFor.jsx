@@ -48,7 +48,7 @@ const WhoThisIsFor = () => {
             viewport={{ once: true, margin: "-100px" }}
           >
             {/* Section Tag */}
-            <motion.div variants={itemVariants} className="mb-6 flex items-center space-x-2 rtl:space-x-reverse">
+            <motion.div variants={itemVariants} className="mb-6 flex items-center justify-center lg:justify-start space-x-2 rtl:space-x-reverse">
               <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
                 <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
                 {t.tag} 
@@ -59,7 +59,7 @@ const WhoThisIsFor = () => {
             {/* Headline */}
             <motion.h2 
               variants={itemVariants}
-              className="font-display font-extrabold text-4xl md:text-5xl lg:text-7xl text-brand-pure-white leading-[1.05] mb-8"
+              className="font-display font-black text-3xl md:text-5xl lg:text-7xl text-brand-pure-white leading-[1.05] mb-8 text-center lg:text-left rtl:lg:text-right"
             >
               {t.title} <br className="hidden lg:block" />
               <span className="text-brand-electric-purple">{t.titleAccent}</span>
@@ -68,18 +68,18 @@ const WhoThisIsFor = () => {
             {/* Body Text */}
             <motion.p 
               variants={itemVariants}
-              className="font-body text-brand-soft-lavender text-lg md:text-xl max-w-xl leading-relaxed opacity-90 mb-12"
+              className="font-body text-brand-soft-lavender text-lg md:text-xl max-w-xl leading-relaxed opacity-90 mb-12 text-center lg:text-left rtl:lg:text-right mx-auto lg:mx-0"
             >
               {t.description}
             </motion.p>
 
             {/* Checklist */}
-            <div className="space-y-6">
+            <div className="space-y-6 flex flex-col items-center lg:items-start">
               {checklistItems.map((item, index) => (
                 <motion.div 
                   key={index}
                   variants={itemVariants}
-                  className="flex items-start space-x-4 rtl:space-x-reverse group"
+                  className="flex items-start space-x-4 rtl:space-x-reverse group w-full max-w-xs md:max-w-md lg:max-w-none px-4 md:px-0"
                 >
                   <div className="mt-1 flex-shrink-0">
                     <div className="w-6 h-6 rounded-lg bg-brand-electric-purple/10 flex items-center justify-center transition-all duration-300 group-hover:bg-brand-electric-purple/20">
@@ -101,7 +101,7 @@ const WhoThisIsFor = () => {
                       </svg>
                     </div>
                   </div>
-                  <span className="font-body font-medium text-brand-pure-white text-lg">
+                  <span className="font-body font-medium text-brand-pure-white text-base md:text-lg text-left rtl:text-right">
                     {item}
                   </span>
                 </motion.div>

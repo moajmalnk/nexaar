@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 import { BRAND_CONFIG } from '../utils/constants';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
@@ -29,18 +29,21 @@ const SECTION_IDS = [
 ];
 
 /* ── shared link items ── */
-const LinkItem = ({ link, isActive, isHovered, onHover, onClick, variant }) => {
+const LinkItem = ({ link, isActive, isHovered, onHover, onClick, variant, isLegalPage }) => {
+  // Suppress visual active/hover states on legal pages
+  const showEffect = !isLegalPage && (isActive || isHovered);
+
   return (
     <a
       href={link.href}
       className="relative flex items-center justify-center py-2 px-2 xl:px-3 group focus:outline-none"
       onMouseEnter={() => onHover(link.name)}
       onMouseLeave={() => onHover(null)}
-      onClick={onClick}
+      onClick={(e) => onClick(e, link.name, link.href)}
     >
       <span 
         className={`relative z-10 transition-colors duration-300 font-body text-sm font-medium ${
-          isActive || isHovered ? 'text-brand-electric-purple' : 'text-brand-pure-white/60'
+          showEffect ? 'text-brand-electric-purple' : 'text-brand-pure-white/60'
         }`}
       >
         {link.name}
@@ -50,8 +53,8 @@ const LinkItem = ({ link, isActive, isHovered, onHover, onClick, variant }) => {
       <motion.div
         initial={{ scaleX: 0, opacity: 0 }}
         animate={{ 
-          scaleX: isHovered || isActive ? 1 : 0,
-          opacity: isHovered || isActive ? 1 : 0 
+          scaleX: showEffect ? 1 : 0,
+          opacity: showEffect ? 1 : 0 
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-electric-purple origin-center"
@@ -69,7 +72,7 @@ const LinkItem = ({ link, isActive, isHovered, onHover, onClick, variant }) => {
 function DesktopNav({
   activeLink, hovered, onHover, onClick, onMobileOpen,
   variant, menuButtonRef, isMobileOpen,
-  lang, toggleLanguage, t, NAV_LINKS,
+  lang, toggleLanguage, t, NAV_LINKS, isLegalPage, pathname,
 }) {
   const isPill = variant === 'pill';
 
@@ -100,6 +103,16 @@ function DesktopNav({
       <div className="flex items-center gap-2 xl:gap-5">
         <Link
           to="/"
+          onClick={(e) => {
+            if (pathname === '/') {
+              e.preventDefault();
+              if (window.lenis) {
+                window.lenis.scrollTo(0, { duration: 1.5 });
+              } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }
+          }}
           className="transition-opacity duration-300 hover:opacity-80 border-none outline-none rounded-lg p-1"
         >
           <NexaarLogo size="md" color={isPill ? 'white' : 'purple'} />
@@ -117,6 +130,7 @@ function DesktopNav({
             onHover={onHover}
             onClick={onClick}
             variant={variant}
+            isLegalPage={isLegalPage}
           />
         ))}
       </nav>
@@ -207,6 +221,9 @@ function DesktopNav({
 ───────────────────────────────────────────── */
 export default function Navbar() {
   const { lang, toggleLanguage } = useLanguage();
+  const { pathname } = useLocation();
+  const isLegalPage = pathname === '/privacy' || pathname === '/terms';
+
   const t = translations[lang].nav;
   const NAV_LINKS = getNavLinks(lang);
 
@@ -221,25 +238,23 @@ export default function Navbar() {
   // Visibility logic (Hide on scroll down, show on scroll up)
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY < 10 || isMobileOpen) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY) {
-        setIsVisible(false); // Scrolling down
-      } else {
-        setIsVisible(true); // Scrolling up
-      }
-      
-      setLastScrollY(currentScrollY);
-    };
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    // Threshold to prevent jitter (e.g., small bounce on mobile)
+    const diff = latest - lastScrollY;
+    if (Math.abs(diff) < 20 && latest > 50) return;
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+    if (latest < 50 || isMobileOpen) {
+      setIsVisible(true);
+    } else if (diff > 0) {
+      setIsVisible(false); // Scrolling down
+    } else if (diff < -15) {
+      setIsVisible(true); // Scrolling up - wait for deliberate move
+    }
+    
+    setLastScrollY(latest);
+  });
 
   const langRef = useRef(lang);
   useEffect(() => { langRef.current = lang; }, [lang]);
@@ -319,7 +334,17 @@ export default function Navbar() {
     }
   }, [lang, activeLink]);
 
-  const handleLinkClick = (name) => {
+  const handleLinkClick = (e, name, href) => {
+    // Smooth scroll for hash links on desktop (where Lenis is enabled)
+    if (window.lenis && href && href.startsWith('/#')) {
+      e.preventDefault();
+      const targetId = href.replace('/', ''); // e.g., '#services'
+      window.lenis.scrollTo(targetId, {
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    }
+
     setActiveLink(name);
     setIsMobileOpen(false);
   };
@@ -357,6 +382,8 @@ export default function Navbar() {
           toggleLanguage={toggleLanguage}
           t={t}
           NAV_LINKS={NAV_LINKS}
+          isLegalPage={isLegalPage}
+          pathname={pathname}
         />
       </div>
 
@@ -417,16 +444,16 @@ export default function Navbar() {
                     >
                       <a
                         href={link.href}
-                        onClick={() => handleLinkClick(link.name)}
+                        onClick={(e) => handleLinkClick(e, link.name, link.href)}
                         className="relative group flex items-center py-2.5 px-4 rounded-2xl transition-all duration-300"
                       >
                         <span
                           className="relative z-10 font-body text-[1.0625rem] tracking-wide transition-colors duration-300"
-                          style={{ color: isActive ? 'var(--color-brand-electric-purple, #6B20E8)' : 'rgba(255,255,255,0.6)' }}
+                          style={{ color: (isActive && !isLegalPage) ? 'var(--color-brand-electric-purple, #6B20E8)' : 'rgba(255,255,255,0.6)' }}
                         >
                           {link.name}
                         </span>
-                        {isActive && (
+                        {(isActive && !isLegalPage) && (
                           <motion.span
                             layoutId="mobile-dot"
                             className="ml-auto w-1.5 h-1.5 rounded-full bg-brand-electric-purple"
