@@ -59,9 +59,9 @@ const Hero = () => {
         <source src="/videos/background.mp4" type="video/mp4" />
       </video>
 
-      {/* Brand Accents - 40% Dominance */}
-      <div className="absolute inset-x-0 top-0 h-full z-0 bg-[radial-gradient(circle_at_20%_30%,rgba(107,32,232,0.20),transparent_70%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-full z-0 bg-[radial-gradient(circle_at_80%_70%,rgba(107,32,232,0.18),transparent_70%)]" />
+      {/* Brand Accents - Dominant Identity Role */}
+      <div className="absolute inset-x-0 top-0 h-full z-0 bg-[radial-gradient(circle_at_20%_30%,rgba(107,32,232,0.30),transparent_60%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-full z-0 bg-[radial-gradient(circle_at_80%_70%,rgba(107,32,232,0.25),transparent_70%)]" />
       
       {/* Subtle brand tint to keep it tech-focused */}
       <div className="absolute inset-0 z-0 bg-brand-electric-purple/5 mix-blend-color" />
@@ -129,10 +129,10 @@ const Hero = () => {
                   href={`https://wa.me/${BRAND_CONFIG.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="primary"
+                  variant="accent"
                   size="large"
                   caps={true}
-                  className="w-full sm:w-auto min-w-[12.5rem]"
+                  className="w-full sm:w-auto min-w-[12.5rem] shadow-coral-glow/30"
                 >
                   {t.ctaPrimary}
                 </Button>

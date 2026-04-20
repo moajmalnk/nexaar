@@ -5,9 +5,10 @@ import { translations } from '../utils/translations';
 
 // ─── Sub-Component: Desktop Journey Step ──────────────────────────────
 // This safely houses the useTransform hook at the top level of its own lifecycle.
-const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topOffset }) => {
-  const stepProgressStart = (index - 0.2) / 5; // steps.length is 5
-  const opacity = useTransform(springProgress, [stepProgressStart, stepProgressStart + 0.1], [0.4, 1]);
+const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topOffset, progressPoints }) => {
+  const nodeProgress = progressPoints[index * 2];
+  // Starts appearing 10% before reaching the node, stays at 100% after
+  const opacity = useTransform(springProgress, [nodeProgress - 0.1, nodeProgress], [0, 1]);
 
   return (
     <div 
@@ -16,12 +17,8 @@ const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topO
     >
       <motion.div
         style={{ opacity }}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative bg-[#0D0D1A]/90 border border-brand-electric-purple/20 p-8 rounded-2xl shadow-ambient overflow-hidden text-left rtl:text-right"
       >
-        <div className="relative bg-[#0D0D1A]/90 border border-brand-electric-purple/20 p-8 rounded-2xl shadow-ambient overflow-hidden text-left rtl:text-right">
           <div className={`absolute top-0 opacity-10 ${isEven ? 'right-0' : 'left-0'} w-24 h-24 bg-brand-electric-purple/30 blur-2xl rounded-full`} />
           <div className="flex items-center gap-3 mb-4 rtl:flex-row-reverse">
             <span className="flex h-8 w-8 items-center justify-center rounded-full border border-brand-electric-purple/30 bg-brand-electric-purple/10 font-display text-xs font-bold text-brand-electric-purple">
@@ -37,8 +34,7 @@ const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topO
               {step.desc}
             </p>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
     </div>
   );
 };
@@ -122,10 +118,32 @@ const ProjectJourney = () => {
   const rightX = svgWidth - (isMobile ? 30 : 100);   
   const curveRadius = isMobile ? 40 : 60;          
 
-  const { pathD, totalPathLen } = useMemo(() => {
+  // Helper: Precise cubic bezier length approximation
+  const getBezierLength = (p0, p1, p2, p3) => {
+    const steps = 20;
+    let length = 0;
+    let px = p0.x;
+    let py = p0.y;
+
+    for (let i = 1; i <= steps; i++) {
+        const t = i / steps;
+        const cx = Math.pow(1 - t, 3) * p0.x + 3 * Math.pow(1 - t, 2) * t * p1.x + 3 * (1 - t) * Math.pow(t, 2) * p2.x + Math.pow(t, 3) * p3.x;
+        const cy = Math.pow(1 - t, 3) * p0.y + 3 * Math.pow(1 - t, 2) * t * p1.y + 3 * (1 - t) * Math.pow(t, 2) * p2.y + Math.pow(t, 3) * p3.y;
+        length += Math.sqrt(Math.pow(cx - px, 2) + Math.pow(cy - py, 2));
+        px = cx;
+        py = cy;
+    }
+    return length;
+  };
+
+  const { pathD, totalPathLen, segmentProgressPoints } = useMemo(() => {
     let d = '';
+    let totalLen = 0;
+    const progressPoints = [0];
     const horizontalLen = rightX - leftX;
     const computeNodeY = (i) => rowHeight * i + rowHeight / 2;
+    
+    const segmentLengths = [];
     
     for (let i = 0; i < totalRows; i++) {
       const y = computeNodeY(i);
@@ -134,18 +152,38 @@ const ProjectJourney = () => {
       const endX = rowStartsRight ? leftX : rightX;
 
       if (i === 0) d += `M ${startX} ${y}`;
+      
+      // Horizontal segment
       d += ` L ${endX} ${y}`;
+      segmentLengths.push(horizontalLen);
+      totalLen += horizontalLen;
+      progressPoints.push(totalLen);
 
       if (i < totalRows - 1) {
         const nextY = computeNodeY(i + 1);
+        const p0 = { x: endX, y: y };
+        const p3 = { x: startX, y: nextY };
+        let p1, p2;
+
         if (rowStartsRight) {
-          d += ` C ${endX - curveRadius} ${y}, ${endX - curveRadius} ${nextY}, ${leftX} ${nextY}`;
+          p1 = { x: endX - curveRadius, y: y };
+          p2 = { x: endX - curveRadius, y: nextY };
+          d += ` C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${p3.x} ${p3.y}`;
         } else {
-          d += ` C ${endX + curveRadius} ${y}, ${endX + curveRadius} ${nextY}, ${rightX} ${nextY}`;
+          p1 = { x: endX + curveRadius, y: y };
+          p2 = { x: endX + curveRadius, y: nextY };
+          d += ` C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${p3.x} ${p3.y}`;
         }
+
+        const curveLen = getBezierLength(p0, p1, p2, p3);
+        segmentLengths.push(curveLen);
+        totalLen += curveLen;
+        progressPoints.push(totalLen);
       }
     }
-    return { pathD: d, totalPathLen: totalRows * horizontalLen + (totalRows - 1) * 300 }; 
+    
+    const normalizedPoints = progressPoints.map(p => p / totalLen);
+    return { pathD: d, totalPathLen: totalLen, segmentProgressPoints: normalizedPoints }; 
   }, [totalRows, isRTL, rightX, leftX, curveRadius, rowHeight]);
 
   const nodePositions = useMemo(() => {
@@ -158,12 +196,12 @@ const ProjectJourney = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    offset: ["start 50%", "end 50%"]
   });
 
   const springProgress = useSpring(scrollYProgress, {
-    stiffness: 40,
-    damping: 20,
+    stiffness: 80,
+    damping: 30,
     restDelta: 0.001
   });
 
@@ -232,18 +270,53 @@ const ProjectJourney = () => {
             {nodePositions.map((pos, i) => {
               const rowStartsRight = isRTL ? (i % 2 === 0) : (i % 2 !== 0);
               const cardX = rowStartsRight ? leftX : rightX;
+              
+              // Node i corresponds to segmentProgressPoints[i * 2]
+              const nodeProgress = segmentProgressPoints[i * 2];
+              
+              const scale = useTransform(springProgress, 
+                [nodeProgress - 0.05, nodeProgress, nodeProgress + 0.05], 
+                [0.8, 1.2, 1]
+              );
+              const opacity = useTransform(springProgress,
+                [nodeProgress - 0.05, nodeProgress],
+                [0.2, 1]
+              );
+              const shadowOpacity = useTransform(springProgress,
+                [nodeProgress - 0.05, nodeProgress, nodeProgress + 0.05],
+                [0, 1, 0.4]
+              );
+
               return (
                 <g key={i}>
                   <circle cx={cardX} cy={pos.y} r="14" fill="#0D0D1A" stroke="#2D2D3A" strokeWidth="2" />
                   <motion.circle
                     cx={cardX} cy={pos.y} r="7" fill="#6B20E8"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
+                    style={{ scale, opacity }}
+                  />
+                  {/* Glow effect when active */}
+                  <motion.circle
+                    cx={cardX} cy={pos.y} r="12"
+                    fill="none"
+                    stroke="#6B20E8"
+                    strokeWidth="2"
+                    style={{ opacity: shadowOpacity, scale: useTransform(scale, [1, 1.2], [1, 1.5]) }}
                   />
                 </g>
               );
             })}
+
+            {/* Glowing Tip (Comet Head) */}
+            <motion.circle
+              r="6"
+              fill="#FF5C35"
+              filter="url(#snakeGlow)"
+              style={{
+                offsetPath: `path("${pathD}")`,
+                offsetDistance: useTransform(springProgress, [0, 1], ["0%", "100%"]),
+                boxShadow: '0 0 20px #FF5C35'
+              }}
+            />
           </svg>
 
           <div className="relative z-10 w-full h-full">
@@ -262,6 +335,7 @@ const ProjectJourney = () => {
                   shouldBeOnLeft={shouldBeOnLeft} 
                   topOffset={`${topOffset}rem`}
                   isRTL={isRTL}
+                  progressPoints={segmentProgressPoints}
                 />
               );
             })}

@@ -33,14 +33,14 @@ const LinkItem = ({ link, isActive, isHovered, onHover, onClick, variant }) => {
   return (
     <a
       href={link.href}
-      className="relative flex items-center justify-center py-2 px-1.5 xl:px-3 group focus:outline-none"
+      className="relative flex items-center justify-center py-2 px-2 xl:px-3 group focus:outline-none"
       onMouseEnter={() => onHover(link.name)}
       onMouseLeave={() => onHover(null)}
       onClick={onClick}
     >
       <span 
-        className={`relative z-10 transition-colors duration-300 font-display font-medium text-[0.75rem] xl:text-[0.8125rem] tracking-widest uppercase ${
-          isActive || isHovered ? 'text-brand-pure-white' : 'text-brand-pure-white/60'
+        className={`relative z-10 transition-colors duration-300 font-body text-sm font-medium ${
+          isActive || isHovered ? 'text-brand-electric-purple' : 'text-brand-pure-white/60'
         }`}
       >
         {link.name}
@@ -54,9 +54,9 @@ const LinkItem = ({ link, isActive, isHovered, onHover, onClick, variant }) => {
           opacity: isHovered || isActive ? 1 : 0 
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-electric-coral origin-center"
+        className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-electric-purple origin-center"
         style={{
-          boxShadow: '0 0 10px rgba(255,92,53,0.4)',
+          boxShadow: '0 0 10px rgba(107,32,232,0.4)',
           width: '70%',
           margin: '0 auto'
         }}
@@ -80,35 +80,35 @@ function DesktopNav({
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -12 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className={`absolute inset-x-0 mx-auto flex items-center justify-between transition-all duration-500 ${
+      className={`absolute inset-x-0 mx-auto flex items-center justify-between ${
         isPill
-          ? 'top-0 left-0 right-0 w-full rounded-none px-6 py-4 xl:top-5 xl:left-4 xl:right-4 xl:max-w-[1440px] xl:w-[94%] xl:rounded-full xl:px-10 xl:py-3.5'
-          : 'top-0 px-6 lg:px-10 xl:px-16 h-[72px]'
+          ? 'w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-7xl top-4 sm:top-5 rounded-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4'
+          : 'w-full top-0 px-4 sm:px-8 lg:px-12 xl:px-16 h-[80px]'
       }`}
       style={{
         background: isPill ? 'rgba(13,13,26,0.92)' : 'rgba(13,13,26,0.98)',
-        border: isPill ? '1px solid rgba(107,32,232,0.15)' : 'none',
+        border: isPill ? '1px solid rgba(107,32,232,0.42)' : 'none',
         borderBottom: isPill ? 'none' : '1px solid rgba(107,32,232,0.22)',
         backdropFilter: isPill ? 'blur(16px)' : 'blur(20px)',
         WebkitBackdropFilter: isPill ? 'blur(16px)' : 'blur(20px)',
         boxShadow: isPill
-          ? '0 0 0 1px rgba(107,32,232,0.05), 0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)'
+          ? '0 0 0 1px rgba(107,32,232,0.1), 0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)'
           : '0 1px 0 rgba(107,32,232,0.15), 0 10px 40px rgba(0,0,0,0.55)',
         whiteSpace: 'nowrap',
       }}
     >
-      <div className="flex items-center gap-4 xl:gap-5">
+      <div className="flex items-center gap-2 xl:gap-5">
         <Link
           to="/"
-          className="transition-opacity duration-300 hover:opacity-80 border-none outline-none focus:ring-2 focus:ring-brand-electric-purple/50 rounded-lg p-1.5 -ml-1.5"
+          className="transition-opacity duration-300 hover:opacity-80 border-none outline-none rounded-lg p-1"
         >
           <NexaarLogo size="md" color={isPill ? 'white' : 'purple'} />
         </Link>
-        <span className="h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
+        <span className="hidden xl:block h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
       </div>
 
-      <nav className={`hidden xl:flex items-center gap-0.5 xl:gap-1 mx-2 xl:mx-6`}>
-        {NAV_LINKS.map(link => (
+      <nav className="hidden lg:flex items-center gap-1 lg:gap-3 xl:gap-6 mx-auto">
+        {NAV_LINKS.filter(link => link.href !== '/#home').map(link => (
           <LinkItem
             key={link.name}
             link={link}
@@ -121,9 +121,9 @@ function DesktopNav({
         ))}
       </nav>
 
-      <div className="hidden xl:flex items-center gap-3 xl:gap-5">
+      <div className="hidden lg:flex items-center gap-3 xl:gap-5">
         {!isPill && (
-          <span className="hidden 2xl:flex items-center gap-2">
+          <span className="hidden xl:flex items-center gap-2">
             <motion.span
               animate={{ scale: [1, 0.7, 1], opacity: [1, 0.4, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
@@ -135,10 +135,10 @@ function DesktopNav({
             </span>
           </span>
         )}
-        <span className="h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
+        <span className="hidden xl:block h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
         <button
           onClick={toggleLanguage}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-brand-electric-purple/10 hover:border-brand-electric-purple/40 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-brand-electric-purple/50"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-brand-electric-purple/10 hover:border-brand-electric-purple/40 transition-all duration-300 group focus:outline-none"
           aria-label="Toggle Language"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand-electric-purple transition-transform duration-500 group-hover:rotate-[30deg]">
@@ -146,26 +146,30 @@ function DesktopNav({
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
           </svg>
-          <span className="font-display font-medium text-[0.75rem] tracking-wider text-brand-pure-white">
+          <span className="font-display font-black text-[0.6875rem] xl:text-[0.75rem] tracking-wider text-brand-pure-white">
             {lang === 'en' ? 'AR' : 'EN'}
           </span>
         </button>
         <Button
           as="a"
-          href={`https://wa.me/${BRAND_CONFIG.whatsapp}`}
+          href={`https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(
+            lang === 'en' 
+              ? "Hello Nexaar! I'm interested in building a digital solution for my business."
+              : "مرحباً نكسار! أنا مهتم ببناء حل رقمي لأعمالي."
+          )}`}
           target="_blank"
           rel="noopener noreferrer"
-          variant="ghost"
+          variant="accent"
           size="small"
           caps={true}
-          className="rounded-full border border-white/10 bg-white/5 hover:bg-brand-electric-purple/10 hover:border-brand-electric-purple/40 px-5"
+          className="rounded-full px-5 xl:px-6 shadow-coral-glow/20"
         >
           {t.getStarted}
         </Button>
       </div>
 
       {/* Mobile Right Controls */}
-      <div className="flex lg:hidden items-center gap-2">
+      <div className="flex lg:hidden items-center gap-3">
         <button
           onClick={toggleLanguage}
           className="flex items-center gap-1.5 px-2 py-1 rounded-full border border-white/10 bg-white/5 active:bg-white/10 transition-all focus:outline-none"
@@ -176,14 +180,14 @@ function DesktopNav({
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
           </svg>
-          <span className="font-display font-medium text-[0.6875rem] text-brand-pure-white uppercase">
+          <span className="font-display font-black text-[0.6875rem] text-brand-pure-white uppercase">
             {lang === 'en' ? 'AR' : 'EN'}
           </span>
         </button>
         <span className="h-[14px] w-px bg-brand-electric-purple/30 shrink-0" />
         <button
           ref={menuButtonRef}
-          className="text-brand-pure-white p-1 rounded-lg hover:bg-white/5 transition-colors"
+          className="text-brand-pure-white p-1 rounded-lg hover:bg-white/5 transition-colors focus:outline-none"
           onClick={onMobileOpen}
           aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isMobileOpen}
@@ -417,16 +421,16 @@ export default function Navbar() {
                         className="relative group flex items-center py-2.5 px-4 rounded-2xl transition-all duration-300"
                       >
                         <span
-                          className="relative z-10 font-display font-medium text-[1.0625rem] tracking-wide transition-colors duration-300"
-                          style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.6)' }}
+                          className="relative z-10 font-body text-[1.0625rem] tracking-wide transition-colors duration-300"
+                          style={{ color: isActive ? 'var(--color-brand-electric-purple, #6B20E8)' : 'rgba(255,255,255,0.6)' }}
                         >
                           {link.name}
                         </span>
                         {isActive && (
                           <motion.span
                             layoutId="mobile-dot"
-                            className="ml-auto w-1.5 h-1.5 rounded-full bg-brand-coral"
-                            style={{ boxShadow: '0 0 10px rgba(255,92,53,0.5)' }}
+                            className="ml-auto w-1.5 h-1.5 rounded-full bg-brand-electric-purple"
+                            style={{ boxShadow: '0 0 10px rgba(107,32,232,0.5)' }}
                           />
                         )}
                       </a>
@@ -438,11 +442,15 @@ export default function Navbar() {
               <div className="mt-auto pt-5 border-t border-brand-electric-purple/20 flex flex-col gap-4">
                 <Button
                   as="a"
-                  href={`https://wa.me/${BRAND_CONFIG.whatsapp}`}
+                  href={`https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(
+                    lang === 'en' 
+                      ? "Hello Nexaar! I'm interested in building a digital solution for my business."
+                      : "مرحباً نكسار! أنا مهتم ببناء حل رقمي لأعمالي."
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="ghost"
-                  className="w-full !py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-brand-electric-purple/10 hover:border-brand-electric-purple/40"
+                  variant="accent"
+                  className="w-full !py-4 rounded-2xl shadow-coral-glow/20"
                   caps={true}
                 >
                   {t.getStarted}

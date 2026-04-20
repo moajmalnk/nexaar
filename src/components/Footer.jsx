@@ -52,7 +52,7 @@ const SocialLink = ({ href, icon: Icon, label }) => (
     rel="noopener noreferrer"
     whileHover={{ y: -4, scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
-    className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-brand-electric-purple/20 hover:border-brand-electric-purple/30 transition-all duration-300 shadow-xl"
+    className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-brand-electric-purple/20 hover:border-brand-electric-purple/30 transition-all duration-300 shadow-xl outline-none"
     aria-label={label}
   >
     <Icon className="w-5 h-5" />
@@ -88,17 +88,17 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
-    services: [
-      { name: lang === 'ar' ? "تطوير الويب" : "Web Development" },
-      { name: lang === 'ar' ? "تطبيقات الجوال" : "Mobile Apps" },
-      { name: lang === 'ar' ? "تصميم واجهة ومستخدم" : "UI/UX Design" },
-      { name: lang === 'ar' ? "الهوية التجارية" : "Branding" },
-    ],
+    services: translations[lang].services.items.map(s => ({
+      name: s.title,
+      href: "/#services"
+    })),
     company: [
-      { name: lang === 'ar' ? "من نحن" : "About Us", href: "#who-it-is-for" },
-      { name: lang === 'ar' ? "أعمالنا" : "Portfolio", href: "#portfolio" },
-      { name: lang === 'ar' ? "العمل معنا" : "Work With Us", href: "#faq" },
-      { name: lang === 'ar' ? "اتصل بنا" : "Contact", href: "#home" },
+      { name: translations[lang].nav.about,     href: "/#who-it-is-for" },
+      { name: translations[lang].nav.services,  href: "/#services" },
+      { name: translations[lang].nav.portfolio, href: "/#portfolio" },
+      { name: translations[lang].nav.why,       href: "/#why-us" },
+      { name: translations[lang].nav.process,   href: "/#process" },
+      { name: translations[lang].nav.tech,      href: "/#tech-stack" },
     ]
   };
 
@@ -110,10 +110,13 @@ const Footer = () => {
           {/* Section: Brand & Info */}
           <div className="col-span-12 lg:col-span-5 space-y-12">
             <div className="space-y-6">
-              <div className="flex items-center">
+              <Link 
+                to="/" 
+                className="flex items-center w-max transition-opacity hover:opacity-80 outline-none border-none group"
+              >
                 <NexaarLogo size="lg" color="white" />
-                <span className="text-brand-electric-purple text-lg ml-1 rtl:mr-1 rtl:ml-0 font-display font-black">®</span>
-              </div>
+                <span className="text-brand-electric-purple text-lg ml-1 rtl:mr-1 rtl:ml-0 font-display font-black group-hover:translate-x-0.5 transition-transform">®</span>
+              </Link>
               <p className="font-body text-brand-soft-lavender/60 max-w-sm leading-relaxed text-[0.9375rem]">
                 {t.desc}
               </p>
@@ -137,11 +140,11 @@ const Footer = () => {
                   {t.links.connect}
                 </h4>
                 <div className="space-y-4">
-                  <a href={`mailto:${t.mail}`} className="block font-body text-brand-soft-lavender/60 hover:text-white text-[0.875rem] transition-colors break-words">
-                    {t.mail}
+                  <a href={`mailto:${BRAND_CONFIG.email}`} className="block font-body text-brand-soft-lavender/60 hover:text-white text-[0.875rem] transition-colors break-words">
+                    {BRAND_CONFIG.email}
                   </a>
                   <p className="font-display font-bold text-[0.625rem] text-brand-electric-purple uppercase tracking-widest border border-brand-electric-purple/20 px-3 py-1.5 rounded-full inline-block">
-                    {t.location}
+                    {BRAND_CONFIG.location}
                   </p>
                 </div>
               </div>
@@ -150,7 +153,7 @@ const Footer = () => {
         </div>
 
         {/* Section: Legal Bar */}
-        <div className="mt-10 lg:mt-32 pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+        <div className="mt-12 pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
           <p className="font-body text-white/20">
             © {currentYear} {t.rights}
           </p>
