@@ -84,9 +84,9 @@ const Hero = () => {
             {/* Mobile-Only Ambient Glow for depth */}
             <div className="absolute inset-x-0 -top-10 -bottom-10 bg-brand-electric-purple/10 blur-[80px] rounded-full block md:hidden pointer-events-none" />
 
-            <div className="relative z-10">
+            <div className="relative z-10 flex flex-col items-center">
               <MaskSlide delay={0.22} duration={0.6}>
-                <h1 className="font-display font-extrabold text-brand-pure-white mb-2 tracking-tight drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+                <h1 className="font-display font-extrabold text-brand-pure-white text-4xl sm:text-6xl md:text-7xl mb-2 tracking-tight drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
                   {lang === 'ar' ? (
                     <>
                       <span className="text-brand-electric-coral italic">{t.title1Accent}</span>
@@ -102,7 +102,7 @@ const Hero = () => {
               </MaskSlide>
 
               <MaskSlide delay={0.3} duration={0.6}>
-                <h1 className="font-display font-extrabold text-brand-pure-white mb-3 md:mb-4 tracking-tight drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
+                <h1 className="font-display font-extrabold text-brand-pure-white text-4xl sm:text-6xl md:text-7xl mb-8 tracking-tight drop-shadow-[0_0_15px_rgba(107,32,232,0.4)]">
                   {t.title2}
                 </h1>
               </MaskSlide>
@@ -112,14 +112,19 @@ const Hero = () => {
           {/* Subtext: centered within grid */}
           <div className="col-span-12 lg:col-start-3 lg:col-span-8 text-center relative z-10">
             <MaskSlide delay={0.38} duration={0.6}>
-              <p className="text-brand-soft-lavender text-body font-body font-normal max-w-3xl mx-auto mb-5 md:mb-6 leading-[1.6] opacity-90 px-4 md:px-0 tagline">
+              {/* Desktop Subtitle */}
+              <p className="hidden md:block text-brand-soft-lavender text-lg md:text-xl font-body font-normal max-w-3xl mx-auto mb-12 leading-relaxed opacity-90 tagline">
                 {t.subtitle}
+              </p>
+              {/* Mobile Subtitle */}
+              <p className="block md:hidden text-brand-soft-lavender text-base font-body font-normal max-w-3xl mx-auto mb-10 leading-relaxed opacity-90 px-4 tagline">
+                {t.subtitleMobile}
               </p>
             </MaskSlide>
           </div>
 
           {/* CTA buttons: premium design */}
-          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-[1.5rem] relative z-20 mt-8 md:mt-12">
+          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-[1.5rem] relative z-20">
             <FadeUp delay={0.46}>
               <div className="flex w-full flex-col sm:flex-row items-center justify-center gap-[1.5rem]">
 
