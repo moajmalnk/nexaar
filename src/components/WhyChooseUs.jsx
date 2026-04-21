@@ -7,12 +7,11 @@ import { translations } from '../utils/translations';
 const PillarCard = ({ card, index, progress, totalCards, t }) => {
   const reduceMotion = useReducedMotion();
 
-  const rangeStart = (index + 1) / totalCards;
-  const rangeEnd = Math.min(rangeStart + (1 / totalCards), 1);
+  const rangeStart = index / totalCards;
+  const rangeEnd = (index + 1) / totalCards;
 
-  const targetScale = 1 - ((totalCards - 1 - index) * 0.04);
-  const rawScale = useTransform(progress, [rangeStart, rangeEnd], [1, targetScale]);
-  const scale = (index === totalCards - 1 || reduceMotion) ? 1 : rawScale;
+  const targetScale = 1 - ((totalCards - 1 - index) * 0.05);
+  const scale = useTransform(progress, [rangeStart, rangeEnd], [1, targetScale]);
 
   return (
     <div
@@ -21,8 +20,17 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
     >
       <div className="h-full w-full flex items-start justify-center px-4 md:px-8">
         <motion.div
-          style={{ scale, top: `calc(5.5rem + ${index * (typeof window !== 'undefined' && window.innerWidth < 768 ? 1.25 : 2.25)}rem)` }}
-          className="relative w-full max-w-5xl min-h-[380px] md:min-h-[440px] rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-8 md:p-12 lg:p-16 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-8 md:gap-12 lg:gap-16 origin-top group overflow-hidden"
+          style={{ 
+            scale: reduceMotion ? 1 : scale, 
+          }}
+          className={`motion-gpu-safe relative w-full max-w-5xl min-h-[400px] md:min-h-[440px] rounded-3xl border border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.7)] p-8 md:p-12 lg:p-14 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-8 md:gap-12 lg:gap-16 origin-top group overflow-hidden ${
+             index === 0 ? 'top-[6.5rem]' :
+             index === 1 ? 'top-[8rem] md:top-[9rem]' :
+             index === 2 ? 'top-[9.5rem] md:top-[11.5rem]' :
+             index === 3 ? 'top-[11rem] md:top-[14rem]' :
+             index === 4 ? 'top-[12.5rem] md:top-[16.5rem]' :
+             'top-[14rem] md:top-[19rem]'
+          }`}
         >
           {/* Background and lighting effects */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#12122A] to-[#0D0D1A] pointer-events-none" />
@@ -61,7 +69,7 @@ const PillarCard = ({ card, index, progress, totalCards, t }) => {
 const WhyChooseUs = () => {
   const { lang } = useLanguage();
   const t = translations[lang].whyChoose;
-  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
 
   const cards = t.pillars.map((p, i) => ({
     id: `0${i + 1}`,
@@ -69,17 +77,16 @@ const WhyChooseUs = () => {
   }));
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: containerRef,
     offset: ['start start', 'end end']
   });
 
   return (
     <section
       id="why-us"
-      ref={sectionRef}
       className="relative bg-brand-deep-navy"
     >
-      <div className="relative pt-12 md:pt-32 pb-8 md:pb-12 px-5 max-w-[1240px] w-[92%] mx-auto text-center">
+      <div className="relative pt-20 md:pt-32 pb-16 md:pb-24 px-5 max-w-[1240px] w-[92%] mx-auto text-center">
         <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
           <span className="font-body font-medium text-sm text-brand-pure-white flex items-center text-center opacity-80">
             <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span>
@@ -100,8 +107,9 @@ const WhyChooseUs = () => {
 
       {/* Sticky-stack layout for all screens */}
       <div
+        ref={containerRef}
         className="relative"
-        style={{ height: `${cards.length * 105}vh` }}
+        style={{ height: `${cards.length * 100}vh` }}
       >
         {cards.map((card, i) => (
           <PillarCard

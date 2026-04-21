@@ -59,7 +59,7 @@ const WhoThisIsFor = () => {
             {/* Headline */}
             <motion.h2 
               variants={itemVariants}
-              className="font-display font-black text-3xl md:text-5xl lg:text-7xl text-brand-pure-white leading-[1.05] mb-8 text-center lg:text-left rtl:lg:text-right"
+              className="font-display font-black text-3xl md:text-5xl lg:text-7xl text-brand-pure-white leading-[1.05] mb-6 md:mb-10 text-center lg:text-left rtl:lg:text-right"
             >
               {t.title} <br className="hidden lg:block" />
               <span className="text-brand-electric-purple">{t.titleAccent}</span>
@@ -79,7 +79,7 @@ const WhoThisIsFor = () => {
                 <motion.div 
                   key={index}
                   variants={itemVariants}
-                  className="flex items-start space-x-4 rtl:space-x-reverse group w-full max-w-xs md:max-w-md lg:max-w-none px-4 md:px-0"
+                  className="flex items-start space-x-4 rtl:space-x-reverse group w-full max-w-md lg:max-w-none"
                 >
                   <div className="mt-1 flex-shrink-0">
                     <div className="w-6 h-6 rounded-lg bg-brand-electric-purple/10 flex items-center justify-center transition-all duration-300 group-hover:bg-brand-electric-purple/20">

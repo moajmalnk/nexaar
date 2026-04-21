@@ -1,13 +1,49 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
 
-// ─── Sub-Component: Desktop Journey Step ──────────────────────────────
-// This safely houses the useTransform hook at the top level of its own lifecycle.
+/* ─── Sub-Component: Journey Node (Hooks Isolation) ────────── */
+const JourneyNode = ({ index, pos, springProgress, segmentProgressPoints, isRTL, leftX, rightX }) => {
+  const rowStartsRight = isRTL ? (index % 2 === 0) : (index % 2 !== 0);
+  const cardX = rowStartsRight ? leftX : rightX;
+  
+  const nodeProgress = segmentProgressPoints[index * 2];
+  
+  const scale = useTransform(springProgress, 
+    [nodeProgress - 0.05, nodeProgress, nodeProgress + 0.05], 
+    [0.8, 1.2, 1]
+  );
+  const opacity = useTransform(springProgress,
+    [nodeProgress - 0.05, nodeProgress],
+    [0.2, 1]
+  );
+  const shadowOpacity = useTransform(springProgress,
+    [nodeProgress - 0.05, nodeProgress, nodeProgress + 0.05],
+    [0, 1, 0.4]
+  );
+  const glowScale = useTransform(scale, [1, 1.2], [1, 1.5]);
+
+  return (
+    <g>
+      <circle cx={cardX} cy={pos.y} r="14" fill="#0D0D1A" stroke="#2D2D3A" strokeWidth="2" />
+      <motion.circle
+        cx={cardX} cy={pos.y} r="7" fill="#6B20E8"
+        style={{ scale, opacity }}
+      />
+      <motion.circle
+        cx={cardX} cy={pos.y} r="12"
+        fill="none"
+        stroke="#6B20E8"
+        strokeWidth="2"
+        style={{ opacity: shadowOpacity, scale: glowScale }}
+      />
+    </g>
+  );
+};
+
 const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topOffset, progressPoints }) => {
   const nodeProgress = progressPoints[index * 2];
-  // Starts appearing 10% before reaching the node, stays at 100% after
   const opacity = useTransform(springProgress, [nodeProgress - 0.1, nodeProgress], [0, 1]);
 
   return (
@@ -17,7 +53,7 @@ const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topO
     >
       <motion.div
         style={{ opacity }}
-        className="relative bg-[#0D0D1A]/90 border border-brand-electric-purple/20 p-8 rounded-2xl shadow-ambient overflow-hidden text-left rtl:text-right"
+        className="relative bg-[#0D0D1A]/90 border border-brand-electric-purple/20 p-8 md:p-10 rounded-2xl shadow-ambient overflow-hidden text-left rtl:text-right"
       >
           <div className={`absolute top-0 opacity-10 ${isEven ? 'right-0' : 'left-0'} w-24 h-24 bg-brand-electric-purple/30 blur-2xl rounded-full`} />
           <div className="flex items-center gap-3 mb-4 rtl:flex-row-reverse">
@@ -39,7 +75,6 @@ const DesktopStep = ({ step, index, springProgress, isEven, shouldBeOnLeft, topO
   );
 };
 
-// ─── Sub-Component: Mobile Journey Step ───────────────────────────────
 const MobileStep = ({ step, index, springProgress, isRTL, totalSteps }) => {
   const stepProgressStart = (index / totalSteps);
   const opacity = useTransform(springProgress, [stepProgressStart - 0.1, stepProgressStart], [0.4, 1]);
@@ -48,7 +83,6 @@ const MobileStep = ({ step, index, springProgress, isRTL, totalSteps }) => {
 
   return (
     <div className="relative pl-14 rtl:pl-0 rtl:pr-14">
-      {/* Timeline Node */}
       <div className="absolute left-0 rtl:left-auto rtl:right-0 top-0 flex flex-col items-center">
         <motion.div 
           style={{ scale }}
@@ -64,14 +98,13 @@ const MobileStep = ({ step, index, springProgress, isRTL, totalSteps }) => {
         />
       </div>
 
-      {/* Card Content */}
       <motion.div
         style={{ opacity }}
         initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="relative bg-white/[0.02] border border-white/5 p-6 rounded-2xl shadow-lg"
+        className="relative bg-white/[0.02] border border-white/5 p-8 rounded-2xl shadow-lg"
       >
         <h3 className="font-display font-bold text-xl text-brand-pure-white mb-3 uppercase tracking-tight">
           {step.title}
@@ -104,11 +137,9 @@ const ProjectJourney = () => {
     ...step
   })), [t.steps]);
 
-  // SVG snake path calculations
   const isMobile = windowWidth < 768;
   const cardAreaWidth = isMobile ? windowWidth - 48 : 900;
   const rowHeight = isMobile ? 320 : 220;
-  const rowHeightRem = rowHeight / 16;
   const totalRows = steps.length;
   const svgHeight = rowHeight * totalRows;
   const svgHeightRem = svgHeight / 16;
@@ -118,7 +149,6 @@ const ProjectJourney = () => {
   const rightX = svgWidth - (isMobile ? 30 : 100);   
   const curveRadius = isMobile ? 40 : 60;          
 
-  // Helper: Precise cubic bezier length approximation
   const getBezierLength = (p0, p1, p2, p3) => {
     const steps = 20;
     let length = 0;
@@ -136,18 +166,16 @@ const ProjectJourney = () => {
     return length;
   };
 
-  const { pathD, totalPathLen, segmentProgressPoints } = useMemo(() => {
+  const { pathD, segmentProgressPoints } = useMemo(() => {
     let d = '';
     let totalLen = 0;
     const progressPoints = [0];
     const horizontalLen = rightX - leftX;
     const computeNodeY = (i) => rowHeight * i + rowHeight / 2;
     
-    const segmentLengths = [];
-    
     for (let i = 0; i < totalRows; i++) {
       const y = computeNodeY(i);
-      const rowStartsRight = isRTL ? (i % 2 === 0) : (i % 2 !== 0);
+      const rowStartsRight = (i % 2 !== 0);
       const startX = rowStartsRight ? rightX : leftX;
       const endX = rowStartsRight ? leftX : rightX;
 
@@ -155,7 +183,6 @@ const ProjectJourney = () => {
       
       // Horizontal segment
       d += ` L ${endX} ${y}`;
-      segmentLengths.push(horizontalLen);
       totalLen += horizontalLen;
       progressPoints.push(totalLen);
 
@@ -176,20 +203,19 @@ const ProjectJourney = () => {
         }
 
         const curveLen = getBezierLength(p0, p1, p2, p3);
-        segmentLengths.push(curveLen);
         totalLen += curveLen;
         progressPoints.push(totalLen);
       }
     }
     
     const normalizedPoints = progressPoints.map(p => p / totalLen);
-    return { pathD: d, totalPathLen: totalLen, segmentProgressPoints: normalizedPoints }; 
-  }, [totalRows, isRTL, rightX, leftX, curveRadius, rowHeight]);
+    return { pathD: d, segmentProgressPoints: normalizedPoints }; 
+  }, [totalRows, rightX, leftX, curveRadius, rowHeight]);
 
   const nodePositions = useMemo(() => {
     const computeNodeY = (i) => rowHeight * i + rowHeight / 2;
     return steps.map((_, i) => ({
-      x: (leftX + rightX) / 2,
+      x: (i % 2 === 0) ? leftX : rightX, // Fix node positions to align with permanent LTR path
       y: computeNodeY(i)
     }));
   }, [steps, leftX, rightX, rowHeight]);
@@ -205,7 +231,7 @@ const ProjectJourney = () => {
     restDelta: 0.001
   });
 
-  const strokeDashoffset = useTransform(springProgress, [0, 1], [totalPathLen, 0]);
+  const cometOffset = useTransform(springProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <section 
@@ -273,44 +299,18 @@ const ProjectJourney = () => {
               </filter>
             </defs>
 
-            {nodePositions.map((pos, i) => {
-              const rowStartsRight = isRTL ? (i % 2 === 0) : (i % 2 !== 0);
-              const cardX = rowStartsRight ? leftX : rightX;
-              
-              // Node i corresponds to segmentProgressPoints[i * 2]
-              const nodeProgress = segmentProgressPoints[i * 2];
-              
-              const scale = useTransform(springProgress, 
-                [nodeProgress - 0.05, nodeProgress, nodeProgress + 0.05], 
-                [0.8, 1.2, 1]
-              );
-              const opacity = useTransform(springProgress,
-                [nodeProgress - 0.05, nodeProgress],
-                [0.2, 1]
-              );
-              const shadowOpacity = useTransform(springProgress,
-                [nodeProgress - 0.05, nodeProgress, nodeProgress + 0.05],
-                [0, 1, 0.4]
-              );
-
-              return (
-                <g key={i}>
-                  <circle cx={cardX} cy={pos.y} r="14" fill="#0D0D1A" stroke="#2D2D3A" strokeWidth="2" />
-                  <motion.circle
-                    cx={cardX} cy={pos.y} r="7" fill="#6B20E8"
-                    style={{ scale, opacity }}
-                  />
-                  {/* Glow effect when active */}
-                  <motion.circle
-                    cx={cardX} cy={pos.y} r="12"
-                    fill="none"
-                    stroke="#6B20E8"
-                    strokeWidth="2"
-                    style={{ opacity: shadowOpacity, scale: useTransform(scale, [1, 1.2], [1, 1.5]) }}
-                  />
-                </g>
-              );
-            })}
+            {nodePositions.map((pos, i) => (
+              <JourneyNode 
+                key={i}
+                index={i}
+                pos={pos}
+                springProgress={springProgress}
+                segmentProgressPoints={segmentProgressPoints}
+                isRTL={isRTL}
+                leftX={leftX}
+                rightX={rightX}
+              />
+            ))}
 
             {/* Glowing Tip (Comet Head) */}
             <motion.circle
@@ -319,7 +319,7 @@ const ProjectJourney = () => {
               filter="url(#snakeGlow)"
               style={{
                 offsetPath: `path("${pathD}")`,
-                offsetDistance: useTransform(springProgress, [0, 1], ["0%", "100%"]),
+                offsetDistance: cometOffset,
                 boxShadow: '0 0 20px #FF5C35'
               }}
             />
@@ -328,7 +328,8 @@ const ProjectJourney = () => {
           <div className="relative z-10 w-full h-full">
             {steps.map((step, index) => {
               const isEven = index % 2 === 0;
-              const shouldBeOnLeft = isRTL ? !isEven : isEven;
+              // Card positions are now identical in both languages
+              const shouldBeOnLeft = isEven; 
               const topOffset = (nodePositions[index].y / 16) - 6.25; 
 
               return (

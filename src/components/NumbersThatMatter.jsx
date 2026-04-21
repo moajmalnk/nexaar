@@ -35,7 +35,8 @@ const NumbersThatMatter = () => {
 
   return (
     <section id="numbers" className="bg-brand-deep-navy section-padding relative overflow-hidden">
-      <div className="max-w-[1240px] w-[92%] mx-auto container-padding grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding">
+        <div className="codo-grid items-center">
         
         {/* Left Column */}
         <motion.div
@@ -43,7 +44,7 @@ const NumbersThatMatter = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-left rtl:text-right"
+          className="col-span-12 lg:col-span-6 text-left rtl:text-right"
         >
           {/* Tag */}
           <div className="mb-6 flex items-center justify-center lg:justify-start space-x-2 rtl:space-x-reverse">
@@ -79,7 +80,7 @@ const NumbersThatMatter = () => {
         </motion.div>
 
         {/* Right Column - Bento Grid */}
-        <div className="grid grid-cols-2 gap-3 lg:gap-x-3 lg:gap-y-0 relative items-center">
+        <div className="col-span-12 lg:col-span-6 grid grid-cols-2 gap-3 lg:gap-x-3 lg:gap-y-0 relative items-center">
           
           {/* Card 1 - Image */}
           <motion.div 
@@ -89,7 +90,7 @@ const NumbersThatMatter = () => {
             className="group relative h-44 sm:h-64 lg:h-80 rounded-2xl overflow-hidden shadow-ambient transition-transform duration-500 hover:scale-[1.03]"
           >
             <img 
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800" 
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=70&w=800" 
               alt="Saudi business professional" 
               loading="lazy"
               decoding="async"
@@ -150,7 +151,8 @@ const NumbersThatMatter = () => {
 
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 };
 

@@ -10,9 +10,18 @@ eslint-output.txt
 eslint.txt
 *.txt.bak
 
+# Dependencies
 node_modules
 dist
 dist-ssr
+
+# Environments
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.local
 
 # Editor directories and files
@@ -25,3 +34,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# AI / Assistant temp files
+.gemini
+antigravity
+scratch
+implementation_plan.md
+task.md
+walkthrough.md
+research_notes.md
+proposed_ui.md
+*.webp
+*.png

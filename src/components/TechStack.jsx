@@ -69,7 +69,6 @@ const MarqueeRow = ({ items, direction = 'left' }) => {
 const TechStack = () => {
   const { lang } = useLanguage();
   const t = translations[lang].techStack;
-  const isRTL = lang === 'ar';
 
   const allTech = [
     { name: "React",        Icon: SiReact,            color: "#61DAFB" },
@@ -92,39 +91,43 @@ const TechStack = () => {
   return (
     <section id="tech-stack" className="relative bg-brand-deep-navy section-padding overflow-hidden">
       {/* Header */}
-      <div className="max-w-[1240px] w-[92%] mx-auto container-padding text-center mb-12 md:mb-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse"
-        >
-          <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
-            <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span>
-            {t.tag}
-            <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
-          </span>
-        </motion.div>
-        
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="font-display font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-brand-pure-white uppercase tracking-tight rtl:tracking-normal rtl:normal-case mb-6 text-center"
-        >
-          {t.title}
-        </motion.h2>
-        
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="font-body font-medium text-lg md:text-xl text-brand-soft-lavender leading-relaxed text-center"
-        >
-          {t.desc}
-        </motion.p>
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding">
+        <div className="codo-grid">
+          <div className="col-span-12 lg:col-start-2 lg:col-span-10 text-center mb-12 md:mb-20">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse"
+            >
+              <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
+                <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span>
+                {t.tag}
+                <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
+              </span>
+            </motion.div>
+            
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="font-display font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-brand-pure-white uppercase tracking-tight rtl:tracking-normal rtl:normal-case mb-6 text-center"
+            >
+              {t.title}
+            </motion.h2>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="font-body font-medium text-lg md:text-xl text-brand-soft-lavender leading-relaxed text-center"
+            >
+              {t.desc}
+            </motion.p>
+          </div>
+        </div>
       </div>
 
       {/* ─── UNIFIED MARQUEE VIEW ─── */}

@@ -7,6 +7,49 @@ import { translations } from '../utils/translations';
 import { lockPageScroll } from '../utils/scrollLock';
 import NexaarLogo from './shared/NexaarLogo';
 import Button from './shared/Button';
+import { trackEvent, ANALYTICS_EVENTS } from '../utils/analytics';
+
+/* ── translation icon component ── */
+const TranslationIcon = ({ className }) => (
+  <svg 
+    width="16" 
+    height="16" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="m5 8 6 6" />
+    <path d="m4 14 6-6 2-3" />
+    <path d="M2 5h12" />
+    <path d="M7 2h1" />
+    <path d="m22 22-5-10-5 10" />
+    <path d="M14 18h6" />
+  </svg>
+);
+
+/* ── premium language switcher button ── */
+const LanguageToggle = ({ lang, toggleLanguage }) => {
+  return (
+    <button
+      onClick={toggleLanguage}
+      className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-brand-electric-coral/10 hover:border-brand-electric-coral/40 transition-all duration-300 group focus:outline-none"
+      aria-label="Toggle Language"
+    >
+      <div className="relative">
+        <TranslationIcon className="w-4 h-4 text-brand-electric-coral transition-transform duration-500 group-hover:rotate-[20deg]" />
+        <div className="absolute inset-0 bg-brand-electric-coral/20 blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+      </div>
+      
+      <span className={`font-display font-black text-[0.75rem] tracking-widest text-brand-pure-white uppercase ${lang === 'en' ? 'font-arabic' : ''}`}>
+        {lang === 'en' ? 'العربية' : 'English'}
+      </span>
+    </button>
+  );
+};
 
 const getNavLinks = (lang) => [
   { name: translations[lang].nav.home,      href: '/#home' },
@@ -29,7 +72,7 @@ const SECTION_IDS = [
 ];
 
 /* ── shared link items ── */
-const LinkItem = ({ link, isActive, isHovered, onHover, onClick, variant, isLegalPage }) => {
+const LinkItem = ({ link, isActive, isHovered, onHover, onClick, isLegalPage }) => {
   // Suppress visual active/hover states on legal pages
   const showEffect = !isLegalPage && (isActive || isHovered);
 
@@ -85,7 +128,7 @@ function DesktopNav({
       transition={{ duration: 0.3, ease: 'easeOut' }}
       className={`absolute inset-x-0 mx-auto flex items-center justify-between ${
         isPill
-          ? 'w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-7xl top-4 sm:top-5 rounded-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4'
+          ? 'w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-7xl top-4 sm:top-5 rounded-full px-6 sm:px-8 lg:px-10 py-3 sm:py-4'
           : 'w-full top-0 px-4 sm:px-8 lg:px-12 xl:px-16 h-[80px]'
       }`}
       style={{
@@ -117,7 +160,6 @@ function DesktopNav({
         >
           <NexaarLogo size="md" color={isPill ? 'white' : 'purple'} />
         </Link>
-        <span className="hidden xl:block h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
       </div>
 
       <nav className="hidden lg:flex items-center gap-1 lg:gap-3 xl:gap-6 mx-auto">
@@ -149,21 +191,7 @@ function DesktopNav({
             </span>
           </span>
         )}
-        <span className="hidden xl:block h-[18px] w-px bg-brand-electric-purple/30 shrink-0" />
-        <button
-          onClick={toggleLanguage}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-brand-electric-purple/10 hover:border-brand-electric-purple/40 transition-all duration-300 group focus:outline-none"
-          aria-label="Toggle Language"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand-electric-purple transition-transform duration-500 group-hover:rotate-[30deg]">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-          <span className="font-display font-black text-[0.6875rem] xl:text-[0.75rem] tracking-wider text-brand-pure-white">
-            {lang === 'en' ? 'AR' : 'EN'}
-          </span>
-        </button>
+        <LanguageToggle lang={lang} toggleLanguage={toggleLanguage} />
         <Button
           as="a"
           href={`https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(
@@ -177,31 +205,18 @@ function DesktopNav({
           size="small"
           caps={true}
           className="rounded-full px-5 xl:px-6 shadow-coral-glow/20"
+          onClick={() => trackEvent(ANALYTICS_EVENTS.CONVERSION_GET_STARTED)}
         >
           {t.getStarted}
         </Button>
       </div>
 
-      {/* Mobile Right Controls */}
       <div className="flex lg:hidden items-center gap-3">
-        <button
-          onClick={toggleLanguage}
-          className="flex items-center gap-1.5 px-2 py-1 rounded-full border border-white/10 bg-white/5 active:bg-white/10 transition-all focus:outline-none"
-          aria-label="Toggle Language"
-        >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand-electric-purple">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-          <span className="font-display font-black text-[0.6875rem] text-brand-pure-white uppercase">
-            {lang === 'en' ? 'AR' : 'EN'}
-          </span>
-        </button>
+        <LanguageToggle lang={lang} toggleLanguage={toggleLanguage} />
         <span className="h-[14px] w-px bg-brand-electric-purple/30 shrink-0" />
         <button
           ref={menuButtonRef}
-          className="text-brand-pure-white p-1 rounded-lg hover:bg-white/5 transition-colors focus:outline-none"
+          className="flex items-center justify-center h-11 w-11 text-brand-pure-white rounded-lg hover:bg-white/5 transition-colors focus:outline-none"
           onClick={onMobileOpen}
           aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isMobileOpen}
@@ -240,19 +255,23 @@ export default function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const { scrollY } = useScroll();
 
+  // Force Home active state when at top of page
   useMotionValueEvent(scrollY, "change", (latest) => {
-    // Threshold to prevent jitter (e.g., small bounce on mobile)
+    if (latest < 100 && activeLink !== translations[lang].nav.home) {
+      setActiveLink(translations[lang].nav.home);
+    }
+
+    // Existing visibility logic...
     const diff = latest - lastScrollY;
     if (Math.abs(diff) < 20 && latest > 50) return;
 
     if (latest < 50 || isMobileOpen) {
       setIsVisible(true);
     } else if (diff > 0) {
-      setIsVisible(false); // Scrolling down
+      setIsVisible(false);
     } else if (diff < -15) {
-      setIsVisible(true); // Scrolling up - wait for deliberate move
+      setIsVisible(true);
     }
-    
     setLastScrollY(latest);
   });
 
@@ -294,20 +313,36 @@ export default function Navbar() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -70% 0px',
-      threshold: 0,
+      rootMargin: '-30% 0px -40% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1.0],
     };
+
+    // Use a map to track ratios for all sections
+    const ratios = new Map();
 
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
-          const linkIndex = SECTION_IDS.indexOf(id);
-          if (linkIndex !== -1) {
-            setActiveLink(getNavLinks(langRef.current)[linkIndex].name);
-          }
+        ratios.set(entry.target.getAttribute('id'), entry.intersectionRatio);
+      });
+
+      // Find the winner (most visible)
+      let winnerId = null;
+      let maxRatio = 0;
+
+      ratios.forEach((ratio, id) => {
+        if (ratio > maxRatio) {
+          maxRatio = ratio;
+          winnerId = id;
         }
       });
+
+      if (winnerId) {
+        const linkIndex = SECTION_IDS.indexOf(winnerId);
+        if (linkIndex !== -1) {
+          const newActiveName = getNavLinks(langRef.current)[linkIndex].name;
+          setActiveLink(newActiveName);
+        }
+      }
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
@@ -335,8 +370,8 @@ export default function Navbar() {
   }, [lang, activeLink]);
 
   const handleLinkClick = (e, name, href) => {
-    // Smooth scroll for hash links on desktop (where Lenis is enabled)
-    if (window.lenis && href && href.startsWith('/#')) {
+    // Smooth scroll for hash links ONLY if we are already on the home page
+    if (window.lenis && href && href.startsWith('/#') && pathname === '/') {
       e.preventDefault();
       const targetId = href.replace('/', ''); // e.g., '#services'
       window.lenis.scrollTo(targetId, {
@@ -363,7 +398,7 @@ export default function Navbar() {
   return (
     <motion.header
       initial={false}
-      animate={{ y: isVisible ? 0 : -100 }}
+      animate={{ y: isVisible ? '0%' : '-100%' }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
       className="fixed top-0 left-0 w-full z-[999] pointer-events-none"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
@@ -479,6 +514,7 @@ export default function Navbar() {
                   variant="accent"
                   className="w-full !py-4 rounded-2xl shadow-coral-glow/20"
                   caps={true}
+                  onClick={() => trackEvent(ANALYTICS_EVENTS.CONVERSION_WHATSAPP)}
                 >
                   {t.getStarted}
                 </Button>

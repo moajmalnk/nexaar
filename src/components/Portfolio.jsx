@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
@@ -6,23 +6,24 @@ import { translations } from '../utils/translations';
 import { BRAND_CONFIG } from '../utils/constants';
 
 import ProjectDetailsModal from './ProjectDetailsModal';
+import Skeleton from './shared/Skeleton';
 
 /* ─── Data ─────────────────────────────────────────────────────── */
 const IMAGES = [
   [
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1555421689-d68471e189f2?auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=70&w=800',
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=70&w=800',
+    'https://images.unsplash.com/photo-1555421689-d68471e189f2?auto=format&fit=crop&q=70&w=800'
   ],
   [
-    'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&q=70&w=800',
+    'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=70&w=800',
+    'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=70&w=800'
   ],
   [
-    'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=70&w=800',
+    'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=70&w=800',
+    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=70&w=800'
   ],
 ];
 const STACKS = [
@@ -53,7 +54,7 @@ const ProjectCard = ({ project, index, onClick }) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => onClick(project)}
-      className="group relative flex flex-col bg-white/[0.03] border border-white/[0.07] rounded-2xl overflow-hidden hover:border-brand-electric-purple/30 transition-colors duration-500 cursor-pointer"
+      className="group relative flex flex-col h-full bg-white/[0.03] border border-white/[0.07] rounded-2xl overflow-hidden hover:border-brand-electric-purple/30 transition-colors duration-500 cursor-pointer"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[4/3] xl:aspect-[16/9] overflow-hidden">
@@ -93,7 +94,7 @@ const ProjectCard = ({ project, index, onClick }) => {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 p-5 gap-3">
+      <div className="flex flex-col flex-1 p-6 sm:p-8 md:p-10 gap-4">
         {/* Title row */}
         <div className="flex items-start justify-between gap-4">
           <h3 className="font-display font-black text-xl sm:text-2xl text-brand-pure-white uppercase tracking-[-0.03em] leading-tight sm:leading-none">
@@ -115,7 +116,7 @@ const ProjectCard = ({ project, index, onClick }) => {
         <div className="w-10 h-[1.5px] bg-brand-electric-purple/60" />
 
         {/* Challenge */}
-        <p className="font-body text-brand-soft-lavender/80 text-sm leading-relaxed line-clamp-2">
+        <p className="font-body text-brand-soft-lavender/90 text-sm leading-relaxed line-clamp-2">
           {project.problem}
         </p>
 
@@ -124,7 +125,7 @@ const ProjectCard = ({ project, index, onClick }) => {
           {project.tech.map((item, i) => (
             <span
               key={i}
-              className="px-2.5 py-1 border border-white/10 rounded-full text-brand-pure-white/70 text-[0.625rem] font-body uppercase tracking-widest bg-white/[0.04]"
+              className="px-2.5 py-1 border border-white/10 rounded-full text-brand-pure-white/90 text-[0.625rem] font-body uppercase tracking-widest bg-white/[0.04]"
             >
               {item}
             </span>
@@ -135,6 +136,28 @@ const ProjectCard = ({ project, index, onClick }) => {
   );
 };
 
+const PortfolioCardSkeleton = () => (
+  <div className="col-span-12 md:col-span-6 lg:col-span-4 rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.07] h-full flex flex-col relative overflow-hidden">
+    <div className="absolute inset-0 animate-shimmer">
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D1A] via-[#0D0D1A]/10 to-transparent" />
+    </div>
+    <div className="aspect-[4/3] sm:aspect-[16/9] md:aspect-[4/3] xl:aspect-[16/9] bg-white/[0.02]" />
+    <div className="p-6 sm:p-8 md:p-10 flex flex-col gap-5 flex-1">
+      <Skeleton width="70%" height="2rem" borderRadius="0.5rem" />
+      <Skeleton width="40px" height="2px" borderRadius="1px" />
+      <div className="space-y-2">
+        <Skeleton width="100%" height="1rem" borderRadius="0.25rem" />
+        <Skeleton width="85%" height="1rem" borderRadius="0.25rem" />
+      </div>
+      <div className="mt-auto flex gap-2 pt-4 border-t border-white/[0.05]">
+        <Skeleton width="60px" height="1.5rem" borderRadius="99px" />
+        <Skeleton width="80px" height="1.5rem" borderRadius="99px" />
+        <Skeleton width="50px" height="1.5rem" borderRadius="99px" />
+      </div>
+    </div>
+  </div>
+);
+
 /* ─── Portfolio Section ─────────────────────────────────────────── */
 const Portfolio = () => {
   const { lang } = useLanguage();
@@ -142,6 +165,12 @@ const Portfolio = () => {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleProjectClick = (project) => {
     setSelectedProject(project);
@@ -162,7 +191,7 @@ const Portfolio = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vh] bg-brand-electric-purple/[0.04] blur-[100px] pointer-events-none" />
 
       {/* ── Header ── */}
-      <div className="max-w-[1240px] w-[92%] mx-auto container-padding mb-10 md:mb-12 relative z-10">
+      <div className="max-w-[1240px] w-[92%] mx-auto container-padding mb-12 md:mb-16 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -198,18 +227,40 @@ const Portfolio = () => {
 
       {/* ── Cards Grid ── */}
       <div className="max-w-[1240px] w-[92%] mx-auto container-padding relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              onClick={handleProjectClick}
-              t={t}
-              lang={lang}
-            />
-          ))}
-        </div>
+        <AnimatePresence mode="wait">
+          {isLoading ? (
+            <motion.div
+              key="skeleton-grid-portfolio"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="codo-grid"
+            >
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <PortfolioCardSkeleton key={i} />
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="main-grid-portfolio"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="codo-grid"
+            >
+              {projects.map((project, index) => (
+                <div key={project.id} className="col-span-12 md:col-span-6 lg:col-span-4">
+                  <ProjectCard
+                    project={project}
+                    index={index}
+                    onClick={handleProjectClick}
+                    t={t}
+                    lang={lang}
+                  />
+                </div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Bottom CTA row */}
         <motion.div
