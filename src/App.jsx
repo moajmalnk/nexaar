@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import LegalPage from './pages/LegalPage';
+import NotFound from './pages/NotFound';
+import OfflineBanner from './components/shared/OfflineBanner';
 import { LanguageProvider } from './context/LanguageProvider';
 import LanguageLoader from './components/shared/LanguageLoader';
 import Lenis from 'lenis';
@@ -74,6 +76,7 @@ function App() {
   return (
     <LanguageProvider>
       <div className="bg-brand-deep-navy min-h-screen text-brand-pure-white selection:bg-brand-electric-purple/30">
+        <OfflineBanner />
         <LanguageLoader />
         <ScrollToTop />
         <Navbar />
@@ -82,6 +85,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/privacy" element={<LegalPage type="privacy" />} />
           <Route path="/terms" element={<LegalPage type="terms" />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
         <Footer />

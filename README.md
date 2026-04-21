@@ -1,36 +1,34 @@
-# Nexaar - Modern Web Solutions
+# Nexaar Tech — Professional Agency Platform
 
-Nexaar is a high-performance, visually stunning landing page built with React, Vite, and Tailwind CSS. It features professional animations, interactive components, and a modern design aesthetic tailored for service-based businesses.
+Nexaar is a premium, high-performance software development agency platform specializing in results-driven digital solutions for Saudi Arabian businesses. This platform features an editorial-grade design, advanced motion graphics, and full bilingual support (English/Arabic).
 
-![Nexaar Hero](/public/favicon.svg) <!-- Replace with a real hero image if available -->
+## 🚀 Key Features
 
-## 🚀 Experience the Future
-Nexaar combines cutting-edge technology with elegant design to provide a seamless user experience. From interactive orbs to floating geometry, every element is crafted to engage.
-
-## ✨ Key Features
-- **Modern UI/UX**: Clean, professional, and dark-themed design with premium aesthetics.
-- **Interactive Visuals**: Includes Vanta.js backgrounds, Three.js integrations, and Framer Motion animations.
-- **Bilingual Support**: Fully integrated language switching (Arabic/English) via React Context.
-- **Responsive Design**: Optimized for all devices, from mobile to ultra-wide displays.
-- **Micro-animations**: Subtle hover effects and scroll-triggered animations for enhanced engagement.
-- **Performance**: Built with Vite for lightning-fast development and optimized production builds.
+- **Bilingual Core (Arabic/English):** Native RTL support with consistent brand identity across both locales.
+- **Fluid Motion Engine:** Interactive UI elements powered by **Framer Motion 12** and **OGL**.
+- **Smooth Cursor & Scroll:** Global smooth-scroll implementation using **Lenis** for a cinematic experience.
+- **Editorial Design System:** Modern, minimalist grid layout with a focus on high-end typography and spacing.
+- **Conversion Focused:** Integrated magnetic WhatsApp CTAs and a semantic Project Journey timeline.
+- **Privacy-First Analytics:** Lightweight tracking integration for modern data compliance.
 
 ## 🛠️ Tech Stack
-- **Framework**: [React 19](https://reactjs.org/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Visual Effects**: [Vanta.js](https://www.vantajs.com/), [Three.js](https://threejs.org/), [OGL](https://github.com/o-g-l/ogl)
-- **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
-- **Deployment**: [Vercel](https://vercel.com/)
 
-## 🏁 Getting Started
+- **Framework:** [React 19](https://reactjs.org/)
+- **Build Tool:** [Vite 8](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS 3.4](https://tailwindcss.com/)
+- **Motion:** [Framer Motion 12](https://www.framer.com/motion/)
+- **Smooth Scroll:** [Lenis](https://lenis.darkroom.engineering/)
+- **Rendering:** [OGL](https://github.com/o-g-l/ogl) (for advanced canvas effects)
+
+## 📦 Getting Started
 
 ### Prerequisites
-- Node.js (v18.0.0 or higher)
-- npm or yarn
+
+- **Node.js** (v20+ recommended)
+- **npm** or **yarn**
 
 ### Installation
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/moajmalnk/nexaar.git
@@ -42,22 +40,27 @@ Nexaar combines cutting-edge technology with elegant design to provide a seamles
    npm install
    ```
 
-3. **Run the development server:**
+3. **Start Development Server:**
    ```bash
    npm run dev
    ```
 
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
+## 🏗️ Production
 
-## 📂 Project Structure
-- `src/components`: UI components (Hero, Navbar, Services, Portfolio, etc.)
-- `src/context`: State management for language and global settings.
-- `src/utils`: Constant values and translation files.
-- `src/assets`: Images and static files.
-- `public`: Shared assets like favicons and SVG icons.
+To generate a production-ready bundle:
 
-## 📄 License
-This project is private and intended for company use.
+```bash
+npm run build
+```
+
+This will create a `dist` folder optimized for static hosting (Vercel, Netlify, or AWS).
+
+## 📂 Architecture
+
+- `/src/components`: UI components including the bespoke Snake Path Journey.
+- `/src/hooks`: Custom hooks for language state and window lifecycle.
+- `/src/utils`: Brand constants, semantic translations, and analytics config.
+- `/src/assets`: Production-ready media and video assets.
+
+---
+© 2026 Nexaar Tech. Engineering results for the Kingdom.

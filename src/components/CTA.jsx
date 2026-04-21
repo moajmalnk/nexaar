@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useMotionValue, useSpring, motion } from 'framer-motion';
 import { BRAND_CONFIG } from '../utils/constants';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
@@ -51,30 +51,36 @@ const CTA = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[37.5rem] h-[37.5rem] bg-brand-electric-purple/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-[1240px] w-[92%] mx-auto container-padding relative z-10">
-        {/* Tag */}
-        <div className="mb-8 flex items-center justify-center space-x-2 rtl:space-x-reverse">
-          <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
-            <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
-            {t.tag} 
-            <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
-          </span>
+        <div className="codo-grid">
+          <div className="col-span-12 lg:col-start-3 lg:col-span-8">
+            {/* Tag */}
+            <div className="mb-8 flex items-center justify-center space-x-2 rtl:space-x-reverse">
+              <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
+                <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
+                {t.tag} 
+                <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
+              </span>
+            </div>
+
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-brand-pure-white leading-tight md:leading-none uppercase tracking-tight mb-8 md:mb-10 text-center">
+              {t.title}
+            </h2>
+
+            <p className="font-body font-normal text-brand-soft-lavender text-lg md:text-xl max-w-2xl mx-auto mb-10 md:mb-16 leading-relaxed text-center">
+              {t.desc}
+            </p>
+          </div>
         </div>
 
-        <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-brand-pure-white leading-tight md:leading-none uppercase tracking-tight mb-8 md:mb-10 text-center">
-          {t.title}
-        </h2>
-
-        <p className="font-body font-normal text-brand-soft-lavender text-lg md:text-xl max-w-2xl mx-auto mb-10 md:mb-16 leading-relaxed text-center">
-          {t.desc}
-        </p>
-
         {/* Magnetic Button */}
-        <div 
+        <motion.div 
           className="flex justify-center px-1"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
+          style={{ x: springX, y: springY }}
         >
           <Button
+            ref={buttonRef}
             as="a"
             href={`https://wa.me/${BRAND_CONFIG.whatsapp}`}
             target="_blank"
@@ -85,7 +91,7 @@ const CTA = () => {
           >
             {t.whatsapp}
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

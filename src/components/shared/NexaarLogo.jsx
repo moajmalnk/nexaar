@@ -9,7 +9,7 @@ const NexaarLogo = ({ className = '', size = 'md', color = 'white' }) => {
   };
 
   const currentSize = sizes[size] || sizes.md;
-  
+
   const textColor = {
     white: 'text-brand-pure-white',
     purple: 'text-brand-electric-purple',
@@ -17,14 +17,32 @@ const NexaarLogo = ({ className = '', size = 'md', color = 'white' }) => {
   };
 
   return (
-    <div className={`flex items-center select-none group ${className}`} style={{ transform: `scale(${currentSize.scale})`, transformOrigin: 'left center' }}>
+    <div 
+      dir="ltr"
+      className={`flex flex-col select-none group leading-none ${className}`} 
+      style={{ 
+        transform: `scale(${currentSize.scale})`, 
+        transformOrigin: 'left center' 
+      }}
+    >
+      {/* Primary Brand Name */}
       <motion.span
-        initial={{ opacity: 0, y: 5 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`font-display font-black italic tracking-[0.22em] uppercase ${textColor[color] || textColor.white} ${currentSize.text}`}
+        className={`font-display font-black italic tracking-tighter uppercase ${textColor[color] || textColor.white} text-[1.5rem]`}
       >
-        Nexaar Tech
+        Nexaar
+      </motion.span>
+
+      {/* Sub-label - Fixed position relative to brand name */}
+      <motion.span
+        initial={{ opacity: 0, x: 10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        className={`font-display font-semibold italic tracking-[0.35em] uppercase self-start pl-[4em] ${textColor[color] || textColor.white} text-[0.55rem] -mt-[2px] opacity-80`}
+      >
+        Tech
       </motion.span>
     </div>
   );

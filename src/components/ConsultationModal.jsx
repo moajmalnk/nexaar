@@ -83,6 +83,7 @@ const EliteDropdown = ({ label, options, value, onChange, placeholder }) => {
 const ConsultationModal = ({ isOpen, onClose }) => {
   const { lang } = useLanguage();
   const t = translations[lang].modal;
+  const [isMobile, setIsMobile] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -96,6 +97,14 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Responsive Detection
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     if (!isOpen) return undefined;
     return lockPageScroll();
@@ -105,7 +114,6 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Construct WhatsApp Message
     const text = `*New Consultation Request from Nexaar Website*
     
 *Name:* ${formData.name}
@@ -118,50 +126,87 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 ${formData.message}`;
 
     const whatsappUrl = `https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
-    
-    // Artificial delay for UX "Elite" feel
     await new Promise(resolve => setTimeout(resolve, 800));
-    
     window.open(whatsappUrl, '_blank');
-    
     setIsSubmitting(false);
     setIsSubmitted(true);
+  };
+
+  // ── Animation Variants ──
+  const desktopVariants = {
+    hidden: { scale: 0.9, opacity: 0, y: 20 },
+    visible: { scale: 1, opacity: 1, y: 0 },
+    exit: { scale: 0.9, opacity: 0, y: 20 }
+  };
+
+  const mobileVariants = {
+    hidden: { y: "100%", opacity: 1 },
+    visible: { y: 0, opacity: 1 },
+    exit: { y: "100%", opacity: 1 }
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+          {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-brand-deep-navy/80 backdrop-blur-xl"
+            className="absolute inset-0 bg-brand-deep-navy/40 backdrop-blur-3xl z-0"
           />
 
+          {/* Modal Container */}
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-xl max-h-[90dvh] bg-brand-deep-navy border border-brand-electric-purple/20 rounded-2xl shadow-elite-glow flex flex-col overflow-hidden"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={isMobile ? mobileVariants : desktopVariants}
+            transition={{ type: 'spring', damping: 28, stiffness: 250 }}
+            className={`
+              relative z-10 w-full bg-brand-deep-navy/95 border-brand-electric-purple/20 flex flex-col overflow-hidden
+              ${isMobile 
+                ? 'fixed bottom-0 left-0 right-0 rounded-t-[2.5rem] border-t max-h-[92dvh] shadow-[0_-20px_40px_rgba(0,0,0,0.4)]' 
+                : 'max-w-xl rounded-2xl border shadow-elite-glow max-h-[85dvh]'
+              }
+            `}
           >
-            <button onClick={onClose} className="absolute top-6 right-6 rtl:left-6 rtl:right-auto text-brand-soft-lavender/50 hover:text-brand-pure-white transition-colors z-20">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {/* Mobile Handle */}
+            {isMobile && (
+              <div className="flex-shrink-0 pt-4 flex justify-center pb-2">
+                <div className="w-12 h-1.5 bg-brand-pure-white/10 rounded-full" />
+              </div>
+            )}
+
+            {/* Close Button */}
+            <button 
+              onClick={onClose} 
+              className={`
+                absolute transition-colors z-20 text-brand-soft-lavender/50 hover:text-brand-pure-white
+                ${isMobile ? 'top-6 right-8 rtl:left-8 rtl:right-auto' : 'top-6 right-6 rtl:left-6 rtl:right-auto'}
+              `}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
             
             <div 
               data-lenis-prevent
-              className="flex-1 overflow-y-auto p-8 md:p-12 custom-scrollbar"
+              className={`
+                flex-1 overflow-y-auto custom-scrollbar
+                ${isMobile ? 'p-8 pb-12' : 'p-10 md:p-12'}
+              `}
             >
               {!isSubmitted ? (
                 <>
-                  <div className="mb-10 text-center md:text-left rtl:md:text-right text-left rtl:text-right">
+                  <div className="mb-10 text-center md:text-left rtl:md:text-right">
                     <h2 className="font-display font-bold text-3xl md:text-4xl text-brand-pure-white mb-4 uppercase tracking-tight">
                       {t.title} <span className="text-brand-electric-purple">{t.titleAccent}</span>
                     </h2>
-                    <p className="font-body text-brand-soft-lavender opacity-70 leading-relaxed">
+                    <p className="font-body text-brand-soft-lavender opacity-70 leading-relaxed max-w-md">
                       {t.desc}
                     </p>
                   </div>
@@ -223,13 +268,23 @@ ${formData.message}`;
                       />
                     </div>
 
-                    <Button type="submit" variant="primary" isLoading={isSubmitting} loadingText="..." className="w-full" caps={true}>
+                    <Button 
+                      type="submit" 
+                      variant="primary" 
+                      isLoading={isSubmitting} 
+                      loadingText={t.sending} 
+                      className="w-full" 
+                      caps={true}
+                    >
                       {t.submit}
                     </Button>
+                    <p className="text-center text-[0.625rem] text-brand-pure-white/30 uppercase tracking-widest font-display mt-4">
+                      {t.secure}
+                    </p>
                   </form>
                 </>
               ) : (
-                <div className="py-12 text-center text-left rtl:text-right">
+                <div className="py-12 text-center">
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-20 h-20 bg-brand-electric-purple/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-brand-electric-purple/50">
                     <svg className="w-10 h-10 text-brand-electric-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -238,7 +293,7 @@ ${formData.message}`;
                   <h2 className="font-display font-bold text-3xl md:text-4xl text-brand-pure-white mb-4 uppercase tracking-tight">
                     {t.successTitle} <span className="text-brand-electric-purple">{t.successAccent}</span>
                   </h2>
-                  <p className="font-body text-brand-soft-lavender opacity-70 mb-10 max-w-sm mx-auto">
+                  <p className="font-body text-brand-soft-lavender opacity-85 mb-10 max-w-sm mx-auto">
                     {t.successDesc.replace('{name}', formData.name.split(' ')[0])}
                   </p>
                   <Button onClick={onClose} variant="outline" className="w-full">

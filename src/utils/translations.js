@@ -13,6 +13,15 @@ export const translations = {
       getStarted: 'Get Started',
       toggleLang: '🇸🇦 Switch to Arabic',
     },
+    notFound: {
+      title: '404 - Page Not Found',
+      desc: 'It seems you have strayed into forbidden territory. The page you are looking for has been decommissioned or moved.',
+      cta: 'Return to Hub',
+    },
+    offline: {
+      title: 'OFFLINE MODE',
+      desc: 'Connections lost. Showing cached content.',
+    },
     whoThisIsFor: {
       tag: 'WHO THIS IS FOR',
       title: 'BUILT FOR SAUDI',
@@ -82,6 +91,7 @@ export const translations = {
         'UI/UX Design & Branding'
       ],
       submit: 'Request Free Consultation',
+      sending: 'Sending...',
       secure: 'SECURE & CONFIDENTIAL',
       successTitle: 'Vision',
       successAccent: 'Received',
@@ -89,7 +99,7 @@ export const translations = {
       return: 'Return to Experience',
     },
     journey: {
-      tag: 'HOW WE WORK',
+      tag: '[ HOW WE WORK ]',
       title: 'THE PROJECT JOURNEY',
       steps: [
         { title: 'Discovery & Planning', desc: 'We understand your business, goals, and requirements through deep investigation.' },
@@ -195,6 +205,7 @@ export const translations = {
       terms: 'Terms of Service',
       rights: 'Nexaar Tech. All rights reserved.',
       location: 'RIYADH, KSA',
+      slogan: 'هندسة النتائج للملكة',
     },
     legal: {
       privacy: {
@@ -265,7 +276,16 @@ export const translations = {
       process: 'خطواتنا',
       tech: 'تقنياتنا',
       getStarted: 'ابداً الآن',
-      toggleLang: '🇬🇧 التغيير للإنجليزية',
+      toggleLang: '🇺🇸 التغيير للإنجليزية',
+    },
+    notFound: {
+      title: '404 - الصفحة غير موجودة',
+      desc: 'يبدو أنك ضللت الطريق إلى منطقة محظورة. الصفحة التي تبحث عنها تم إخراجها من الخدمة أو نقلها.',
+      cta: 'العودة للرئيسية',
+    },
+    offline: {
+      title: 'وضع عدم الاتصال',
+      desc: 'فقد الاتصال. يتم عرض المحتوى المخزن.',
     },
     whoThisIsFor: {
       tag: 'من نحن',
@@ -336,6 +356,7 @@ export const translations = {
         'تصميم واجهة المستخدم والهوية'
       ],
       submit: 'طلب استشارة مجانية',
+      sending: 'جاري الإرسال...',
       secure: 'آمن وسري للغاية',
       successTitle: 'تم استلام',
       successAccent: 'الرؤية',
@@ -343,7 +364,7 @@ export const translations = {
       return: 'العودة للموقع',
     },
     journey: {
-      tag: 'خطوات العمل',
+      tag: '[ كيف نعمل ]',
       title: 'رحلة المشروع',
       steps: [
         { title: 'الاكتشاف والتخطيط', desc: 'نفهم عملك وأهدافك ومتطلباتك من خلال تحقيق عميق وشامل.' },

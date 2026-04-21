@@ -119,7 +119,7 @@ const Hero = () => {
           </div>
 
           {/* CTA buttons: premium design */}
-          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-[1.5rem] relative z-20 mt-4 md:mt-8">
+          <div className="col-span-12 flex flex-col sm:flex-row items-center justify-center gap-[1.5rem] relative z-20 mt-8 md:mt-12">
             <FadeUp delay={0.46}>
               <div className="flex w-full flex-col sm:flex-row items-center justify-center gap-[1.5rem]">
 

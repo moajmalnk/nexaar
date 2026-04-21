@@ -65,31 +65,33 @@ const FAQ = () => {
   return (
     <section id="faq" className="bg-brand-deep-navy section-padding">
       <div className="max-w-[1240px] w-[92%] mx-auto container-padding">
-        {/* Header Area */}
-        <div className="text-center mb-16">
-          <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
-            <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
-              <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
-              {t.tag} 
-              <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
-            </span>
+        <div className="codo-grid">
+          {/* Header Area */}
+          <div className="col-span-12 lg:col-start-2 lg:col-span-10 text-center mb-16">
+            <div className="mb-4 flex items-center justify-center space-x-2 rtl:space-x-reverse">
+              <span className="font-body font-medium text-sm text-brand-pure-white flex items-center">
+                <span className="text-brand-electric-purple mr-1 rtl:ml-1 rtl:mr-0">[</span> 
+                {t.tag} 
+                <span className="text-brand-electric-purple ml-1 rtl:mr-1 rtl:ml-0">]</span>
+              </span>
+            </div>
+            <h2 className="font-display font-black text-4xl md:text-5xl text-brand-pure-white uppercase text-center">
+              {t.title}
+            </h2>
           </div>
-          <h2 className="font-display font-black text-4xl md:text-5xl text-brand-pure-white uppercase text-center">
-            {t.title}
-          </h2>
-        </div>
 
-        {/* Accordion List */}
-        <div className="flex flex-col">
-          {faqs.map((faq, index) => (
-            <FAQItem
-              key={index}
-              question={faq.question}
-              answer={faq.answer}
-              isOpen={activeIndex === index}
-              onClick={() => toggleItem(index)}
-            />
-          ))}
+          {/* Accordion List */}
+          <div className="col-span-12 lg:col-start-2 lg:col-span-10 flex flex-col">
+            {faqs.map((faq, index) => (
+              <FAQItem
+                key={index}
+                question={faq.question}
+                answer={faq.answer}
+                isOpen={activeIndex === index}
+                onClick={() => toggleItem(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

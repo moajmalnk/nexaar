@@ -7,43 +7,7 @@ import { BRAND_CONFIG } from '../utils/constants';
 import NexaarLogo from './shared/NexaarLogo';
 
 /**
- * ── Sub-Component: Link Column ────────────────────────────────────────
- * Reusable vertical list for navigation links.
- */
-const FooterColumn = ({ title, links }) => (
-  <div className="space-y-6">
-    <h4 className="font-display font-bold text-xs text-white/40 uppercase tracking-[0.2em]">
-      {title}
-    </h4>
-    <nav>
-      <ul className="space-y-4">
-        {links.map((link) => (
-          <li key={link.name}>
-            {link.href ? (
-              <a
-                href={link.href}
-                className="group flex items-center text-brand-soft-lavender/60 hover:text-white font-body text-[0.875rem] transition-all duration-300"
-              >
-                <span className="relative">
-                  {link.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-brand-electric-coral group-hover:w-full transition-all duration-300" />
-                </span>
-              </a>
-            ) : (
-              <span className="text-brand-soft-lavender/60 font-body text-[0.875rem]">
-                {link.name}
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </nav>
-  </div>
-);
-
-/**
  * ── Sub-Component: Social Link ────────────────────────────────────────
- * Icon-based social media links with premium hover effects.
  */
 const SocialLink = ({ href, icon: Icon, label }) => (
   <motion.a
@@ -52,7 +16,7 @@ const SocialLink = ({ href, icon: Icon, label }) => (
     rel="noopener noreferrer"
     whileHover={{ y: -4, scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
-    className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-brand-electric-purple/20 hover:border-brand-electric-purple/30 transition-all duration-300 shadow-xl outline-none"
+    className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-brand-electric-purple/20 hover:border-brand-electric-purple/30 transition-all duration-300"
     aria-label={label}
   >
     <Icon className="w-5 h-5" />
@@ -79,94 +43,125 @@ const InstagramIcon = (props) => (
   </svg>
 );
 
-/* ──────────────────────────────────────────────────────────────────────
-   Main Component: Footer
-────────────────────────────────────────────────────────────────────── */
 const Footer = () => {
   const { lang } = useLanguage();
   const t = translations[lang].footer;
   const currentYear = new Date().getFullYear();
 
-  const footerLinks = {
-    services: translations[lang].services.items.map(s => ({
-      name: s.title,
-      href: "/#services"
-    })),
-    company: [
-      { name: translations[lang].nav.about,     href: "/#who-it-is-for" },
-      { name: translations[lang].nav.services,  href: "/#services" },
-      { name: translations[lang].nav.portfolio, href: "/#portfolio" },
-      { name: translations[lang].nav.why,       href: "/#why-us" },
-      { name: translations[lang].nav.process,   href: "/#process" },
-      { name: translations[lang].nav.tech,      href: "/#tech-stack" },
-    ]
-  };
+  const servicesLinks = translations[lang].services.items.map(s => ({
+    name: s.title,
+    href: "/#services"
+  }));
+
+  const companyLinks = [
+    { name: translations[lang].nav.about,     href: "/#who-it-is-for" },
+    { name: translations[lang].nav.services,  href: "/#services" },
+    { name: translations[lang].nav.portfolio, href: "/#portfolio" },
+    { name: translations[lang].nav.why,       href: "/#why-us" },
+  ];
 
   return (
-    <footer className="bg-brand-deep-navy border-t border-white/[0.05] relative overflow-hidden rtl:text-right text-left">
-      <div className="max-w-[1240px] w-[92%] mx-auto px-5 lg:px-12 pt-12 lg:pt-32 pb-10 lg:pb-16">
-        <div className="codo-grid gap-y-10 lg:gap-y-0">
+    <footer className="relative bg-brand-deep-navy overflow-hidden font-display pt-20">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-1/4 w-[50%] h-[1px] bg-gradient-to-r from-transparent via-brand-electric-purple/20 to-transparent" />
+      
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
+        
+        {/* 1. EDITORIAL LINK GRID */}
+        <div className="grid grid-cols-12 gap-y-16 lg:gap-y-0">
           
-          {/* Section: Brand & Info */}
-          <div className="col-span-12 lg:col-span-5 space-y-12">
-            <div className="space-y-6">
-              <Link 
-                to="/" 
-                className="flex items-center w-max transition-opacity hover:opacity-80 outline-none border-none group"
-              >
-                <NexaarLogo size="lg" color="white" />
-                <span className="text-brand-electric-purple text-lg ml-1 rtl:mr-1 rtl:ml-0 font-display font-black group-hover:translate-x-0.5 transition-transform">®</span>
-              </Link>
-              <p className="font-body text-brand-soft-lavender/60 max-w-sm leading-relaxed text-[0.9375rem]">
+          {/* Brand Column */}
+          <div className="col-span-12 lg:col-span-4 py-10 lg:py-20 lg:pr-16 rtl:lg:pr-0 rtl:lg:pl-16 flex flex-col items-center lg:items-start gap-12 text-center lg:text-left rtl:lg:text-right">
+            <div className="space-y-8 flex flex-col items-center lg:items-start">
+              <NexaarLogo size="lg" className="hover:opacity-80 transition-opacity" />
+              <p className="text-brand-soft-lavender/60 font-body text-[0.9375rem] leading-relaxed max-w-sm">
                 {t.desc}
               </p>
-              
-              <div className="flex items-center gap-4 pt-4">
+              <div className="flex items-center gap-4">
                 <SocialLink href="#" icon={LinkedInIcon} label="LinkedIn" />
-                <SocialLink href="#" icon={TwitterIcon} label="X (Twitter)" />
+                <SocialLink href="#" icon={TwitterIcon} label="Twitter" />
                 <SocialLink href="#" icon={InstagramIcon} label="Instagram" />
               </div>
             </div>
+            <div>
+               <span className="text-[0.65rem] font-bold tracking-[0.3em] uppercase text-brand-electric-purple border border-brand-electric-purple/20 px-4 py-2 rounded-full inline-block">
+                {t.location}
+              </span>
+            </div>
           </div>
 
-          {/* Section: Links Grid */}
-          <div className="col-span-12 lg:col-span-6 lg:col-start-7">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
-              <FooterColumn title={t.links.services} links={footerLinks.services} />
-              <FooterColumn title={t.links.explore} links={footerLinks.company} />
-              
-              <div className="col-span-2 md:col-span-1 space-y-6">
-                <h4 className="font-display font-bold text-xs text-white/40 uppercase tracking-[0.2em]">
-                  {t.links.connect}
-                </h4>
-                <div className="space-y-4">
-                  <a href={`mailto:${BRAND_CONFIG.email}`} className="block font-body text-brand-soft-lavender/60 hover:text-white text-[0.875rem] transition-colors break-words">
+          {/* Nav Columns Layer */}
+          <div className="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-0 text-center lg:text-left rtl:lg:text-right">
+            {/* Services */}
+            <div className="lg:py-20 lg:px-12 space-y-10">
+              <h4 className="text-[0.65rem] font-bold text-white/30 uppercase tracking-[0.3em]">
+                {t.links.services}
+              </h4>
+              <ul className="space-y-5">
+                {servicesLinks.map(link => (
+                  <li key={link.name}>
+                    <a href={link.href} className="text-brand-pure-white/70 hover:text-brand-electric-purple font-medium text-sm transition-colors duration-300 block">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Links */}
+            <div className="lg:py-20 lg:px-12 space-y-10">
+              <h4 className="text-[0.65rem] font-bold text-white/30 uppercase tracking-[0.3em]">
+                {t.links.explore}
+              </h4>
+              <ul className="space-y-5">
+                {companyLinks.map(link => (
+                  <li key={link.name}>
+                    <a href={link.href} className="text-brand-pure-white/70 hover:text-brand-electric-purple font-medium text-sm transition-colors duration-300 block">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div className="lg:py-20 lg:px-12 space-y-10">
+              <h4 className="text-[0.65rem] font-bold text-white/30 uppercase tracking-[0.3em]">
+                {t.links.connect}
+              </h4>
+              <div className="space-y-8 flex flex-col items-center lg:items-start">
+                <a 
+                  href={`mailto:${BRAND_CONFIG.email}`} 
+                  className="group block w-max"
+                >
+                  <span className="text-sm font-body text-brand-soft-lavender hover:text-white transition-colors">
                     {BRAND_CONFIG.email}
-                  </a>
-                  <p className="font-display font-bold text-[0.625rem] text-brand-electric-purple uppercase tracking-widest border border-brand-electric-purple/20 px-3 py-1.5 rounded-full inline-block">
-                    {BRAND_CONFIG.location}
-                  </p>
-                </div>
+                  </span>
+                  <div className="w-0 h-px bg-brand-electric-purple group-hover:w-full transition-all duration-500 mt-1" />
+                </a>
+                <p className="text-[0.65rem] font-bold text-brand-soft-lavender/40 leading-relaxed max-w-[120px] uppercase tracking-widest">
+                  {lang === 'ar' ? t.slogan : 'Engineering results for the Kingdom'}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Section: Legal Bar */}
-        <div className="mt-12 pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-          <p className="font-body text-white/20">
+        {/* 3. MINIMALIST LEGAL BAR */}
+        <div className="mt-12 lg:mt-24 py-12 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[0.65rem] font-medium text-white/20 uppercase tracking-[0.2em] order-2 md:order-1">
             © {currentYear} {t.rights}
           </p>
-          
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-[0.75rem] font-body text-white/30 tracking-wide">
-            <Link to="/privacy" className="hover:text-white transition-colors duration-300">
+          <div className="flex items-center gap-10 order-1 md:order-2">
+            <Link to="/privacy" className="text-[0.65rem] font-bold text-white/40 hover:text-brand-electric-purple uppercase tracking-[0.2em] transition-colors">
               {t.privacy}
             </Link>
-            <Link to="/terms" className="hover:text-white transition-colors duration-300">
+            <Link to="/terms" className="text-[0.65rem] font-bold text-white/40 hover:text-brand-electric-purple uppercase tracking-[0.2em] transition-colors">
               {t.terms}
             </Link>
           </div>
         </div>
+
       </div>
     </footer>
   );
