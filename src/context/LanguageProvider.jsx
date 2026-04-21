@@ -5,22 +5,17 @@ export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState(() => {
     if (typeof window !== 'undefined') {
       // 1. Check for explicit user preference (highest priority)
-      // Note: We use a new key to avoid users being 'stuck' in English from the previous bug
       const explicitSaved = localStorage.getItem('nexaar_user_lang_pref');
       if (explicitSaved) return explicitSaved;
       
-      // 2. Check all browser preferred languages for Arabic
-      // Support for ar, ar-SA, ar-EG, etc.
-      const preferredLanguages = navigator.languages || [navigator.language];
-      const hasArabicPreference = preferredLanguages.some(l => 
-        l && l.toLowerCase().startsWith('ar')
-      );
-
-      if (hasArabicPreference) {
+      // 2. Check the browser's primary language setting
+      const primaryLanguage = navigator.language || (navigator.languages && navigator.languages[0]) || 'en';
+      if (primaryLanguage.toLowerCase().startsWith('ar')) {
         return 'ar';
       }
+      return 'en';
     }
-    // 3. System default
+    // 3. System default fallback
     return 'en';
   });
   
