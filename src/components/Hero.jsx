@@ -112,13 +112,8 @@ const Hero = () => {
           {/* Subtext: centered within grid */}
           <div className="col-span-12 lg:col-start-3 lg:col-span-8 text-center relative z-10">
             <MaskSlide delay={0.38} duration={0.6}>
-              {/* Desktop Subtitle */}
-              <p className="hidden md:block text-brand-soft-lavender text-lg md:text-xl font-body font-normal max-w-3xl mx-auto mb-12 leading-relaxed opacity-90 tagline">
+              <p className="hidden md:block text-brand-soft-lavender text-lg md:text-xl font-body font-normal max-w-3xl mx-auto mb-12 leading-relaxed opacity-90 px-4 md:px-0 tagline">
                 {t.subtitle}
-              </p>
-              {/* Mobile Subtitle */}
-              <p className="block md:hidden text-brand-soft-lavender text-base font-body font-normal max-w-3xl mx-auto mb-10 leading-relaxed opacity-90 px-4 tagline">
-                {t.subtitleMobile}
               </p>
             </MaskSlide>
           </div>

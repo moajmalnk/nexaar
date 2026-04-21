@@ -52,13 +52,13 @@ const LanguageToggle = ({ lang, toggleLanguage }) => {
 };
 
 const getNavLinks = (lang) => [
-  { name: translations[lang].nav.home,      href: '/#home' },
-  { name: translations[lang].nav.who,       href: '/#who-it-is-for' },
-  { name: translations[lang].nav.services,  href: '/#services' },
-  { name: translations[lang].nav.why,       href: '/#why-us' },
-  { name: translations[lang].nav.process,   href: '/#process' },
-  { name: translations[lang].nav.portfolio, href: '/#portfolio' },
-  { name: translations[lang].nav.tech,      href: '/#tech-stack' },
+  { id: 'home',          name: translations[lang].nav.home,      href: '/#home' },
+  { id: 'who-it-is-for', name: translations[lang].nav.who,       href: '/#who-it-is-for' },
+  { id: 'services',      name: translations[lang].nav.services,  href: '/#services' },
+  { id: 'why-us',        name: translations[lang].nav.why,       href: '/#why-us' },
+  { id: 'process',       name: translations[lang].nav.process,   href: '/#process' },
+  { id: 'portfolio',     name: translations[lang].nav.portfolio, href: '/#portfolio' },
+  { id: 'tech-stack',    name: translations[lang].nav.tech,      href: '/#tech-stack' },
 ];
 
 const SECTION_IDS = [
@@ -80,9 +80,9 @@ const LinkItem = ({ link, isActive, isHovered, onHover, onClick, isLegalPage }) 
     <a
       href={link.href}
       className="relative flex items-center justify-center py-2 px-2 xl:px-3 group focus:outline-none"
-      onMouseEnter={() => onHover(link.name)}
+      onMouseEnter={() => onHover(link.id)}
       onMouseLeave={() => onHover(null)}
-      onClick={(e) => onClick(e, link.name, link.href)}
+      onClick={(e) => onClick(e, link.id, link.href)}
     >
       <span 
         className={`relative z-10 transition-colors duration-300 font-body text-sm font-medium ${
@@ -113,7 +113,7 @@ const LinkItem = ({ link, isActive, isHovered, onHover, onClick, isLegalPage }) 
 
 /* ── Desktop Navigation ── */
 function DesktopNav({
-  activeLink, hovered, onHover, onClick, onMobileOpen,
+  activeId, hovered, onHover, onClick, onMobileOpen,
   variant, menuButtonRef, isMobileOpen,
   lang, toggleLanguage, t, NAV_LINKS, isLegalPage, pathname,
 }) {
@@ -163,12 +163,12 @@ function DesktopNav({
       </div>
 
       <nav className="hidden lg:flex items-center gap-1 lg:gap-3 xl:gap-6 mx-auto">
-        {NAV_LINKS.filter(link => link.href !== '/#home').map(link => (
+        {NAV_LINKS.filter(link => link.id !== 'home').map(link => (
           <LinkItem
-            key={link.name}
+            key={link.id}
             link={link}
-            isActive={activeLink === link.name}
-            isHovered={hovered === link.name}
+            isActive={activeId === link.id}
+            isHovered={hovered === link.id}
             onHover={onHover}
             onClick={onClick}
             variant={variant}
@@ -243,9 +243,16 @@ export default function Navbar() {
   const NAV_LINKS = getNavLinks(lang);
 
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const isMobileOpenRef = useRef(isMobileOpen);
+  
+  // Sync ref for access inside listeners
+  useEffect(() => {
+    isMobileOpenRef.current = isMobileOpen;
+  }, [isMobileOpen]);
 
-  const [activeLink, setActiveLink] = useState(() => translations[lang].nav.home);
-  const [hovered, setHovered]       = useState(null);
+  // Track active state by ID (e.g., 'home', 'why-us') instead of translated name
+  const [activeId, setActiveId] = useState('home');
+  const [hovered, setHovered]   = useState(null);
 
   const drawerRef     = useRef(null);
   const menuButtonRef = useRef(null);
@@ -257,15 +264,20 @@ export default function Navbar() {
 
   // Force Home active state when at top of page
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest < 100 && activeLink !== translations[lang].nav.home) {
-      setActiveLink(translations[lang].nav.home);
+    // Crucial fix: The scrollLock utility changes body position to fixed,
+    // which makes window.scrollY jump to 0. We must ignore scroll events
+    // while the mobile menu is open so it doesn't instantly snap to "Home".
+    if (isMobileOpenRef.current) return;
+
+    if (latest < 100 && activeId !== 'home') {
+      setActiveId('home');
     }
 
     // Existing visibility logic...
     const diff = latest - lastScrollY;
     if (Math.abs(diff) < 20 && latest > 50) return;
 
-    if (latest < 50 || isMobileOpen) {
+    if (latest < 50) {
       setIsVisible(true);
     } else if (diff > 0) {
       setIsVisible(false);
@@ -313,34 +325,24 @@ export default function Navbar() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -40% 0px',
-      threshold: [0, 0.25, 0.5, 0.75, 1.0],
+      // Target the center-upper part of the viewport (20% height band)
+      // This is much more robust for sections with varying heights.
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: 0,
     };
 
-    // Use a map to track ratios for all sections
-    const ratios = new Map();
-
     const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        ratios.set(entry.target.getAttribute('id'), entry.intersectionRatio);
-      });
+      // Also prevent the observer from overriding the state while the menu is open,
+      // as the layout shifts caused by scroll lock might trigger false intersections.
+      if (isMobileOpenRef.current) return;
 
-      // Find the winner (most visible)
-      let winnerId = null;
-      let maxRatio = 0;
-
-      ratios.forEach((ratio, id) => {
-        if (ratio > maxRatio) {
-          maxRatio = ratio;
-          winnerId = id;
-        }
-      });
-
-      if (winnerId) {
-        const linkIndex = SECTION_IDS.indexOf(winnerId);
-        if (linkIndex !== -1) {
-          const newActiveName = getNavLinks(langRef.current)[linkIndex].name;
-          setActiveLink(newActiveName);
+      // Find the first section that is intersecting our narrow center band
+      const activeEntry = entries.find(entry => entry.isIntersecting);
+      
+      if (activeEntry) {
+        const winnerId = activeEntry.target.getAttribute('id');
+        if (SECTION_IDS.includes(winnerId)) {
+          setActiveId(winnerId);
         }
       }
     };
@@ -354,22 +356,7 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []); 
 
-  useEffect(() => {
-    const enLinks = getNavLinks('en');
-    const arLinks = getNavLinks('ar');
-    const combinedLinks = [...enLinks, ...arLinks];
-    const matchedIndex = combinedLinks.findIndex(l => l.name === activeLink);
-    
-    if (matchedIndex !== -1) {
-      const normalizedIndex = matchedIndex % enLinks.length;
-      const newLabel = getNavLinks(lang)[normalizedIndex]?.name ?? translations[lang].nav.home;
-      if (newLabel !== activeLink) {
-        requestAnimationFrame(() => setActiveLink(newLabel));
-      }
-    }
-  }, [lang, activeLink]);
-
-  const handleLinkClick = (e, name, href) => {
+  const handleLinkClick = (e, id, href) => {
     // Smooth scroll for hash links ONLY if we are already on the home page
     if (window.lenis && href && href.startsWith('/#') && pathname === '/') {
       e.preventDefault();
@@ -380,7 +367,7 @@ export default function Navbar() {
       });
     }
 
-    setActiveLink(name);
+    setActiveId(id);
     setIsMobileOpen(false);
   };
 
@@ -406,7 +393,7 @@ export default function Navbar() {
       <div className={`relative h-24 pointer-events-auto nav-main-wrapper transition-all duration-500`}>
         <DesktopNav
           variant="pill"
-          activeLink={activeLink}
+          activeId={activeId}
           hovered={hovered}
           onHover={setHovered}
           onClick={handleLinkClick}
@@ -471,16 +458,19 @@ export default function Navbar() {
 
               <nav className="flex flex-col gap-1.5 px-1">
                 {NAV_LINKS.map((link) => {
-                  const isActive = activeLink === link.name;
+                  const isActive = activeId === link.id;
                   return (
                     <motion.div
-                      key={link.name}
+                      key={link.id}
                       variants={{ closed: { opacity: 0, x: -10 }, open: { opacity: 1, x: 0 } }}
                     >
-                      <a
+                      <motion.a
                         href={link.href}
-                        onClick={(e) => handleLinkClick(e, link.name, link.href)}
-                        className="relative group flex items-center py-2.5 px-4 rounded-2xl transition-all duration-300"
+                        onClick={(e) => handleLinkClick(e, link.id, link.href)}
+                        whileTap={{ scale: 0.97, backgroundColor: 'rgba(255,255,255,0.05)' }}
+                        className={`relative group flex items-center py-2.5 px-4 rounded-2xl transition-all duration-200 ${
+                          isActive ? 'bg-white/5' : 'hover:bg-white/5'
+                        }`}
                       >
                         <span
                           className="relative z-10 font-body text-[1.0625rem] tracking-wide transition-colors duration-300"
@@ -491,11 +481,13 @@ export default function Navbar() {
                         {(isActive && !isLegalPage) && (
                           <motion.span
                             layoutId="mobile-dot"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
                             className="ml-auto w-1.5 h-1.5 rounded-full bg-brand-electric-purple"
                             style={{ boxShadow: '0 0 10px rgba(107,32,232,0.5)' }}
                           />
                         )}
-                      </a>
+                      </motion.a>
                     </motion.div>
                   );
                 })}
