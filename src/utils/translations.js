@@ -188,7 +188,7 @@ export const translations = {
     },
     footer: {
       desc: 'Building the future of digital assets in Saudi Arabia with scalable, enterprise-grade architecture.',
-      mail: 'hello@nexaar.tech',
+      mail: 'info@nexaartech.com',
       newsletter: {
         title: 'Stay Ahead of the Curve',
         desc: 'Get expert insights on the Saudi tech landscape and digital transformation.',
@@ -208,52 +208,168 @@ export const translations = {
       slogan: 'هندسة النتائج للملكة',
     },
     legal: {
+      contactNote: 'Questions regarding our {title}? Contact us at {email}',
       privacy: {
         title: 'Privacy Policy',
-        lastUpdated: 'April 2026',
+        lastUpdated: '22 April 2025',
         sections: [
           {
             title: 'Information We Collect',
             content: [
-              'We collect information that you provide directly to us through project inquiries and consultations.',
-              'This may include your name, email address, company details, and project visions.'
+              'We collect only the information necessary to respond to your enquiries and deliver our services:',
+              'Name — to identify and address you properly',
+              'Email address — to communicate with you about your project, enquiry, or account',
+              'We do not collect payment card numbers, government IDs, passwords, or any sensitive personal data unless explicitly stated at the time of collection.'
             ]
           },
           {
-            title: 'How We Use Your Data',
+            title: 'How We Use Your Information',
             content: [
-              'We use your data to build tailored digital solutions and coordinate project timelines.',
-              'We do not sell your personal data to third parties.'
+              'Your name and email address are used solely for the following purposes:',
+              'To respond to contact form submissions and enquiries',
+              'To communicate updates, proposals, or deliverables related to your project',
+              'To manage our business relationship with you',
+              'To send important notices about changes to our services or policies',
+              'We will never use your information to send unsolicited marketing emails, and we will never sell or trade your personal data to any third party.'
             ]
           },
           {
-            title: 'Data Security',
+            title: 'Legal Basis for Processing',
             content: [
-              'Nexaar employs enterprise-grade encryption and security protocols to protect your project data during development and deployment.'
+              'We process your personal data on the basis of your consent (when you submit a contact form or sign up to our platform) and on the basis of legitimate interests in operating our business and delivering services you have requested.'
+            ]
+          },
+          {
+            title: 'Data Storage & Security',
+            content: [
+              'Your data is stored securely on industry-standard cloud infrastructure. We apply reasonable technical and organisational measures to protect your information from unauthorised access, loss, or disclosure. Access to personal data is restricted to team members who require it to deliver your project.',
+              'We retain your data only for as long as is necessary for the purpose it was collected, or as required by applicable law.'
+            ]
+          },
+          {
+            title: 'Third-Party Sharing',
+            content: [
+              'We do not sell, rent, or share your personal information with third parties for their own marketing purposes. We may share data with trusted service providers (e.g. cloud hosting, email delivery) solely to the extent required to operate our services. All such providers are bound by appropriate data protection obligations.',
+              'Our website may contain links to external sites. We are not responsible for the privacy practices of those sites and encourage you to review their policies.'
+            ]
+          },
+          {
+            title: 'Cookies & Analytics',
+            content: [
+              'Our website may use standard analytics tools (such as Google Analytics) to understand how visitors interact with our site. These tools may collect anonymised usage data via cookies. You may disable cookies in your browser settings; this will not affect your ability to use our core site.'
+            ]
+          },
+          {
+            title: 'Your Rights',
+            content: [
+              'Depending on your location, you may have the right to:',
+              'Access the personal data we hold about you',
+              'Request correction of inaccurate data',
+              'Request deletion of your data',
+              'Withdraw your consent at any time',
+              'Object to or restrict certain processing activities',
+              'To exercise any of these rights, please contact us at legal@nexaartech.com. We will respond within a reasonable timeframe.'
+            ]
+          },
+          {
+            title: 'Changes to This Policy',
+            content: [
+              'We may update this Privacy Policy from time to time. When we do, we will revise the effective date at the top of this page. Continued use of our website or services after any changes constitutes your acceptance of the updated policy.'
+            ]
+          },
+          {
+            title: 'Contact',
+            content: [
+              'If you have any questions about this Privacy Policy, please contact us:',
+              'Email: legal@nexaartech.com',
+              'Website: https://nexaartech.com',
+              'Address: Riyadh, Kingdom of Saudi Arabia'
             ]
           }
         ]
       },
       terms: {
         title: 'Terms of Service',
-        lastUpdated: 'April 2026',
+        lastUpdated: '22 April 2025',
         sections: [
           {
-            title: 'Engagement & Scope',
+            title: 'About Nexaar Tech',
             content: [
-              'Project scopes are defined and agreed upon before work begins. Any shifts in scope may impact timelines and costs.'
+              'Nexaar Tech is a technology development agency based in Riyadh, Kingdom of Saudi Arabia. We specialise in end-to-end digital product development — including web applications, mobile applications, and technology strategy — primarily for early-stage entrepreneurs and startups in the Saudi Arabian ecosystem.'
+            ]
+          },
+          {
+            title: 'Acceptance of Terms',
+            content: [
+              'By submitting an enquiry, signing a proposal, or accessing any part of our website or client portal, you confirm that you have read, understood, and agree to these Terms. If you are entering into these Terms on behalf of a company or organisation, you represent that you have authority to bind that entity.'
+            ]
+          },
+          {
+            title: 'Our Services',
+            content: [
+              'Nexaar Tech provides the following categories of services:',
+              'Web and mobile application design and development',
+              'Technology consulting and product strategy',
+              'Access to client portals, project dashboards, and related platforms operated by Nexaar Tech',
+              'Specific deliverables, timelines, pricing, and project scope are agreed separately in written proposals or service agreements between Nexaar Tech and the client. In the event of any conflict between these Terms and a specific agreement, the specific agreement prevails.'
+            ]
+          },
+          {
+            title: 'Your Responsibilities',
+            content: [
+              'When using our services or website, you agree to:',
+              'Provide accurate and up-to-date information when requested',
+              'Use our website and services for lawful purposes only',
+              'Not attempt to disrupt, hack, or gain unauthorised access to our systems',
+              'Not copy, reverse-engineer, or reproduce any part of our website or platforms without written permission',
+              'Cooperate reasonably with our team to enable timely delivery of agreed services'
             ]
           },
           {
             title: 'Intellectual Property',
             content: [
-              'Upon full payment, the client owns the copyright of the final deliverables unless otherwise specified in the service agreement.'
+              'Unless otherwise agreed in writing, all content on the Nexaar Tech website — including text, graphics, logos, and code — is the property of Nexaar Tech and protected by applicable intellectual property laws.',
+              'Intellectual property rights in deliverables created specifically for a client project will be as specified in the relevant project agreement. Where no agreement is in place, ownership remains with Nexaar Tech until full payment is received.'
             ]
           },
           {
-            title: 'Confidentiality',
+            title: 'Limitation of Liability',
             content: [
-              'We maintain strict confidentiality regarding all client business logic and project details shared during our partnership.'
+              'To the fullest extent permitted by law, Nexaar Tech shall not be liable for any indirect, incidental, consequential, or punitive damages arising from your use of our website or services, including but not limited to loss of profits, loss of data, or business interruption.',
+              'Our total liability to you in connection with any claim shall not exceed the amount paid by you to Nexaar Tech in the three months preceding the event giving rise to the claim.'
+            ]
+          },
+          {
+            title: 'Disclaimer of Warranties',
+            content: [
+              'Our website and services are provided "as is" and "as available" without warranties of any kind, either express or implied. We do not guarantee that our website will be uninterrupted, error-free, or free of viruses or other harmful components.'
+            ]
+          },
+          {
+            title: 'Governing Law',
+            content: [
+              'These Terms shall be governed by and construed in accordance with the laws of the Kingdom of Saudi Arabia. Any disputes arising from or related to these Terms shall be subject to the exclusive jurisdiction of the courts of Riyadh, Saudi Arabia.'
+            ]
+          },
+          {
+            title: 'Changes to These Terms',
+            content: [
+              'We reserve the right to update or modify these Terms at any time. Changes will be effective upon posting to our website with a revised effective date. Your continued use of our services after any such changes constitutes your acceptance of the new Terms.'
+            ]
+          },
+          {
+            title: 'Termination',
+            content: [
+              'We reserve the right to suspend or terminate access to our services or website at our discretion if we believe you are in breach of these Terms or applicable law. Sections related to intellectual property, liability, and governing law will survive termination.'
+            ]
+          },
+          {
+            title: 'Contact',
+            content: [
+              'For any questions or concerns about these Terms, please contact us:',
+              'Email: legal@nexaartech.com',
+              'Website: https://nexaartech.com',
+              'Address: Riyadh, Kingdom of Saudi Arabia'
             ]
           }
         ]
@@ -453,7 +569,7 @@ export const translations = {
     },
     footer: {
       desc: 'بناء مستقبل الأصول الرقمية في المملكة العربية السعودية بهندسة برمجية قابلة للتطوير على مستوى المؤسسات.',
-      mail: 'hello@nexaar.tech',
+      mail: 'info@nexaartech.com',
       newsletter: {
         title: 'ابق في الطليعة',
         desc: 'احصل على رؤى الخبراء حول المشهد التقني في السعودية والتحول الرقمي.',
@@ -472,52 +588,168 @@ export const translations = {
       location: 'الرياض، المملكة العربية السعودية',
     },
     legal: {
+      contactNote: 'لديك أسئلة بخصوص {title}؟ تواصل معنا عبر {email}',
       privacy: {
         title: 'سياسة الخصوصية',
-        lastUpdated: 'أبريل 2026',
+        lastUpdated: '22 أبريل 2025',
         sections: [
           {
             title: 'المعلومات التي نجمعها',
             content: [
-              'نجمع المعلومات التي تقدمها لنا مباشرة من خلال استفسارات المشروع والاستشارات.',
-              'قد يشمل ذلك اسمك وبريدك الإلكتروني وتفاصيل الشركة ورؤى المشروع.'
+              'نحن نجمع فقط المعلومات الضرورية للرد على استفساراتك وتقديم خدماتنا:',
+              'الاسم — لتحديد هويتك ومخاطبتك بشكل صحيح',
+              'عنوان البريد الإلكتروني — للتواصل معك بشأن مشروعك أو استفسارك أو حسابك',
+              'نحن لا نجمع أرقام بطاقات الدفع، أو الهويات الحكومية، أو كلمات المرور، أو أي بيانات شخصية حساسة ما لم يتم ذكر ذلك صراحة وقت الجمع.'
             ]
           },
           {
-            title: 'كيفية استخدام بياناتك',
+            title: 'كيفية استخدام معلوماتك',
             content: [
-              'نستخدم بياناتك لبناء حلول رقمية مخصصة وتنسيق الجداول الزمنية للمشروع.',
-              'نحن لا نبيع بياناتك الشخصية لأطراف ثالثة.'
+              'يتم استخدام اسمك وعنوان بريدك الإلكتروني فقط للأغراض التالية:',
+              'للرد على طلبات نماذج الاتصال والاستفسارات',
+              'لإبلاغك بالتحديثات أو المقترحات أو المخرجات المتعلقة بمشروعك',
+              'لإدارة علاقتنا التجارية معك',
+              'لإرسال إشعارات مهمة حول التغييرات في خدماتنا أو سياساتنا',
+              'لن نستخدم معلوماتك أبداً لإرسال رسائل بريد إلكتروني تسويقية غير مرغوب فيها، ولن نبيع أو نتاجر ببياناتك الشخصية مع أي طرف ثالث.'
             ]
           },
           {
-            title: 'أمن البيانات',
+            title: 'الأساس القانوني للمعالجة',
             content: [
-              'توظف نكسار بروتوكولات تشفير وأمان على مستوى المؤسسات لحماية بيانات مشروعك أثناء التطوير والنشر.'
+              'نقوم بمعالجة بياناتك الشخصية بناءً على موافقتك (عندما ترسل نموذج اتصال أو تسجل في منصتنا) وبناءً على المصالح المشروعة في تشغيل أعمالنا وتقديم الخدمات التي طلبتها.'
+            ]
+          },
+          {
+            title: 'تخزين البيانات وأمنها',
+            content: [
+              'يتم تخزين بياناتك بشكل آمن على بنية تحتية سحابية متوافقة مع معايير الصناعة. نحن نطبق تدابير تقنية وتنظيمية معقولة لحماية معلوماتك من الوصول غير المصرح به أو الفقدان أو الكشف. يقتصر الوصول إلى البيانات الشخصية على أعضاء الفريق الذين يحتاجون إليها لتنفيذ مشروعك.',
+              'نحتفظ ببياناتك فقط للفترة الضرورية للغرض الذي جمعت من أجله، أو حسب ما يقتضيه القانون المعمول به.'
+            ]
+          },
+          {
+            title: 'المشاركة مع أطراف ثالثة',
+            content: [
+              'نحن لا نبيع أو نؤجر أو نشارك معلوماتك الشخصية مع أطراف ثالثة لأغراض التسويق الخاصة بهم. قد نشارك البيانات مع مزودي الخدمة الموثوق بهم (مثل استضافة السحاب، توصيل البريد الإلكتروني) فقط بالقدر المطلوب لتشغيل خدماتنا. جميع هؤلاء المزودين ملزمون بالتزامات حماية البيانات المناسبة.',
+              'قد يحتوي موقعنا على روابط لمواقع خارجية. نحن لسنا مسؤولين عن ممارسات الخصوصية لتلك المواقع ونشجعك على مراجعة سياساتها.'
+            ]
+          },
+          {
+            title: 'ملفات تعريف الارتباط والتحليلات',
+            content: [
+              'قد يستخدم موقعنا أدوات تحليل قياسية (مثل Google Analytics) لفهم كيفية تفاعل الزوار مع موقعنا. قد تجمع هذه الأدوات بيانات استخدام مجهولة المصدر عبر ملفات تعريف الارتباط. يمكنك تعطيل ملفات تعريف الارتباط في إعدادات متصفحك؛ لن يؤثر ذلك على قدرتك على استخدام موقعنا الأساسي.'
+            ]
+          },
+          {
+            title: 'حقوقك',
+            content: [
+              'بناءً على موقعك، قد يكون لك الحق في:',
+              'الوصول إلى البيانات الشخصية التي نحتفظ بها عنك',
+              'طلب تصحيح البيانات غير الدقيقة',
+              'طلب حذف بياناتك',
+              'سحب موافقتك في أي وقت',
+              'الاعتراض على أو تقييد بعض أنشطة المعالجة',
+              'لممارسة أي من هذه الحقوق، يرجى الاتصال بنا على legal@nexaartech.com. سنرد خلال إطار زمني معقول.'
+            ]
+          },
+          {
+            title: 'التغييرات في هذه السياسة',
+            content: [
+              'قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. عندما نفعل ذلك، سنقوم بمراجعة تاريخ السريان في أعلى هذه الصفحة. استمرار استخدام موقعنا أو خدماتنا بعد أي تغييرات يشكل قبولك للسياسة المحدثة.'
+            ]
+          },
+          {
+            title: 'اتصل بنا',
+            content: [
+              'إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا:',
+              'البريد الإلكتروني: legal@nexaartech.com',
+              'الموقع الإلكتروني: https://nexaartech.com',
+              'العنوان: الرياض، المملكة العربية السعودية'
             ]
           }
         ]
       },
       terms: {
         title: 'شروط الخدمة',
-        lastUpdated: 'أبريل 2026',
+        lastUpdated: '22 أبريل 2025',
         sections: [
           {
-            title: 'الارتباط والنطاق',
+            title: 'عن نكسار تك',
             content: [
-              'يتم تحديد نطاقات المشروع والاتفاق عليها قبل بدء العمل. قد يؤثر أي تغيير في النطاق على الجداول الزمنية والتكاليف.'
+              'نكسار تك هي وكالة تطوير تقني مقرها الرياض، المملكة العربية السعودية. نحن متخصصون في تطوير المنتجات الرقمية الشاملة — بما في ذلك تطبيقات الويب وتطبيقات الجوال واستراتيجية التكنولوجيا — في المقام الأول لرواد الأعمال والشركات الناشئة في مراحلها المبكرة في منظومة الأعمال السعودية.'
+            ]
+          },
+          {
+            title: 'قبول الشروط',
+            content: [
+              'من خلال تقديم استفسار، أو التوقيع على اقتراح، أو الوصول إلى أي جزء من موقعنا أو بوابة العملاء الخاصة بنا، فإنك تؤكد أنك قرأت وفهمت ووافقت على هذه الشروط. إذا كنت تدخل في هذه الشروط نيابة عن شركة أو منظمة، فإنك تقر بأن لديك السلطة لإلزام هذا الكيان.'
+            ]
+          },
+          {
+            title: 'خدماتنا',
+            content: [
+              'تقدم نكسار تك الفئات التالية من الخدمات:',
+              'تصميم وتطوير تطبيقات الويب والجوال',
+              'الاستشارات التقنية واستراتيجية المنتج',
+              'الوصول إلى بوابات العملاء، لوحات التحكم الخاصة بالمشاريع، والمنصات ذات الصلة التي تديرها نكسار تك',
+              'يتم الاتفاق على المخرجات المحددة، الجداول الزمنية، الأسعار، ونطاق المشروع بشكل منفصل في مقترحات مكتوبة أو اتفاقيات خدمة بين نكسار تك والعميل. في حال حدوث أي تعارض بين هذه الشروط واتفاقية محددة، تسود الاتفاقية المحددة.'
+            ]
+          },
+          {
+            title: 'مسؤولياتك',
+            content: [
+              'عند استخدام خدماتنا أو موقعنا الإلكتروني، فإنك توافق على:',
+              'تقديم معلومات دقيقة ومحدثة عند طلبها',
+              'استخدام موقعنا وخدماتنا لأغراض قانونية فقط',
+              'عدم محاولة تعطيل أو اختراق أو الوصول غير المصرح به إلى أنظمتنا',
+              'عدم نسخ أو عكس هندسة أو إعادة إنتاج أي جزء من موقعنا أو منصاتنا دون إذن كتابي',
+              'التعاون المعقول مع فريقنا لتمكين التسليم في الوقت المحدد للخدمات المتفق عليها'
             ]
           },
           {
             title: 'الملكية الفكرية',
             content: [
-              'عند سداد المبلغ بالكامل، يمتلك العميل حقوق الطبع والنشر للمخرجات النهائية ما لم ينص على خلاف ذلك في اتفاقية الخدمة.'
+              'ما لم يتم الاتفاق على خلاف ذلك كتابةً، فإن جميع المحتويات الموجودة على موقع نكسار تك — بما في ذلك النصوص والرسومات والشعارات والأكواد — هي ملك لنكسار تك ومحمية بموجب قوانين الملكية الفكرية المعمول بها.',
+              'ستكون حقوق الملكية الفكرية في المخرجات التي تم إنشاؤها خصيصاً لمشروع العميل كما هو محدد في اتفاقية المشروع ذات الصلة. في حال عدم وجود اتفاقية، تظل الملكية لنكسار تك حتى يتم استلام المبلغ بالكامل.'
             ]
           },
           {
-            title: 'السرية',
+            title: 'تحديد المسؤولية',
             content: [
-              'نحافظ على سرية تامة فيما يتعلق بجميع منطق أعمال العميل وتفاصيل المشروع التي تتم مشاركتها أثناء شراكتنا.'
+              'إلى أقصى حد يسمح به القانون، لا تتحمل نكسار تك المسؤولية عن أي أضرار غير مباشرة أو عرضية أو تبعية أو عقابية تنشأ عن استخدامك لموقعنا أو خدماتنا، بما في ذلك على سبيل المثال لا الحصر فقدان الأرباح أو فقدان البيانات أو انقطاع الأعمال.',
+              'لن تتجاوز مسؤوليتنا الإجمالية تجاهك فيما يتعلق بأي مطالبة المبلغ الذي دفعته لنكسار تك في الأشهر الثلاثة السابقة للحدث الذي أدى إلى المطالبة.'
+            ]
+          },
+          {
+            title: 'إخلاء المسؤولية عن الضمانات',
+            content: [
+              'يتم تقديم موقعنا وخدماتنا "كما هي" و "كما هي متوفرة" دون ضمانات من أي نوع، سواء كانت صريحة أو ضمنية. نحن لا نضمن أن موقعنا سيكون دون انقطاع، أو خالياً من الأخطاء، أو خالياً من الفيروسات أو المكونات الضارة الأخرى.'
+            ]
+          },
+          {
+            title: 'القانون الحاكم',
+            content: [
+              'تخضع هذه الشروط وتفسر وفقاً لقوانين المملكة العربية السعودية. أي نزاعات تنشأ عن أو تتعلق بهذه الشروط تخضع للولاية القضائية الحصرية لمحاكم الرياض، المملكة العربية السعودية.'
+            ]
+          },
+          {
+            title: 'التغييرات في هذه الشروط',
+            content: [
+              'نحتفظ بالحق في تحديث أو تعديل هذه الشروط في أي وقت. ستكون التغييرات فعالة عند نشرها على موقعنا مع تاريخ سريان مراجع. استمرار استخدامك لخدماتنا بعد أي من هذه التغييرات يشكل قبولك للشروط الجديدة.'
+            ]
+          },
+          {
+            title: 'الإنهاء',
+            content: [
+              'نحتفظ بالحق في تعليق أو إنهاء الوصول إلى خدماتنا أو موقعنا وفقاً لتقديرنا إذا اعتقدنا أنك انتهكت هذه الشروط أو القانون المعمول به. الأقسام المتعلقة بالملكية الفكرية والمسؤولية والقانون الحاكم ستظل سارية بعد الإنهاء.'
+            ]
+          },
+          {
+            title: 'اتصل بنا',
+            content: [
+              'لأي أسئلة أو استفسارات حول هذه الشروط، يرجى الاتصال بنا:',
+              'البريد الإلكتروني: legal@nexaartech.com',
+              'الموقع الإلكتروني: https://nexaartech.com',
+              'العنوان: الرياض، المملكة العربية السعودية'
             ]
           }
         ]

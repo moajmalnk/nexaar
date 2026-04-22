@@ -90,7 +90,7 @@ const NumbersThatMatter = () => {
             className="group relative h-44 sm:h-64 lg:h-80 rounded-2xl overflow-hidden shadow-ambient transition-transform duration-500 hover:scale-[1.03]"
           >
             <img 
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=70&w=800" 
+              src="/images/saudi-business-women.png" 
               alt="Saudi business professional" 
               loading="lazy"
               decoding="async"
@@ -124,7 +124,7 @@ const NumbersThatMatter = () => {
             className="bg-brand-electric-purple rounded-2xl md:rounded-3xl h-40 sm:h-48 lg:h-52 flex flex-col justify-center items-center text-center p-5 md:p-8 shadow-2xl transition-all duration-500 hover:scale-[1.03] relative lg:-mt-8"
           >
             <h3 className="font-display font-extrabold text-4xl md:text-5xl lg:text-7xl xl:text-8xl text-brand-pure-white/40 mb-1 leading-[1.1]">
-              <Counter value={100} />+
+              <Counter value={37} />+
             </h3>
             <p className="font-body font-bold text-brand-pure-white text-[0.625rem] md:text-xs lg:text-sm uppercase tracking-tight">
               {t.supported}

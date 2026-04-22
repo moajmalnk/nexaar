@@ -188,7 +188,7 @@ const Portfolio = () => {
     <section id="portfolio" className="bg-brand-deep-navy section-padding relative overflow-hidden">
 
       {/* Subtle ambient blob */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vh] bg-brand-electric-purple/[0.04] blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30dvh] bg-brand-electric-purple/[0.04] blur-[100px] pointer-events-none" />
 
       {/* ── Header ── */}
       <div className="max-w-[1240px] w-[92%] mx-auto container-padding mb-12 md:mb-16 relative z-10">
