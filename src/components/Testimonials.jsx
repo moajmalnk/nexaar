@@ -84,7 +84,13 @@ const Testimonials = () => {
                       <img 
                         src={testimonial.avatar} 
                         alt={testimonial.name} 
-                        className="w-full h-full object-cover"
+                        className={`w-full h-full object-cover ${
+                          testimonial.id === 2 ? 'object-[center_5%]' : 
+                          testimonial.id === 3 ? 'object-[100%_25%]' : 
+                          testimonial.id === 5 ? 'object-[center_5%]' : 
+                          testimonial.id === 6 ? 'object-[center_30%] scale-[1.35]' : 
+                          'object-[center_25%]'
+                        }`}
                         loading="lazy"
                       />
                     ) : (
