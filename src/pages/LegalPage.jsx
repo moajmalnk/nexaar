@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../utils/translations';
+import { BRAND_CONFIG } from '../utils/constants';
+
 
 const LegalPage = ({ type }) => {
   const { lang } = useLanguage();
@@ -67,7 +69,7 @@ const LegalPage = ({ type }) => {
 
           {/* Footer Note */}
           <motion.div variants={itemVariants} className="pt-8 text-center text-brand-soft-lavender/40 font-body text-sm italic">
-            Questions regarding our {content.title}? Contact us at hello@nexaar.tech
+            {translations[lang].legal.contactNote.replace('{title}', content.title).replace('{email}', BRAND_CONFIG.legalEmail)}
           </motion.div>
         </motion.div>
       </div>
