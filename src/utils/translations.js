@@ -148,12 +148,12 @@ export const translations = {
       title: 'TRUSTED BY VISIONARIES',
       desc: 'We focus on long-term relationships built on trust, transparency, and results within the Saudi tech ecosystem.',
       items: [
-        { id: 1, name: "Ahmed Al-Fadhel", role: "Founder, SaaS Connect Riyadh", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150", quote: "Nexaar didn't just write code; they challenged our assumptions and improved our core product logic. True technical partners." },
-        { id: 2, name: "Sarah Al-Ghamdi", role: "CEO, RetailNova", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150", quote: "The speed at which they moved from wireframes to a fully functional MVP was staggering. Clear communication, zero hidden surprises." },
-        { id: 3, name: "Omar Tariq", role: "CTO, FinFlow", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150", quote: "Finding developers who understand scalable architecture is hard. Finding a team that cares about the business outcome is rarer. Nexaar delivers both." },
-        { id: 4, name: "Layla Hassan", role: "Operations Lead, HealthSync", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150", quote: "Their focus on a clean, maintainable digital foundation saved us months of technical debt down the line." },
-        { id: 5, name: "Faisal Bin Youssef", role: "Co-Founder, EduTech KSA", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150", quote: "We came to them with an idea; they handed us a market-ready platform. The design is world-class, and the performance is flawless." },
-        { id: 6, name: "Nadia Malik", role: "Director, UrbanLogistics", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=150&h=150", quote: "Professionalism at its peak. Their discovery phase aligned our entire team, and the delivery was exactly on schedule." }
+        { id: 1, name: "Ahmed Al-Fadhel", role: "Founder, SaaS Connect Riyadh", avatar: "/images/avatars/avatar-ahmed.jpg", quote: "Nexaar didn't just write code; they challenged our assumptions and improved our core product logic. True technical partners." },
+        { id: 2, name: "Sarah Al-Ghamdi", role: "CEO, RetailNova", avatar: "/images/avatars/avatar-sarah.jpg", quote: "The speed at which they moved from wireframes to a fully functional MVP was staggering. Clear communication, zero hidden surprises." },
+        { id: 3, name: "Omar Tariq", role: "CTO, FinFlow", avatar: "/images/avatars/avatar-omar.jpg", quote: "Finding developers who understand scalable architecture is hard. Finding a team that cares about the business outcome is rarer. Nexaar delivers both." },
+        { id: 4, name: "Layla Hassan", role: "Operations Lead, HealthSync", avatar: "/images/avatars/avatar-layla.jpg", quote: "Their focus on a clean, maintainable digital foundation saved us months of technical debt down the line." },
+        { id: 5, name: "Faisal Bin Youssef", role: "Co-Founder, EduTech KSA", avatar: "/images/avatars/avatar-faisal.jpg", quote: "We came to them with an idea; they handed us a market-ready platform. The design is world-class, and the performance is flawless." },
+        { id: 6, name: "Nadia Malik", role: "Director, UrbanLogistics", avatar: "/images/avatars/avatar-nadia.jpg", quote: "Professionalism at its peak. Their discovery phase aligned our entire team, and the delivery was exactly on schedule." }
       ]
     },
     stats: {
@@ -529,12 +529,12 @@ export const translations = {
       title: 'موثوق من قبل المبدعين',
       desc: 'نركز على العلاقات طويلة الأمد القائمة على الثقة والشفافية والنتائج داخل منظومة التقنية السعودية.',
       items: [
-        { id: 1, name: "أحمد الفاضل", role: "مؤسس، SaaS Connect الرياض", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150", quote: "نكسار لم يكتفوا بكتابة الكود؛ لقد تحدوا افتراضاتنا وحسنوا المنطق الأساسي لمنتجنا. شركاء تقنيون حقيقيون." },
-        { id: 2, name: "سارة الغامدي", role: "الرئيس التنفيذي، RetailNova", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150", quote: "السرعة التي انتقلوا بها من المخططات الأولية إلى منتج أولي كامل الوظائف كانت مذهلة. تواصل واضح، ولا مفاجآت خفية." },
-        { id: 3, name: "عمر طارق", role: "المدير التقني، FinFlow", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150", quote: "من الصعب العثور على مطورين يفهمون الهندسة البرمجية القابلة للتوسع. العثور على فريق يهتم بنتيجة العمل أندر. نكسار تقدم كلاهما." },
-        { id: 4, name: "ليلى حسن", role: "مسؤول العمليات، HealthSync", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150", quote: "تركيزهم على أساس رقمي نظيف وقابل للصيانة وفر علينا شهورًا من الديون التقنية في المستقبل." },
-        { id: 5, name: "فيصل بن يوسف", role: "شريك مؤسس، EduTech KSA", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150", quote: "جئنا إليهم بفكرة؛ سلمونا منصة جاهزة للسوق. التصميم عالمي المستوى والأداء مثالي." },
-        { id: 6, name: "نادية مالك", role: "مديرة، UrbanLogistics", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=150&h=150", quote: "الاحترافية في ذروتها. مرحلة الاكتشاف الخاصة بهم وحدت فريقنا بالكامل، وكان التسليم في الموعد المحدد تمامًا." }
+        { id: 1, name: "أحمد الفاضل", role: "مؤسس، SaaS Connect الرياض", avatar: "/images/avatars/avatar-ahmed.jpg", quote: "نكسار لم يكتفوا بكتابة الكود؛ لقد تحدوا افتراضاتنا وحسنوا المنطق الأساسي لمنتجنا. شركاء تقنيون حقيقيون." },
+        { id: 2, name: "سارة الغامدي", role: "الرئيس التنفيذي، RetailNova", avatar: "/images/avatars/avatar-sarah.jpg", quote: "السرعة التي انتقلوا بها من المخططات الأولية إلى منتج أولي كامل الوظائف كانت مذهلة. تواصل واضح، ولا مفاجآت خفية." },
+        { id: 3, name: "عمر طارق", role: "المدير التقني، FinFlow", avatar: "/images/avatars/avatar-omar.jpg", quote: "من الصعب العثور على مطورين يفهمون الهندسة البرمجية القابلة للتوسع. العثور على فريق يهتم بنتيجة العمل أندر. نكسار تقدم كلاهما." },
+        { id: 4, name: "ليلى حسن", role: "مسؤول العمليات، HealthSync", avatar: "/images/avatars/avatar-layla.jpg", quote: "تركيزهم على أساس رقمي نظيف وقابل للصيانة وفر علينا شهورًا من الديون التقنية في المستقبل." },
+        { id: 5, name: "فيصل بن يوسف", role: "شريك مؤسس، EduTech KSA", avatar: "/images/avatars/avatar-faisal.jpg", quote: "جئنا إليهم بفكرة؛ سلمونا منصة جاهزة للسوق. التصميم عالمي المستوى والأداء مثالي." },
+        { id: 6, name: "نادية مالك", role: "مديرة، UrbanLogistics", avatar: "/images/avatars/avatar-nadia.jpg", quote: "الاحترافية في ذروتها. مرحلة الاكتشاف الخاصة بهم وحدت فريقنا بالكامل، وكان التسليم في الموعد المحدد تمامًا." }
       ]
     },
     stats: {

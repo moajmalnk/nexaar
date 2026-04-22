@@ -90,8 +90,8 @@ const NumbersThatMatter = () => {
             className="group relative h-44 sm:h-64 lg:h-80 rounded-2xl overflow-hidden shadow-ambient transition-transform duration-500 hover:scale-[1.03]"
           >
             <img 
-              src="/images/saudi-business-women.png" 
-              alt="Saudi business professional" 
+              src="/images/impact-strategy.jpg" 
+              alt="Strategic planning" 
               loading="lazy"
               decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -141,7 +141,7 @@ const NumbersThatMatter = () => {
           >
             <img 
               src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" 
-              alt="Technology abstract eye" 
+              alt="Technology abstract" 
               loading="lazy"
               decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
