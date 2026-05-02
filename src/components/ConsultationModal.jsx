@@ -143,7 +143,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     const updatedFormData = { ...formData, phone: finalPhone };
 
     try {
-      // Save lead to local storage & Cloudflare endpoint
+      // Save lead to local storage
       await saveLead(updatedFormData);
     } catch (err) {
       console.error('Error saving lead:', err);

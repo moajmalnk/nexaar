@@ -64,7 +64,7 @@ const Footer = () => {
     { name: translations[lang].nav.services,  href: "/#services" },
     { name: translations[lang].nav.portfolio, href: "/#portfolio" },
     { name: translations[lang].nav.why,       href: "/#why-us" },
-    { name: lang === 'ar' ? 'لوحة التحكم' : 'Dashboard', href: "/admin" },
+    { name: lang === 'ar' ? 'لوحة التحكم' : 'Dashboard', href: "/admin", isDashboard: true },
   ];
 
   return (
@@ -129,7 +129,7 @@ const Footer = () => {
                         {link.name}
                       </a>
                     ) : (
-                      <Link to={link.href} className="text-brand-pure-white/70 hover:text-brand-electric-purple font-medium text-sm transition-colors duration-300 block">
+                      <Link to={link.href} className={`${link.isDashboard ? 'text-brand-pure-white/20 hover:text-brand-electric-purple/40 font-normal' : 'text-brand-pure-white/70 hover:text-brand-electric-purple font-medium'} text-sm transition-colors duration-300 block`}>
                         {link.name}
                       </Link>
                     )}
@@ -173,7 +173,7 @@ const Footer = () => {
             <Link to="/terms" target="_self" className="text-[0.65rem] font-bold text-white/40 hover:text-brand-electric-purple uppercase tracking-[0.2em] transition-colors">
               {t.terms}
             </Link>
-            <Link to="/admin" target="_self" className="text-[0.65rem] font-bold text-white/40 hover:text-brand-electric-purple uppercase tracking-[0.2em] transition-colors">
+            <Link to="/admin" target="_self" className="text-[0.65rem] font-medium text-white/15 hover:text-brand-electric-purple/40 uppercase tracking-[0.2em] transition-colors">
               Admin
             </Link>
           </div>
