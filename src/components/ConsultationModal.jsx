@@ -5,6 +5,8 @@ import { translations } from '../utils/translations';
 import { BRAND_CONFIG } from '../utils/constants';
 import Button from './shared/Button';
 import { lockPageScroll } from '../utils/scrollLock';
+import { saveLead } from '../utils/leadsStorage';
+
 
 const EliteDropdown = ({ label, options, value, onChange, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -114,20 +116,51 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Format phone for perfect WhatsApp compatibility (Detects Saudi Arabia +966 vs India +91)
+    let cleanedPhone = formData.phone.replace(/\D/g, ''); // strip out all non-digits
+    let finalPhone = formData.phone;
+
+    if (cleanedPhone.startsWith('0091')) {
+      finalPhone = `+91 ${cleanedPhone.substring(4)}`;
+    } else if (cleanedPhone.startsWith('91') && cleanedPhone.length === 12) {
+      finalPhone = `+91 ${cleanedPhone.substring(2)}`;
+    } else if (cleanedPhone.startsWith('0') && cleanedPhone.length === 11) {
+      finalPhone = `+91 ${cleanedPhone.substring(1)}`;
+    } else if (cleanedPhone.length === 10 && /^[6789]/.test(cleanedPhone)) {
+      finalPhone = `+91 ${cleanedPhone}`;
+    } else {
+      // Treat as Saudi Arabia by default or process existing country code
+      if (cleanedPhone.startsWith('00966')) {
+        cleanedPhone = cleanedPhone.substring(5);
+      } else if (cleanedPhone.startsWith('966')) {
+        cleanedPhone = cleanedPhone.substring(3);
+      } else if (cleanedPhone.startsWith('0')) {
+        cleanedPhone = cleanedPhone.substring(1);
+      }
+      finalPhone = `+966 ${cleanedPhone}`;
+    }
+
+    const updatedFormData = { ...formData, phone: finalPhone };
+
+    try {
+      // Save lead to local storage & Cloudflare endpoint
+      await saveLead(updatedFormData);
+    } catch (err) {
+      console.error('Error saving lead:', err);
+    }
+
     const text = `*New Consultation Request from Nexaar Website*
     
-*Name:* ${formData.name}
-*Company:* ${formData.company || 'N/A'}
-*Phone:* ${formData.phone}
-*Sector:* ${formData.sector || 'N/A'}
-*Project:* ${formData.projectType || 'N/A'}
+*Name:* ${updatedFormData.name}
+*Company:* ${updatedFormData.company || 'N/A'}
+*Phone:* ${updatedFormData.phone}
+*Sector:* ${updatedFormData.sector || 'N/A'}
+*Project:* ${updatedFormData.projectType || 'N/A'}
 
 *Vision:*
-${formData.message}`;
+${updatedFormData.message}`;
 
-    const whatsappUrl = `https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
     await new Promise(resolve => setTimeout(resolve, 800));
-    window.open(whatsappUrl, '_blank');
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
@@ -296,7 +329,7 @@ ${formData.message}`;
                   <p className="font-body text-brand-soft-lavender opacity-85 mb-10 max-w-sm mx-auto">
                     {t.successDesc.replace('{name}', formData.name.split(' ')[0])}
                   </p>
-                  <Button onClick={onClose} variant="outline" className="w-full">
+                  <Button onClick={onClose} variant="primary" className="w-full">
                     {t.return}
                   </Button>
                 </div>

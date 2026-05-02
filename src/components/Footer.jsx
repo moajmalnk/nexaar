@@ -64,6 +64,7 @@ const Footer = () => {
     { name: translations[lang].nav.services,  href: "/#services" },
     { name: translations[lang].nav.portfolio, href: "/#portfolio" },
     { name: translations[lang].nav.why,       href: "/#why-us" },
+    { name: lang === 'ar' ? 'لوحة التحكم' : 'Dashboard', href: "/admin" },
   ];
 
   return (
@@ -123,9 +124,15 @@ const Footer = () => {
               <ul className="space-y-5">
                 {companyLinks.map(link => (
                   <li key={link.name}>
-                    <a href={link.href} className="text-brand-pure-white/70 hover:text-brand-electric-purple font-medium text-sm transition-colors duration-300 block">
-                      {link.name}
-                    </a>
+                    {link.href.includes('#') ? (
+                      <a href={link.href} className="text-brand-pure-white/70 hover:text-brand-electric-purple font-medium text-sm transition-colors duration-300 block">
+                        {link.name}
+                      </a>
+                    ) : (
+                      <Link to={link.href} className="text-brand-pure-white/70 hover:text-brand-electric-purple font-medium text-sm transition-colors duration-300 block">
+                        {link.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -165,6 +172,9 @@ const Footer = () => {
             </Link>
             <Link to="/terms" target="_self" className="text-[0.65rem] font-bold text-white/40 hover:text-brand-electric-purple uppercase tracking-[0.2em] transition-colors">
               {t.terms}
+            </Link>
+            <Link to="/admin" target="_self" className="text-[0.65rem] font-bold text-white/40 hover:text-brand-electric-purple uppercase tracking-[0.2em] transition-colors">
+              Admin
             </Link>
           </div>
         </div>
