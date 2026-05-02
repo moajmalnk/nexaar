@@ -5,7 +5,9 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import LegalPage from './pages/LegalPage';
 import NotFound from './pages/NotFound';
+import Dashboard from './pages/Dashboard';
 import OfflineBanner from './components/shared/OfflineBanner';
+
 import { LanguageProvider } from './context/LanguageProvider';
 import LanguageLoader from './components/shared/LanguageLoader';
 import Lenis from 'lenis';
@@ -73,22 +75,27 @@ function App() {
     };
   }, []);
 
+  const location = useLocation();
+  const hideNavFooter = location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/admin');
+
   return (
     <LanguageProvider>
       <div className="bg-brand-deep-navy min-h-screen text-brand-pure-white selection:bg-brand-electric-purple/30">
         <OfflineBanner />
         <LanguageLoader />
         <ScrollToTop />
-        <Navbar />
+        {!hideNavFooter && <Navbar />}
         
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/privacy" element={<LegalPage type="privacy" />} />
           <Route path="/terms" element={<LegalPage type="terms" />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
-        <Footer />
+        {!hideNavFooter && <Footer />}
       </div>
     </LanguageProvider>
   );
