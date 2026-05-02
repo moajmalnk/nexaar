@@ -142,12 +142,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
     const updatedFormData = { ...formData, phone: finalPhone };
 
-    try {
-      // Save lead to local storage
-      await saveLead(updatedFormData);
-    } catch (err) {
-      console.error('Error saving lead:', err);
-    }
+    // Save lead in background
+    saveLead(updatedFormData).catch(err => {
+      console.error('Error saving lead in background:', err);
+    });
 
     const text = `*New Consultation Request from Nexaar Website*
     
@@ -160,7 +158,8 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 *Vision:*
 ${updatedFormData.message}`;
 
-    await new Promise(resolve => setTimeout(resolve, 800));
+    // Faster 200ms delay to make the submission feel lightning fast
+    await new Promise(resolve => setTimeout(resolve, 200));
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
