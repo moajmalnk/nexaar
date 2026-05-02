@@ -8,6 +8,7 @@ import { lockPageScroll } from '../utils/scrollLock';
 import NexaarLogo from './shared/NexaarLogo';
 import Button from './shared/Button';
 import { trackEvent, ANALYTICS_EVENTS } from '../utils/analytics';
+import ConsultationModal from './ConsultationModal';
 
 /* ── translation icon component ── */
 const TranslationIcon = ({ className }) => (
@@ -116,6 +117,7 @@ function DesktopNav({
   activeId, hovered, onHover, onClick, onMobileOpen,
   variant, menuButtonRef, isMobileOpen,
   lang, toggleLanguage, t, NAV_LINKS, isLegalPage, pathname,
+  onOpenConsultation,
 }) {
   const isPill = variant === 'pill';
 
@@ -193,19 +195,14 @@ function DesktopNav({
         )}
         <LanguageToggle lang={lang} toggleLanguage={toggleLanguage} />
         <Button
-          as="a"
-          href={`https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(
-            lang === 'en' 
-              ? "Hello Nexaar! I'm interested in building a digital solution for my business."
-              : "مرحباً نكسار! أنا مهتم ببناء حل رقمي لأعمالي."
-          )}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => {
+            trackEvent(ANALYTICS_EVENTS.CONVERSION_GET_STARTED);
+            if (onOpenConsultation) onOpenConsultation();
+          }}
           variant="accent"
           size="small"
           caps={true}
           className="rounded-full px-5 xl:px-6 shadow-coral-glow/20"
-          onClick={() => trackEvent(ANALYTICS_EVENTS.CONVERSION_GET_STARTED)}
         >
           {t.getStarted}
         </Button>
@@ -243,6 +240,7 @@ export default function Navbar() {
   const NAV_LINKS = getNavLinks(lang);
 
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const isMobileOpenRef = useRef(isMobileOpen);
   
   // Sync ref for access inside listeners
@@ -383,7 +381,8 @@ export default function Navbar() {
   };
 
   return (
-    <motion.header
+    <>
+      <motion.header
       initial={false}
       animate={{ y: isVisible ? '0%' : '-100%' }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
@@ -406,6 +405,7 @@ export default function Navbar() {
           NAV_LINKS={NAV_LINKS}
           isLegalPage={isLegalPage}
           pathname={pathname}
+          onOpenConsultation={() => setIsConsultationOpen(true)}
         />
       </div>
 
@@ -495,18 +495,14 @@ export default function Navbar() {
 
               <div className="mt-auto pt-5 border-t border-brand-electric-purple/20 flex flex-col gap-4">
                 <Button
-                  as="a"
-                  href={`https://wa.me/${BRAND_CONFIG.whatsapp}?text=${encodeURIComponent(
-                    lang === 'en' 
-                      ? "Hello Nexaar! I'm interested in building a digital solution for my business."
-                      : "مرحباً نكسار! أنا مهتم ببناء حل رقمي لأعمالي."
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => {
+                    trackEvent(ANALYTICS_EVENTS.CONVERSION_WHATSAPP);
+                    setIsMobileOpen(false);
+                    setIsConsultationOpen(true);
+                  }}
                   variant="accent"
                   className="w-full !py-4 rounded-2xl shadow-coral-glow/20"
                   caps={true}
-                  onClick={() => trackEvent(ANALYTICS_EVENTS.CONVERSION_WHATSAPP)}
                 >
                   {t.getStarted}
                 </Button>
@@ -516,5 +512,11 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </motion.header>
-  );
+
+    <ConsultationModal 
+      isOpen={isConsultationOpen} 
+      onClose={() => setIsConsultationOpen(false)} 
+    />
+  </>
+);
 }

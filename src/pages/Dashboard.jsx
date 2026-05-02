@@ -65,9 +65,15 @@ const CustomSelect = ({ value, onChange, options }) => {
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(() => sessionStorage.getItem('nexaar_auth') === 'true');
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(() => localStorage.getItem('nexaar_username') || '');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(() => localStorage.getItem('nexaar_remember') === 'true');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCapsLockOn, setIsCapsLockOn] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [isForgotOpen, setIsForgotOpen] = useState(false);
   
   const [leads, setLeads] = useState([]);
   const [filteredLeads, setFilteredLeads] = useState([]);
@@ -82,15 +88,34 @@ const Dashboard = () => {
     onConfirm: null
   });
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     if (e) e.preventDefault();
-    if (username === 'admin' && password === 'nexaar2026') {
+    if (failedAttempts >= 5) {
+      setLoginError('Maximum login attempts exceeded. Temporary lockout enabled.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setLoginError('');
+
+    await new Promise(resolve => setTimeout(resolve, 850));
+
+    if ((username === 'Murshid' || username === 'murshid') && password === 'nexaar2026') {
       setIsAuthenticated(true);
       sessionStorage.setItem('nexaar_auth', 'true');
+      if (rememberMe) {
+        localStorage.setItem('nexaar_username', username);
+        localStorage.setItem('nexaar_remember', 'true');
+      } else {
+        localStorage.removeItem('nexaar_username');
+        localStorage.removeItem('nexaar_remember');
+      }
       setLoginError('');
+      setFailedAttempts(0);
     } else {
-      setLoginError('Invalid username or password');
+      setLoginError('The password or username is incorrect.');
     }
+    setIsSubmitting(false);
   };
 
   const loadLeads = async () => {
@@ -192,63 +217,210 @@ const Dashboard = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-brand-deep-navy flex items-center justify-center p-4">
+      <div className="min-h-screen bg-brand-deep-navy flex items-center justify-center p-4 relative overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-brand-charcoal/30 border border-brand-electric-purple/20 backdrop-blur-xl p-8 rounded-2xl max-w-md w-full space-y-8 shadow-2xl relative"
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-brand-charcoal/20 border border-brand-electric-purple/20 backdrop-blur-xl p-8 md:p-10 rounded-3xl max-w-md w-full space-y-8 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.6)] relative z-10 select-none overflow-hidden"
+          role="region"
+          aria-label="Administrator login region"
         >
-          {/* Neon Top Bar Accent */}
+          {/* Top border ambient glow accent line */}
           <div className="absolute top-0 left-1/4 w-[50%] h-[2px] bg-gradient-to-r from-transparent via-brand-electric-purple to-transparent" />
           
-          <div className="text-center space-y-2">
-            <h1 className="font-display font-extrabold text-3xl tracking-tight text-brand-pure-white uppercase">
-              NEXAAR <span className="text-brand-electric-purple">TECH</span>
-            </h1>
-            <p className="font-body text-brand-soft-lavender/60 text-sm">
-              Please enter your admin credentials to access the leads dashboard.
-            </p>
+          <div className="text-center space-y-4">
+            {/* Visual logo/icon above title */}
+            <div className="mx-auto flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-electric-purple/10 border border-brand-electric-purple/25 backdrop-blur-sm shadow-inner select-none transition-all duration-300 hover:scale-105">
+              <svg className="w-7 h-7 text-brand-electric-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            
+            <div>
+              <h1 className="font-display font-extrabold text-3xl tracking-tight text-brand-pure-white uppercase">
+                NEXAAR <span className="text-brand-electric-purple">TECH</span>
+              </h1>
+            </div>
+
+            {/* Security/Trust line */}
+            <div className="inline-flex items-center justify-center gap-1.5 bg-green-500/5 border border-green-500/10 px-3 py-1.5 rounded-full select-none" role="status">
+              <svg className="w-3.5 h-3.5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span className="font-body text-[0.6875rem] text-green-400/80 font-medium tracking-wide">
+                Secured connection
+              </span>
+            </div>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-1.5">
-              <label className="font-display text-xs uppercase font-bold tracking-wider text-brand-pure-white/60 pl-1">
+          <form 
+            onSubmit={handleLogin} 
+            onKeyDown={(e) => {
+              if (e.getModifierState && e.getModifierState('CapsLock')) {
+                setIsCapsLockOn(true);
+              } else {
+                setIsCapsLockOn(false);
+              }
+            }}
+            className="space-y-6"
+            role="form"
+            aria-label="Admin Login Form"
+          >
+            {loginError && (
+              <motion.div
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="font-body text-red-400 text-xs text-center font-medium bg-red-500/10 border border-red-500/20 py-2 px-4 rounded-xl flex items-center gap-2 justify-center select-none"
+                role="alert"
+              >
+                <svg className="w-3.5 h-3.5 flex-shrink-0 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                {loginError}
+              </motion.div>
+            )}
+            <div className="space-y-2">
+              <label htmlFor="username" className="font-display text-xs font-semibold tracking-wide text-brand-pure-white/70 pl-1 block select-none">
                 Username
               </label>
-              <input
-                type="text"
-                placeholder="Admin username"
-                className="w-full bg-brand-deep-navy/60 border border-brand-electric-purple/15 text-brand-pure-white px-4 py-3 rounded-xl outline-none focus:border-brand-electric-purple/40 transition-all font-body text-sm"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
+              <div className="relative group">
+                <svg className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-brand-soft-lavender/40 transition-colors group-focus-within:text-brand-electric-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  autoComplete="username"
+                  aria-label="Username"
+                  aria-required="true"
+                  placeholder="Admin username"
+                  className="w-full bg-brand-deep-navy/40 border border-brand-electric-purple/15 hover:border-brand-electric-purple/30 text-brand-pure-white pl-11 pr-4 py-3.5 rounded-xl outline-none focus:border-brand-electric-purple focus:bg-brand-deep-navy/70 focus:ring-4 focus:ring-brand-electric-purple/15 transition-all font-body text-sm placeholder:text-brand-soft-lavender/30 select-text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label className="font-display text-xs uppercase font-bold tracking-wider text-brand-pure-white/60 pl-1">
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder="Your secret password"
-                className="w-full bg-brand-deep-navy/60 border border-brand-electric-purple/15 text-brand-pure-white px-4 py-3 rounded-xl outline-none focus:border-brand-electric-purple/40 transition-all font-body text-sm"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+            <div className="space-y-2">
+              <div className="flex items-center justify-between pl-1">
+                <label htmlFor="password" className="font-display text-xs font-semibold tracking-wide text-brand-pure-white/70 block select-none">
+                  Secret password
+                </label>
+                {isCapsLockOn && (
+                  <span className="font-body text-[0.625rem] text-amber-400 font-semibold uppercase tracking-wider flex items-center gap-1 select-none" role="status">
+                    <svg className="w-3.5 h-3.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    Caps lock on
+                  </span>
+                )}
+              </div>
+              <div className="relative group">
+                <svg className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-brand-soft-lavender/40 transition-colors group-focus-within:text-brand-electric-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  autoComplete="current-password"
+                  aria-label="Secret password"
+                  aria-required="true"
+                  placeholder="Enter your secret password"
+                  className="w-full bg-brand-deep-navy/40 border border-brand-electric-purple/15 hover:border-brand-electric-purple/30 text-brand-pure-white pl-11 pr-12 py-3.5 rounded-xl outline-none focus:border-brand-electric-purple focus:bg-brand-deep-navy/70 focus:ring-4 focus:ring-brand-electric-purple/15 transition-all font-body text-sm placeholder:text-brand-soft-lavender/30 select-text"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-soft-lavender/40 hover:text-brand-pure-white transition-colors focus:outline-none focus:ring-2 focus:ring-brand-electric-purple/40 rounded-lg p-1 select-none"
+                >
+                  {showPassword ? (
+                    <svg className="w-5 h-5 text-brand-electric-purple" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5 text-brand-soft-lavender/60 hover:text-brand-pure-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
 
-            {loginError && (
-              <p className="font-body text-red-400 text-xs text-center font-medium bg-red-500/10 border border-red-500/20 py-2 rounded-lg">
-                {loginError}
-              </p>
-            )}
+            <div className="flex justify-end select-none px-1">
+              <button
+                type="button"
+                onClick={() => setIsForgotOpen(!isForgotOpen)}
+                className="font-body text-xs text-brand-electric-purple hover:text-brand-soft-lavender transition-colors font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-brand-electric-purple/40 rounded-lg px-1.5"
+              >
+                Forgot password?
+              </button>
+            </div>
 
-            <Button type="submit" variant="primary" className="w-full py-3.5 mt-2 flex justify-center">
-              Login securely
+            <Button 
+              type="submit" 
+              variant="primary" 
+              isLoading={isSubmitting}
+              className="w-full py-4 mt-2 flex justify-center uppercase tracking-wider font-display font-bold text-xs"
+              aria-label={isSubmitting ? "Accessing Secure Terminal..." : "Submit and login securely"}
+            >
+              {isSubmitting ? 'Accessing Secure Terminal...' : 'Login securely'}
+            </Button>
+
+            <Button 
+              type="button" 
+              variant="secondary" 
+              onClick={() => navigate('/')}
+              className="w-full py-4 mt-1 flex justify-center uppercase tracking-wider font-display font-bold text-xs bg-transparent border border-brand-electric-purple/20 hover:bg-brand-electric-purple/10 text-brand-soft-lavender hover:text-brand-pure-white transition-all select-none"
+              aria-label="Go back to home page"
+            >
+              Go Back to Home
             </Button>
           </form>
+
+          {isForgotOpen && (
+            <div className="absolute inset-0 !mt-0 z-[100] flex items-center justify-center p-6 bg-[#0c0d1b] border border-brand-electric-purple/30 rounded-3xl backdrop-blur-md select-none overflow-hidden">
+              <div className="absolute top-0 left-1/4 w-[50%] h-[1px] bg-gradient-to-r from-transparent via-brand-electric-purple to-transparent" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="w-full max-w-sm space-y-4 select-none"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-electric-purple/10 border border-brand-electric-purple/20 backdrop-blur-sm select-none">
+                    <svg className="w-5 h-5 text-brand-electric-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="font-display font-bold text-lg text-brand-pure-white uppercase tracking-wider">
+                    Reset Password
+                  </h3>
+                </div>
+
+                <p className="font-body text-xs text-brand-soft-lavender/80 leading-relaxed mb-6 select-none">
+                  To reset your credentials, please contact the Nexaar security team or your lead administrator.
+                </p>
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={() => setIsForgotOpen(false)}
+                  className="w-full py-3 tracking-wider font-display font-bold text-xs uppercase"
+                >
+                  Dismiss
+                </Button>
+              </motion.div>
+            </div>
+          )}
         </motion.div>
       </div>
     );
@@ -278,7 +450,8 @@ const Dashboard = () => {
                   onConfirm: () => {
                     setIsAuthenticated(false);
                     sessionStorage.removeItem('nexaar_auth');
-                    navigate('/');
+                    setUsername('');
+                    setPassword('');
                   }
                 });
               }} 
