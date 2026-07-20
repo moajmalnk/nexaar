@@ -5,12 +5,15 @@ import { getLeads, deleteLead, updateLeadStatus } from '../utils/leadsStorage';
 import Button from '../components/shared/Button';
 
 
-const CustomSelect = ({ value, onChange, options }) => {
+const CustomSelect = ({ value, onChange, options = [], name }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const selectedOption = options.find(opt => opt.value === value) || options[0];
+  // Rule 17: Handle empty values robustly without unexpected application breaks
+  const selectedOption = options?.find(opt => opt.value === value) || options?.[0] || { label: 'Select...', value: '' };
 
   return (
     <div className="relative select-none w-full">
+      {/* Rule 17: Hidden state management input separated from display logic */}
+      <input type="hidden" name={name} value={selectedOption.value} />
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="w-full bg-brand-deep-navy/60 border border-brand-electric-purple/15 hover:border-brand-electric-purple/40 text-brand-pure-white px-4 py-3 rounded-xl outline-none focus:border-brand-electric-purple/50 transition-all font-body text-sm flex items-center justify-between cursor-pointer backdrop-blur-sm h-full"
@@ -38,7 +41,7 @@ const CustomSelect = ({ value, onChange, options }) => {
               transition={{ duration: 0.15 }}
               className="absolute z-30 top-full left-0 right-0 mt-2 bg-brand-deep-navy/95 border border-brand-electric-purple/25 rounded-xl shadow-2xl overflow-hidden backdrop-blur-md max-h-60 overflow-y-auto"
             >
-              {options.map((option) => (
+              {options?.map((option) => (
                 <div
                   key={option.value}
                   onClick={() => {
@@ -76,6 +79,7 @@ const Dashboard = () => {
   const [isForgotOpen, setIsForgotOpen] = useState(false);
   
   const [leads, setLeads] = useState([]);
+  const [isLoadingLeads, setIsLoadingLeads] = useState(true);
   const [filteredLeads, setFilteredLeads] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -85,18 +89,32 @@ const Dashboard = () => {
     isOpen: false,
     title: '',
     message: '',
+    isDestructive: false,
     onConfirm: null
   });
 
+  // Rule 10: Dynamic Programmatic Locking
+  const isLoginFormValid = username.trim().length > 0 && password.trim().length > 0;
+
   const handleLogin = async (e) => {
     if (e) e.preventDefault();
+    
+    // Rule 8: Anti-Double Click Lockout Guard (Instant disabled state on click #1)
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setLoginError('');
+
     if (failedAttempts >= 5) {
       setLoginError('Maximum login attempts exceeded. Temporary lockout enabled.');
+      setIsSubmitting(false);
       return;
     }
 
-    setIsSubmitting(true);
-    setLoginError('');
+    if (!username.trim() || !password.trim()) {
+      setLoginError('Please enter both username and password.');
+      setIsSubmitting(false);
+      return;
+    }
 
     await new Promise(resolve => setTimeout(resolve, 850));
 
@@ -119,8 +137,10 @@ const Dashboard = () => {
   };
 
   const loadLeads = async () => {
+    setIsLoadingLeads(true);
     const data = await getLeads();
     setLeads(data || []);
+    setIsLoadingLeads(false);
   };
 
   const filterLeads = () => {
@@ -163,6 +183,7 @@ const Dashboard = () => {
       isOpen: true,
       title: 'Remove Lead',
       message: 'Are you sure you want to permanently delete this lead? This action cannot be undone.',
+      isDestructive: true,
       onConfirm: async () => {
         await deleteLead(id);
         loadLeads();
@@ -296,6 +317,7 @@ const Dashboard = () => {
                   aria-label="Username"
                   aria-required="true"
                   placeholder="Admin username"
+                  dir="auto"
                   className="w-full bg-brand-deep-navy/40 border border-brand-electric-purple/15 hover:border-brand-electric-purple/30 text-brand-pure-white pl-11 pr-4 py-3.5 rounded-xl outline-none focus:border-brand-electric-purple focus:bg-brand-deep-navy/70 focus:ring-4 focus:ring-brand-electric-purple/15 transition-all font-body text-sm placeholder:text-brand-soft-lavender/30 select-text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -330,6 +352,7 @@ const Dashboard = () => {
                   aria-label="Secret password"
                   aria-required="true"
                   placeholder="Enter your secret password"
+                  dir="ltr"
                   className="w-full bg-brand-deep-navy/40 border border-brand-electric-purple/15 hover:border-brand-electric-purple/30 text-brand-pure-white pl-11 pr-12 py-3.5 rounded-xl outline-none focus:border-brand-electric-purple focus:bg-brand-deep-navy/70 focus:ring-4 focus:ring-brand-electric-purple/15 transition-all font-body text-sm placeholder:text-brand-soft-lavender/30 select-text"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -372,6 +395,7 @@ const Dashboard = () => {
               isLoading={isSubmitting}
               className="w-full py-4 mt-2 flex justify-center uppercase tracking-wider font-display font-bold text-xs"
               aria-label={isSubmitting ? "Accessing Secure Terminal..." : "Submit and login securely"}
+              disabled={!isLoginFormValid}
             >
               {isSubmitting ? 'Accessing Secure Terminal...' : 'Login securely'}
             </Button>
@@ -447,6 +471,7 @@ const Dashboard = () => {
                   isOpen: true,
                   title: 'Logout',
                   message: 'Are you sure you want to sign out and leave the dashboard?',
+                  isDestructive: false,
                   onConfirm: () => {
                     setIsAuthenticated(false);
                     sessionStorage.removeItem('nexaar_auth');
@@ -543,6 +568,7 @@ const Dashboard = () => {
 
           <div>
             <CustomSelect
+              name="statusFilter"
               value={statusFilter}
               onChange={setStatusFilter}
               options={[
@@ -556,6 +582,7 @@ const Dashboard = () => {
 
           <div>
             <CustomSelect
+              name="typeFilter"
               value={typeFilter}
               onChange={setTypeFilter}
               options={[
@@ -579,7 +606,25 @@ const Dashboard = () => {
               <span>Showing sorted list</span>
             </div>
             
-            {filteredLeads.length === 0 ? (
+            {isLoadingLeads ? (
+              <div className="space-y-4 pr-1">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="p-6 rounded-2xl border border-brand-electric-purple/10 bg-brand-charcoal/20 animate-shimmer flex flex-col md:flex-row md:items-center justify-between gap-5 relative overflow-hidden">
+                    <div className="space-y-4 flex-1">
+                      <div className="flex gap-3">
+                        <div className="w-16 h-5 skeleton-bg rounded-full" />
+                        <div className="w-24 h-5 skeleton-bg rounded-full" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="w-48 h-5 skeleton-bg" />
+                        <div className="w-32 h-4 skeleton-bg" />
+                      </div>
+                    </div>
+                    <div className="w-24 h-10 skeleton-bg rounded-xl" />
+                  </div>
+                ))}
+              </div>
+            ) : filteredLeads.length === 0 ? (
               <div className="text-center py-16 border border-dashed border-brand-electric-purple/20 rounded-2xl bg-brand-charcoal/10">
                 <p className="font-body text-brand-soft-lavender opacity-50 text-sm">
                   No consultation requests found for the selected filters.
@@ -808,34 +853,54 @@ const Dashboard = () => {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="bg-brand-charcoal/40 border border-brand-electric-purple/20 backdrop-blur-xl p-6 md:p-8 rounded-2xl max-w-sm w-full space-y-6 shadow-2xl relative"
+              // Rule 9: Small 400px Authorization Block for destructive ops
+              className={`bg-brand-deep-navy border backdrop-blur-xl p-6 md:p-8 rounded-2xl max-w-[400px] w-full space-y-6 shadow-2xl relative overflow-hidden ${
+                confirmModal.isDestructive 
+                  ? 'border-red-500/30 shadow-[0_0_40px_rgba(239,68,68,0.15)]' 
+                  : 'border-brand-electric-purple/20'
+              }`}
             >
-              <div className="space-y-2">
+              {confirmModal.isDestructive && (
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-50" />
+              )}
+              
+              <div className="space-y-3 text-center">
+                {confirmModal.isDestructive && (
+                  <div className="mx-auto w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-full flex items-center justify-center mb-2">
+                    <svg className="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  </div>
+                )}
                 <h3 className="font-display font-extrabold text-xl text-brand-pure-white uppercase tracking-wider">
                   {confirmModal.title}
                 </h3>
-                <p className="font-body text-brand-soft-lavender/80 text-sm">
+                <p className="font-body text-brand-soft-lavender/80 text-sm leading-relaxed px-2">
                   {confirmModal.message}
                 </p>
               </div>
               
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 pt-2">
+                <Button
+                  onClick={() => setConfirmModal({ isOpen: false, title: '', message: '', isDestructive: false, onConfirm: null })}
+                  variant="secondary"
+                  className="flex-1 py-3 hover:bg-white/5 border-white/10 font-bold"
+                >
+                  Cancel
+                </Button>
                 <Button
                   onClick={async () => {
                     if (confirmModal.onConfirm) await confirmModal.onConfirm();
-                    setConfirmModal({ isOpen: false, title: '', message: '', onConfirm: null });
+                    setConfirmModal({ isOpen: false, title: '', message: '', isDestructive: false, onConfirm: null });
                   }}
                   variant="primary"
-                  className="flex-1 py-2"
+                  className={`flex-1 py-3 font-bold ${
+                    confirmModal.isDestructive
+                      ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30 hover:border-red-500/50 hover:shadow-[0_0_15px_rgba(239,68,68,0.2)]'
+                      : ''
+                  }`}
                 >
-                  Confirm
-                </Button>
-                <Button
-                  onClick={() => setConfirmModal({ isOpen: false, title: '', message: '', onConfirm: null })}
-                  variant="secondary"
-                  className="flex-1 py-2 hover:bg-white/5 border-white/10"
-                >
-                  Cancel
+                  {confirmModal.isDestructive ? 'Authorize' : 'Confirm'}
                 </Button>
               </div>
             </motion.div>
