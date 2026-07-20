@@ -107,8 +107,8 @@ const validateFields = (data, lang) => {
     errors.phone = isAr ? 'يرجى إدخال رقم هاتف صحيح (8 أرقام على الأقل)' : 'Please enter a valid phone number (min 8 digits)';
   }
 
-  if (!data.message || data.message.trim().length < 10) {
-    errors.message = isAr ? 'يرجى كتابة تفاصيل مشروعك (10 أحرف على الأقل)' : 'Please describe your vision (min 10 characters)';
+  if (!data.message || !data.message.trim()) {
+    errors.message = isAr ? 'يرجى كتابة تفاصيل مشروعك' : 'Please describe your vision';
   }
 
   return errors;
